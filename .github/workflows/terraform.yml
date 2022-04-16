@@ -1,0 +1,50 @@
+name: Smoke Tests for terraform.templates_for_sap
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  terraform_validate:
+    name: 'Terraform Validate ALL'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 10
+      matrix:
+        terraform_ver: [~1.0.0, ~1.1.0]
+        sap_solution_scenario: [sap_hana_single_node_install, sap_ecc_hana_single_node_system_copy_homogeneous_hdb, sap_s4hana_single_node_install, sap_s4hana_single_node_system_copy_homogeneous_hdb]
+        infrastructure_platform: [aws_ec2_instance, ibmcloud_vs, ibmcloud_powervs, ibmpowervc, msazure_vm]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: ${{ matrix.terraform_ver }}
+      - name: Check if directory empty
+        id: directory_empty_flag
+        run: |
+          # Check directory, add result to empty_string, make visible to other step tasks (use string, not boolean)
+          if [ -d "$PWD/${{ matrix.sap_solution_scenario }}/${{ matrix.infrastructure_platform }}" ]; then
+            dir_test=$(ls -lha "$PWD/${{ matrix.sap_solution_scenario }}/${{ matrix.infrastructure_platform }}" | grep main.tf)
+            if [ -z "${dir_test}" ]; then echo 'null' ; else FLAG="true" && echo "::set-output name=FLAG::$FLAG" ; fi
+          else
+            echo 'null'
+          fi
+      - name: Terraform Init, if directory is not empty
+        if: ${{ steps.directory_empty_flag.outputs.FLAG == 'true' }}
+        id: init
+        run: |
+          cd "./${{ matrix.sap_solution_scenario }}/${{ matrix.infrastructure_platform }}"
+          terraform init
+      - name: Terraform Validate, if directory is not empty
+        if: ${{ steps.directory_empty_flag.outputs.FLAG == 'true' }}
+        id: validate
+        run: |
+          cd "./${{ matrix.sap_solution_scenario }}/${{ matrix.infrastructure_platform }}"
+          terraform validate -no-color
