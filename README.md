@@ -126,6 +126,39 @@ The following list is **`not`** a commitment but is a statement of intent beyond
 | *SAP S/4HANA distributed installation* | Installation of SAP S/4HANA using SAP HANA Database Server and SAP NetWeaver across multiple virtual machine on a Cloud or Hypervisor |
 | *SAP BW/4HANA single-node installation* | Installation of SAP BW/4HANA using SAP HANA Database Server and SAP NetWeaver to a single virtual machine on a Cloud or Hypervisor |
 
+## Requirements, Dependencies and Testing
+
+### SAP User ID credentials
+
+SAP software installation media must be obtained from SAP directly, and requires valid license agreements with SAP in order to access these files.
+
+An SAP Company Number (SCN) contains one or more Installation Number/s, providing licences for specified SAP Software. When an SAP User ID is created within the SAP Customer Number (SCN), the administrator must provide SAP Download authorizations for the SAP User ID.
+
+When an SAP User ID (e.g. S-User) is enabled with and part of an SAP Universal ID, then the `sap_launchpad` Ansible Collection **must** use:
+- the SAP User ID
+- the password for login with the SAP Universal ID
+
+In addition, if a SAP Universal ID is used then the recommendation is to check and reset the SAP User ID ‘Account Password’ in the [SAP Universal ID Account Manager](https://account.sap.com/manage/accounts), which will help to avoid any potential conflicts.
+
+### Operating System requirements
+
+The execution/controller host of the Terraform Templates must contain:
+- Terraform 1.0+
+- Ansible Core 2.11+, may work with Ansible 2.9+ but is not fully tested
+- git client
+- Python 3+ (i.e. CPython distribution)
+
+### Testing on execution/controller host
+
+**Tests with Ansible Core release versions:**
+- Ansible Core 2.11.5 community edition
+
+**Tests with Python release versions:**
+- Python 3.9.7 (i.e. CPython distribution)
+
+**Tests with Operating System release versions:**
+- macOS 11.6 (Big Sur), with Homebrew used for Python 3.x via PyEnv
+
 ## Disclaimer
 
 These are common SAP solution scenarios which are codified using Infrastructure Automation for SAP (Terraform) and Build Automation for SAP (Ansible). These can be extended as needed for bespoke requirements.
