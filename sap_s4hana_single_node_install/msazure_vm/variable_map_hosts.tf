@@ -9,7 +9,7 @@ variable "map_host_specifications" {
 
     small_256gb = {
 
-      hana01 = {
+      s4h01 = {
         vm_instance = "Standard_M32ls"
 
         // N.B. all capacities must be different from each other, due to Shell loop searching based on capacity GB
@@ -71,7 +71,7 @@ variable "map_host_specifications" {
 
     small_256gb_ha = {
 
-      hana01p = {
+      s4h01p = {
         vm_instance = "Standard_M32ls"
 
         // N.B. all capacities must be different from each other, due to Shell loop searching based on capacity GB
@@ -129,7 +129,7 @@ variable "map_host_specifications" {
         #filesystem_swap = "xfs"
       },
 
-      hana01s = {
+      s4h01s = {
         vm_instance = "Standard_M32ls"
 
         // N.B. all capacities must be different from each other, due to Shell loop searching based on capacity GB
