@@ -1,7 +1,7 @@
 
 module "run_account_init_module" {
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/account_init"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/account_init?ref=main"
 
   module_var_resource_group_name           = local.resource_group_create_boolean ? 0 : var.ibmcloud_resource_group
   module_var_resource_group_create_boolean = local.resource_group_create_boolean
@@ -25,7 +25,7 @@ module "run_account_bootstrap_module" {
     module.run_account_init_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/account_bootstrap"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/account_bootstrap?ref=main"
 
   module_var_resource_group_id = module.run_account_init_module.output_resource_group_id
   module_var_resource_prefix   = var.resource_prefix
@@ -49,7 +49,7 @@ module "run_account_iam_module" {
 
   count = var.ibmcloud_iam_yesno == "yes" ? 1 : 0
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/account_iam"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/account_iam?ref=main"
 
   module_var_resource_group_id = module.run_account_init_module.output_resource_group_id
   module_var_resource_prefix   = var.resource_prefix
@@ -64,7 +64,7 @@ module "run_bastion_inject_module" {
     module.run_account_bootstrap_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/bastion_inject"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/bastion_inject?ref=main"
 
   module_var_resource_group_id = module.run_account_init_module.output_resource_group_id
   module_var_resource_prefix   = var.resource_prefix
@@ -91,7 +91,7 @@ module "run_powervs_account_bootstrap_module" {
     module.run_account_bootstrap_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_powervs/account_bootstrap_addon"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_powervs/account_bootstrap_addon?ref=main"
 
   module_var_resource_group_id        = module.run_account_init_module.output_resource_group_id
   module_var_resource_prefix          = var.resource_prefix
@@ -108,7 +108,7 @@ module "run_powervs_interconnect_sg_update_module" {
     module.run_powervs_account_bootstrap_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/powervs_interconnect_sg_update"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/powervs_interconnect_sg_update?ref=main"
 
   module_var_bastion_security_group_id = module.run_bastion_inject_module.output_bastion_security_group_id
   module_var_host_security_group_id    = module.run_account_bootstrap_module.output_host_security_group_id
@@ -127,7 +127,7 @@ module "run_powervs_interconnect_proxy_provision_module" {
     module.run_powervs_interconnect_sg_update_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/powervs_interconnect_proxy_provision"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/powervs_interconnect_proxy_provision?ref=main"
 
   # Set Terraform Module Variables using Terraform Variables at runtime
 
@@ -171,7 +171,7 @@ module "run_powervs_host_provision_module" {
     module.run_powervs_interconnect_proxy_provision_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_powervs/host_provision"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_powervs/host_provision?ref=main"
 
   module_var_resource_group_id = module.run_account_init_module.output_resource_group_id
   module_var_resource_prefix   = var.resource_prefix
@@ -275,7 +275,7 @@ module "run_shell_download_obj_store_ibmcos" {
 
   depends_on = [module.run_powervs_host_provision_module]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/shell_download_obj_store_ibmcos"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/shell_download_obj_store_ibmcos?ref=main"
 
   # Terraform Module Variables using the prior Terraform Module Variables (from bootstrap module)
   module_var_bastion_user            = var.bastion_user
@@ -307,7 +307,7 @@ module "run_ansible_sap_s4hana_system_copy_hdb" {
     module.run_shell_download_obj_store_ibmcos
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_s4hana_system_copy_hdb"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_s4hana_system_copy_hdb?ref=main"
 
   # Terraform Module Variables using the prior Terraform Module Variables (from bootstrap module)
   module_var_bastion_boolean         = true // required as true boolean for any Cloud Service Provider (CSP)

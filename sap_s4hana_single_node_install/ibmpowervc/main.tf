@@ -1,7 +1,7 @@
 
 module "run_host_bootstrap_module" {
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmpowervc/host_bootstrap"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmpowervc/host_bootstrap?ref=main"
 
   # Set Terraform Module Variables using Terraform Variables at runtime
   module_var_resource_prefix = var.resource_prefix
@@ -11,7 +11,7 @@ module "run_host_bootstrap_module" {
 
 module "run_host_provision_module" {
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmpowervc/host_provision"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmpowervc/host_provision?ref=main"
 
   # Set Terraform Module Variables using Terraform Variables at runtime
 
@@ -106,7 +106,7 @@ module "run_ansible_sap_s4hana_install_maintplan" {
 
   depends_on = [module.run_host_provision_module]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_s4hana_install_maintplan"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_s4hana_install_maintplan?ref=main"
 
   # Terraform Module Variables using the prior Terraform Module Variables (from bootstrap module)
   module_var_bastion_boolean         = var.bastion_boolean
