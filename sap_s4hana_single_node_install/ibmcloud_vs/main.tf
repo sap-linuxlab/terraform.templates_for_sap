@@ -1,5 +1,37 @@
 
+module "run_ansible_dry_run" {
+
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_s4hana_install_maintplan"
+
+  module_var_dry_run_boolean = true
+
+  # Terraform Module Variables which are mandatory, all with an empty string
+  module_var_bastion_boolean                  = false
+  module_var_bastion_user                     = ""
+  module_var_bastion_ssh_port                 = 0
+  module_var_bastion_private_ssh_key          = ""
+  module_var_bastion_floating_ip              = ""
+  module_var_host_private_ssh_key             = ""
+  module_var_host_private_ip                  = ""
+  module_var_hostname                         = "software_media_dry_run"
+  module_var_dns_root_domain_name             = ""
+  module_var_sap_id_user                      = var.sap_id_user
+  module_var_sap_id_user_password             = var.sap_id_user_password
+  module_var_sap_swpm_sid                     = ""
+  module_var_sap_swpm_db_schema_abap          = ""
+  module_var_sap_swpm_db_schema_abap_password = ""
+  module_var_sap_swpm_ddic_000_password       = ""
+  module_var_sap_swpm_template_selected       = var.sap_swpm_template_selected
+  module_var_sap_maintenance_planner_transaction_name = var.sap_maintenance_planner_transaction_name
+
+}
+
+
 module "run_account_init_module" {
+
+  depends_on = [
+    module.run_ansible_dry_run
+  ]
 
   source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/account_init"
 
@@ -241,8 +273,21 @@ module "run_ansible_sap_s4hana_install_maintplan" {
 
   module_var_sap_swpm_sid = var.sap_s4hana_install_sid
 
+  module_var_sap_swpm_db_schema_abap          = "SAPHANADB"
+  module_var_sap_swpm_db_schema_abap_password = var.sap_hana_install_master_password
+  module_var_sap_swpm_db_system_password      = var.sap_hana_install_master_password
+  module_var_sap_swpm_db_systemdb_password    = var.sap_hana_install_master_password
+  module_var_sap_swpm_db_sidadm_password      = var.sap_hana_install_master_password
+  module_var_sap_swpm_ddic_000_password       = var.sap_hana_install_master_password
+  module_var_sap_swpm_pas_instance_nr         = var.sap_nwas_pas_instance_no
+  module_var_sap_swpm_ascs_instance_nr        = "02"
+
+  module_var_sap_swpm_master_password         = var.sap_hana_install_master_password
+
   module_var_sap_maintenance_planner_transaction_name = var.sap_maintenance_planner_transaction_name
 
   module_var_sap_swpm_template_selected = var.sap_swpm_template_selected
+
+  module_var_sap_software_download_directory  = var.sap_software_download_directory
 
 }

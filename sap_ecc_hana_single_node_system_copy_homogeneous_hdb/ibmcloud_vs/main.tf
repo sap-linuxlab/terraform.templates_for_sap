@@ -252,7 +252,6 @@ module "run_ansible_sap_ecc_hana_system_copy_hdb" {
   module_var_bastion_boolean         = true // required as true boolean for any Cloud Service Provider (CSP)
   module_var_bastion_user            = var.bastion_user
   module_var_bastion_ssh_port        = var.bastion_ssh_port
-  module_var_bastion_public_ssh_key  = module.run_account_bootstrap_module.output_bastion_public_ssh_key
   module_var_bastion_private_ssh_key = module.run_account_bootstrap_module.output_bastion_private_ssh_key
 
   module_var_bastion_floating_ip = module.run_bastion_inject_module.output_bastion_ip
