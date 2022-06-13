@@ -1,7 +1,35 @@
 
+module "run_ansible_dry_run" {
+
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_hana_install?ref=main"
+
+  module_var_dry_run_test = "ppc64le" // x86_64 or ppc64le
+
+  # Terraform Module Variables which are mandatory, all with an empty string
+  module_var_bastion_boolean                  = false
+  module_var_bastion_user                     = ""
+  module_var_bastion_ssh_port                 = 0
+  module_var_bastion_private_ssh_key          = ""
+  module_var_bastion_floating_ip              = ""
+  module_var_host_private_ssh_key             = ""
+  module_var_host_private_ip                  = ""
+  module_var_hostname                         = "software_media_dry_run"
+  module_var_sap_id_user                      = var.sap_id_user
+  module_var_sap_id_user_password             = var.sap_id_user_password
+  module_var_sap_hana_install_master_password = ""
+  module_var_sap_hana_install_sid             = ""
+  module_var_sap_hana_install_instance_number = ""
+
+}
+
+
 module "run_host_bootstrap_module" {
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmpowervc/host_bootstrap"
+  depends_on = [
+    module.run_ansible_dry_run
+  ]
+
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmpowervc/host_bootstrap?ref=main"
 
   # Set Terraform Module Variables using Terraform Variables at runtime
   module_var_resource_prefix = var.resource_prefix
@@ -11,7 +39,7 @@ module "run_host_bootstrap_module" {
 
 module "run_host_provision_module" {
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmpowervc/host_provision"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmpowervc/host_provision?ref=main"
 
   # Set Terraform Module Variables using Terraform Variables at runtime
 
@@ -108,7 +136,7 @@ module "run_ansible_sap_hana_install" {
     module.run_host_provision_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_hana_install"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_hana_install?ref=main"
 
 
   # Terraform Module Variables using the prior Terraform Module Variables (from bootstrap module)

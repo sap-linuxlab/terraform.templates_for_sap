@@ -1,7 +1,41 @@
 
+module "run_ansible_dry_run" {
+
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_ecc_hana_system_copy_hdb?ref=main"
+
+  module_var_dry_run_test = "x86_64" // x86_64 or ppc64le
+
+  # Terraform Module Variables which are mandatory, all with an empty string
+  module_var_bastion_boolean                  = false
+  module_var_bastion_user                     = ""
+  module_var_bastion_ssh_port                 = 0
+  module_var_bastion_private_ssh_key          = ""
+  module_var_bastion_floating_ip              = ""
+  module_var_host_private_ssh_key             = ""
+  module_var_host_private_ip                  = ""
+  module_var_hostname                         = "software_media_dry_run"
+  module_var_dns_root_domain_name             = ""
+  module_var_sap_id_user                      = var.sap_id_user
+  module_var_sap_id_user_password             = var.sap_id_user_password
+  module_var_sap_swpm_sid                     = ""
+  module_var_sap_hana_backup_directory        = ""
+  module_var_sap_hana_backup_filename_prefix  = ""
+  module_var_sap_swpm_backup_system_password  = ""
+  module_var_sap_swpm_db_schema_abap          = ""
+  module_var_sap_swpm_db_schema_abap_password = ""
+  module_var_sap_swpm_ddic_000_password       = ""
+  module_var_sap_swpm_template_selected       = var.sap_swpm_template_selected
+
+}
+
+
 module "run_account_init_module" {
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/account_init"
+  depends_on = [
+    module.run_ansible_dry_run
+  ]
+
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/account_init?ref=main"
 
   module_var_resource_group_name           = local.resource_group_create_boolean ? 0 : var.ibmcloud_resource_group
   module_var_resource_group_create_boolean = local.resource_group_create_boolean
@@ -25,7 +59,7 @@ module "run_account_bootstrap_module" {
     module.run_account_init_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/account_bootstrap"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/account_bootstrap?ref=main"
 
   module_var_resource_group_id = module.run_account_init_module.output_resource_group_id
   module_var_resource_prefix   = var.resource_prefix
@@ -48,7 +82,7 @@ module "run_bastion_inject_module" {
     module.run_account_bootstrap_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/bastion_inject"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/bastion_inject?ref=main"
 
   module_var_resource_group_id = module.run_account_init_module.output_resource_group_id
   module_var_resource_prefix   = var.resource_prefix
@@ -77,7 +111,7 @@ module "run_account_iam_module" {
 
   count = var.ibmcloud_iam_yesno == "yes" ? 1 : 0
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/account_iam"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/account_iam?ref=main"
 
   module_var_resource_group_id = module.run_account_init_module.output_resource_group_id
   module_var_resource_prefix   = var.resource_prefix
@@ -93,7 +127,7 @@ module "run_host_network_access_sap_module" {
     module.run_bastion_inject_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/host_network_access_sap"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/host_network_access_sap?ref=main"
 
   module_var_ibmcloud_vpc_subnet_name = local.ibmcloud_vpc_subnet_create_boolean ? module.run_account_init_module.output_vpc_subnet_name : var.ibmcloud_vpc_subnet_name
   module_var_host_security_group_id   = module.run_account_bootstrap_module.output_host_security_group_id
@@ -112,7 +146,7 @@ module "run_host_provision_module" {
     module.run_bastion_inject_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/host_provision"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/host_provision?ref=main"
 
   # Set Terraform Module Variables using Terraform Variables at runtime
 
@@ -213,12 +247,11 @@ module "run_shell_download_obj_store_ibmcos" {
 
   depends_on = [module.run_host_provision_module]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/shell_download_obj_store_ibmcos"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/shell_download_obj_store_ibmcos?ref=main"
 
   # Terraform Module Variables using the prior Terraform Module Variables (from bootstrap module)
   module_var_bastion_user            = var.bastion_user
   module_var_bastion_ssh_port        = var.bastion_ssh_port
-  module_var_bastion_public_ssh_key  = module.run_account_bootstrap_module.output_bastion_public_ssh_key
   module_var_bastion_private_ssh_key = module.run_account_bootstrap_module.output_bastion_private_ssh_key
 
   module_var_bastion_floating_ip = module.run_bastion_inject_module.output_bastion_ip
@@ -246,13 +279,12 @@ module "run_ansible_sap_ecc_hana_system_copy_hdb" {
     module.run_shell_download_obj_store_ibmcos
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_ecc_hana_system_copy_hdb"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_ecc_hana_system_copy_hdb?ref=main"
 
   # Terraform Module Variables using the prior Terraform Module Variables (from bootstrap module)
   module_var_bastion_boolean         = true // required as true boolean for any Cloud Service Provider (CSP)
   module_var_bastion_user            = var.bastion_user
   module_var_bastion_ssh_port        = var.bastion_ssh_port
-  module_var_bastion_public_ssh_key  = module.run_account_bootstrap_module.output_bastion_public_ssh_key
   module_var_bastion_private_ssh_key = module.run_account_bootstrap_module.output_bastion_private_ssh_key
 
   module_var_bastion_floating_ip = module.run_bastion_inject_module.output_bastion_ip
@@ -278,11 +310,21 @@ module "run_ansible_sap_ecc_hana_system_copy_hdb" {
 
   module_var_sap_hana_backup_directory        = var.sap_hana_backup_directory
   module_var_sap_hana_backup_filename_prefix  = var.sap_hana_backup_filename_prefix
+
   module_var_sap_swpm_backup_system_password  = var.sap_swpm_backup_system_password
   module_var_sap_swpm_db_schema_abap          = var.sap_hana_backup_db_schema_to_swpm
   module_var_sap_swpm_db_schema_abap_password = var.sap_swpm_db_schema_abap_password
+  module_var_sap_swpm_db_system_password      = var.sap_hana_install_master_password
+  module_var_sap_swpm_db_systemdb_password    = var.sap_hana_install_master_password
+  module_var_sap_swpm_db_sidadm_password      = var.sap_hana_install_master_password
   module_var_sap_swpm_ddic_000_password       = var.sap_swpm_ddic_000_password
+  module_var_sap_swpm_pas_instance_nr         = var.sap_nwas_pas_instance_no
+  module_var_sap_swpm_ascs_instance_nr        = "02"
 
-  module_var_sap_swpm_template_selected = var.sap_swpm_template_selected
+  module_var_sap_swpm_master_password         = var.sap_hana_install_master_password
+
+  module_var_sap_swpm_template_selected       = var.sap_swpm_template_selected
+
+  module_var_sap_software_download_directory  = var.sap_software_download_directory
 
 }
