@@ -3,7 +3,7 @@ module "run_ansible_dry_run" {
 
   source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_hana_install?ref=main"
 
-  module_var_dry_run_test = "x86_64" // x86_64 or ppc64le
+  module_var_dry_run_test = "ppc64le" // x86_64 or ppc64le
 
   # Terraform Module Variables which are mandatory, all with an empty string
   module_var_bastion_boolean                  = false
