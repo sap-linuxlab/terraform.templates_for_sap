@@ -37,10 +37,6 @@ SSH Connection using:
 #### Copy/Paste the below into your shell for easy login, and run 'sshjump' afterwards
 ####
 
-
-# Please change your parent shell current directory before executing the SSH commands. Change to the Terraform Template directory:
-cd ./sap_s4hana_single_node_system_copy_homogeneous_hdb/ibmcloud_vs
-
 bastion_private_key_file="$PWD/ssh/bastion_rsa"
 target_private_key_file="$PWD/ssh/hosts_rsa"
 
@@ -65,6 +61,12 @@ function sshjump() {
         case $opt in
         "SAP HANA Studio or SAPGUI, via SSH port forward binding proxy")
             echo ">>> Chosen option $REPLY: $opt"
+            select opt in "$${target_host_array[@]}"; do
+                if [ $opt == "Quit" ]; then exit; fi
+                target_ip=$opt
+                echo "---- Selected option $REPLY, tunneling into $target_ip ----"
+                break
+            done
             echo ""
             echo "#### For SAP HANA Studio, use Add System with host name as localhost; do not add port numbers."
             echo "#### If selecting 'Connect using SSL' on Connection Properties, then on Additional Properties (final) screen deselect 'Validate the SSL certificate'"
@@ -76,15 +78,15 @@ function sshjump() {
             ssh -N \
                 $bastion_user@$bastion_host -p $bastion_port -i $bastion_private_key_file \
                 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
-                -L localhost:"32$sap_nwas_pas_instance_no":$target_ip:"32$sap_nwas_pas_instance_no" \
-                -L localhost:"33$sap_nwas_pas_instance_no":$target_ip:"33$sap_nwas_pas_instance_no" \
-                -L localhost:"3$sap_hana_instance_no""13":$target_ip:"3$sap_hana_instance_no""13" \
-                -L localhost:"3$sap_hana_instance_no""15":$target_ip:"3$sap_hana_instance_no""15" \
-                -L localhost:"3$sap_hana_instance_no""41":$target_ip:"3$sap_hana_instance_no""41" \
-                -L localhost:"443$sap_hana_instance_no":$target_ip:"443$sap_hana_instance_no" \
-                -L localhost:"443$sap_nwas_pas_instance_no":$target_ip:"443$sap_nwas_pas_instance_no" \
-                -L localhost:"5$sap_hana_instance_no""13":$target_ip:"5$sap_hana_instance_no""13" \
-                -L localhost:"5$sap_hana_instance_no""14":$target_ip:"5$sap_hana_instance_no""14"
+                -L localhost:32$sap_nwas_pas_instance_no:$target_ip:32$sap_nwas_pas_instance_no \
+                -L localhost:33$sap_nwas_pas_instance_no:$target_ip:33$sap_nwas_pas_instance_no \
+                -L localhost:3$${sap_hana_instance_no}13:$target_ip:3$${sap_hana_instance_no}13 \
+                -L localhost:3$${sap_hana_instance_no}15:$target_ip:3$${sap_hana_instance_no}15 \
+                -L localhost:3$${sap_hana_instance_no}41:$target_ip:3$${sap_hana_instance_no}41 \
+                -L localhost:443$sap_hana_instance_no:$target_ip:443$sap_hana_instance_no \
+                -L localhost:443$sap_nwas_pas_instance_no:$target_ip:443$sap_nwas_pas_instance_no \
+                -L localhost:5$${sap_hana_instance_no}13:$target_ip:5$${sap_hana_instance_no}13 \
+                -L localhost:5$${sap_hana_instance_no}14:$target_ip:5$${sap_hana_instance_no}14
             break
             ;;
         "OS root access, via SSH stdin/stdout forwarding proxy")
