@@ -112,6 +112,12 @@ EOF
 }
 
 
+# If detected Windows WSL2, then find the installed name using external resource to return a JSON string
+data "external" "wsl_distro_name" {
+  count = local.is_wsl ? 1 : 0
+  program = ["bash", "-c", "echo \"{\\\"stdout\\\":\\\"$(echo $WSL_DISTRO_NAME)\\\"}\""]
+}
+
 output "ssh_sap_connection_details_windows" {
   value = local.not_wsl ? "IGNORE" : <<EOF
 
@@ -134,10 +140,14 @@ SSH Connection using:
 $bastion_private_key_file = "$(pwd)\ssh\bastion_rsa"
 $target_private_key_file = "$(pwd)\ssh\hosts_rsa"
 
+$bastion_private_key_file = "\\wsl$\${data.external.wsl_distro_name[0].result.stdout}${replace(join("",[abspath(path.root),"\\ssh\\bastion_rsa"]),"/","\\")}"
+$target_private_key_file = "\\wsl$\${data.external.wsl_distro_name[0].result.stdout}${replace(join("",[abspath(path.root),"\\ssh\\hosts_rsa"]),"/","\\")}"
+
 $bastion_user = "${var.bastion_user}"
 $bastion_host = "${module.run_bastion_inject_module.output_bastion_ip}"
 $bastion_port = "${var.bastion_ssh_port}"
-$target_host_array = @(${join(",", flatten([for key, value in module.run_host_provision_module : value.*.output_host_private_ip]))} "Quit")
+$target_host_string = "${join("','",flatten([for key, value in module.run_host_provision_module : value.*.output_host_private_ip]))}"
+$target_host_array = @($target_host_string.Split(","),"Quit")
 
 $sap_hana_instance_no = "${var.sap_hana_install_instance_number}"
 
@@ -149,6 +159,14 @@ function sshjump {
     echo '3) Quit'
 
     $selection = Read-Host "Please make a selection"
+
+    echo "Creating ssh_keys temporary directory in $env:userprofile"
+    New-Item -Path "$env:userprofile\ssh_keys" -ItemType "directory" -Force
+    echo "Copying SSH Private Keys output from Terraform Template executed using WSL2 and Ubuntu"
+    Copy-Item $bastion_private_key_file -Destination "$env:userprofile\ssh_keys" -force
+    Copy-Item $target_private_key_file -Destination "$env:userprofile\ssh_keys" -force
+    $temp_bastion_private_key_file = "$env:userprofile\ssh_keys\bastion_rsa"
+    $temp_target_private_key_file = "$env:userprofile\ssh_keys\hosts_rsa"
 
     switch ( $selection )
     {
@@ -169,7 +187,7 @@ function sshjump {
                 echo ""
                 # SSH port forward binding, using -L local_host:local_port:remote_host:remote_port (add -vv for debugging)
                 ssh -N `
-                $bastion_user@$bastion_host -p $bastion_port -i $bastion_private_key_file `
+                $bastion_user@$bastion_host -p $bastion_port -i $temp_bastion_private_key_file `
                 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null `
                 -L localhost:3$${sap_hana_instance_no}13:$${target_ip}:3$${sap_hana_instance_no}13 `
                 -L localhost:3$${sap_hana_instance_no}15:$${target_ip}:3$${sap_hana_instance_no}15 `
@@ -190,8 +208,8 @@ function sshjump {
             }else {
                 $target_ip = $target_host_array[$target_host_selection]
                 #echo ">>> Chosen option $(PSItem)"
-                ssh -i $target_private_key_file root@$target_ip -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null `
-                -o ProxyCommand="ssh -W %h:%p $bastion_user@$bastion_host -p $bastion_port -i $bastion_private_key_file `
+                ssh -i $temp_target_private_key_file root@$target_ip -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null `
+                -o ProxyCommand="ssh -W %h:%p $bastion_user@$bastion_host -p $bastion_port -i $temp_bastion_private_key_file `
                 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
             }
         }

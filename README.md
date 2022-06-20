@@ -36,6 +36,8 @@ To get started immediately, requirements:
 <details>
   <summary><b>Windows OS instructions summary:</b></summary>
   
+  Windows cannot natively run Ansible because of Python package dependencies which are not available for Windows. Therefore the only tested method is to use Windows Subsystem for Linux v2 (WSL2) with Ubuntu 20.04 to execute the Terraform Templates for SAP from; after which output is given in PowerShell to use the native OpenSSH Client in Windows 10 and above.
+
   Tested steps to use Terraform Templates for SAP from local machines running Windows 10:
 
   1. Download and Install Windows Terminal for simplified terminal usage, please see: https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701

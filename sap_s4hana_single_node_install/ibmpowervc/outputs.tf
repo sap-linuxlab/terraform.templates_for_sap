@@ -43,6 +43,11 @@ EOF
 }
 
 
+# If detected Windows WSL2, then find the installed name using external resource to return a JSON string
+data "external" "wsl_distro_name" {
+  count = local.is_wsl ? 1 : 0
+  program = ["bash", "-c", "echo \"{\\\"stdout\\\":\\\"$(echo $WSL_DISTRO_NAME)\\\"}\""]
+}
 
 output "ssh_sap_connection_details_windows" {
   value = local.not_wsl ? "IGNORE" : <<EOF
@@ -53,11 +58,19 @@ output "ssh_sap_connection_details_windows" {
 #### Copy/Paste the below into your PowerShell for easy login, and run 'sshjump' afterwards
 ####
 
-$target_private_key_file = "$(pwd)\ssh\hosts_rsa"
-$target_host_array = @(${join(",", flatten([for key, value in module.run_host_provision_module : value.*.output_host_private_ip]))} "Quit")
-
+$target_private_key_file = "\\wsl$\${data.external.wsl_distro_name[0].result.stdout}${replace(join("",[abspath(path.root),"\\ssh\\hosts_rsa"]),"/","\\")}"
+$target_host_string = "${join("','",flatten([for key, value in module.run_host_provision_module : value.*.output_host_private_ip]))}"
+$target_host_array = @($target_host_string.Split(","),"Quit")
 
 function sshjump {
+
+echo "Creating ssh_keys temporary directory in $env:userprofile"
+New-Item -Path "$env:userprofile\ssh_keys" -ItemType "directory" -Force
+echo "Copying SSH Private Keys output from Terraform Template executed using WSL2 and Ubuntu"
+Copy-Item $bastion_private_key_file -Destination "$env:userprofile\ssh_keys" -force
+Copy-Item $target_private_key_file -Destination "$env:userprofile\ssh_keys" -force
+$temp_bastion_private_key_file = "$env:userprofile\ssh_keys\bastion_rsa"
+$temp_target_private_key_file = "$env:userprofile\ssh_keys\hosts_rsa"
 
 foreach ($target_host in $target_host_array) {
     $i=$target_host_array.IndexOf($target_host)
@@ -68,10 +81,7 @@ if ($target_host_array[$target_host_selection] -eq "Quit" ){
     break
 }else {
     $target_ip = $target_host_array[$target_host_selection]
-    #echo ">>> Chosen option $(PSItem)"
-    ssh -i $target_private_key_file root@$target_ip -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null `
-    -o ProxyCommand="ssh -W %h:%p $bastion_user@$bastion_host -p $bastion_port -i $bastion_private_key_file `
-    -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+    ssh -i $temp_target_private_key_file root@$target_ip -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
 }
 
 EOF
