@@ -10,7 +10,7 @@ Project is built of two components:
 
 # Get started
 
-It is recommended to read the README below for context and understanding, before you execute this code.
+It is recommended to fully read the README below for context and understanding, before you execute this code.
 
 To get started immediately, requirements:
 - Terraform and Ansible installed
@@ -18,23 +18,39 @@ To get started immediately, requirements:
 - SAP ONE Support Launchpad credentials, with Software Download privileges
 - Optional depending on choice SAP solution scenario: SAP System Copy backup file
 
-To get started immediately, execute from your command line:
-```
-# Install Terraform
-# https://learn.hashicorp.com/tutorials/terraform/install-cli
+<details>
+  <summary><b>macOS instructions summary:</b></summary>
+  
+  Tested steps to use Terraform Templates for SAP from local machines running Windows 10:
 
-# Install Ansible Core (or superset, Ansible Community Edition)
-# (e.g. on macOS, brew install ansible)
+  1. Install Homebrew, please see documentation: https://docs.brew.sh
+      - Install Terraform and Ansible Community Edition (contains ansible-core); such as using `brew install ansible bash gawk jq openssl@1.1 terraform`
+  2. Download Terraform Templates for SAP using `curl -L https://github.com/sap-linuxlab/terraform.templates_for_sap/archive/refs/heads/main.zip -o main.zip && tar -xvf main.zip`
+  3. Run and follow prompts `./run_terraform.sh`
+</details>
 
-# Download from GitHub.com repository
-# (e.g. on macOS, curl -L https://github.com/sap-linuxlab/terraform.templates_for_sap/archive/refs/heads/main.zip)
+<br/>
 
-# Extract ZIP
-# (e.g. on Windows 10, tar -xf main.zip)
+<details>
+  <summary><b>Windows OS instructions summary:</b></summary>
+  
+  Tested steps to use Terraform Templates for SAP from local machines running Windows 10:
 
-# Run and follow prompts
-./run_terraform.sh
-```
+  1. Download and Install Windows Terminal for simplified terminal usage, please see: https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701
+  2. Install Windows Subsystem for Linux v2 (WSL2), please see documentation: https://aka.ms/wsl2-install
+  3. After WSL setup is completed, install Ubuntu 20.04 onto host using `wsl --install -d Ubuntu-20.04`. Follow proceeding steps.
+  4. Update `apt` and install `pip` for System Python and `unzip`, using `sudo apt update && sudo apt install python3-pip unzip`
+  5. Install Terraform and Ansible Community Edition (contains ansible-core) using `apt`; alternative using Homebrew for Linux in proceeding step.
+      - Install Terraform on Ubuntu using `apt`, please see documentation: https://learn.hashicorp.com/tutorials/terraform/install-cli#install-terraform
+      - Install Ansible Community Edition (contains ansible-core) using `apt`, please see documentation: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-ubuntu
+  6. ALTERNATIVE / Not recommended: Install Homebrew on Linux, please see documentation: https://docs.brew.sh/Homebrew-on-Linux
+      - Install Terraform and Ansible Community Edition (contains ansible-core); such as using `brew install ansible terraform`
+  7. Download Terraform Templates for SAP using `curl -L https://github.com/sap-linuxlab/terraform.templates_for_sap/archive/refs/heads/main.zip -o main.zip && unzip main.zip`
+  8. Run and follow prompts `./run_terraform.sh`
+  9. If altering any files, these can be accessed with Windows Finder by using directory `\\wsl$`. For example, opening this directory using VS Code for Windows.
+
+  `NOTE:` If editing any code, please ensure the file is saved in LF and not the Windows default CRLF as the format for End of Line Sequence. Terraform and Ansible may not work correctly if files are CRLF.
+</details>
 
 ---
 
