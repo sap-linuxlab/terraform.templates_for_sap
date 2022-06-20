@@ -18,6 +18,7 @@ To get started immediately, requirements:
 - SAP ONE Support Launchpad credentials, with Software Download privileges
 - Optional depending on choice SAP solution scenario: SAP System Copy backup file
 
+<br/>
 <details>
   <summary><b>macOS instructions summary:</b></summary>
   
@@ -27,6 +28,7 @@ To get started immediately, requirements:
       - Install Terraform and Ansible Community Edition (contains ansible-core); such as using `brew install ansible bash gawk jq openssl@1.1 terraform`
   2. Download Terraform Templates for SAP using `curl -L https://github.com/sap-linuxlab/terraform.templates_for_sap/archive/refs/heads/main.zip -o main.zip && tar -xvf main.zip`
   3. Run and follow prompts `./run_terraform.sh`
+  4. Once completed, follow output copy/paste to open SSH connection to OS or an SSH tunnel for SAP HANA Studio and SAPGUI
 </details>
 
 <br/>
@@ -48,6 +50,8 @@ To get started immediately, requirements:
   7. Download Terraform Templates for SAP using `curl -L https://github.com/sap-linuxlab/terraform.templates_for_sap/archive/refs/heads/main.zip -o main.zip && unzip main.zip`
   8. Run and follow prompts `./run_terraform.sh`
   9. If altering any files, these can be accessed with Windows Finder by using directory `\\wsl$`. For example, opening this directory using VS Code for Windows.
+  10. Run and follow prompts `./run_terraform.sh`
+  11. Once completed, follow output copy/paste to open SSH connection to OS or an SSH tunnel for SAP HANA Studio and SAPGUI
 
   `NOTE:` If editing any code, please ensure the file is saved in LF and not the Windows default CRLF as the format for End of Line Sequence. Terraform and Ansible may not work correctly if files are CRLF.
 </details>
