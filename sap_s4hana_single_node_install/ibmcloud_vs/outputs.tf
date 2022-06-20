@@ -62,7 +62,7 @@ function sshjump() {
         "SAP HANA Studio or SAPGUI, via SSH port forward binding proxy")
             echo ">>> Chosen option $REPLY: $opt"
             select opt_ip in "$${target_host_array[@]}"; do
-                if [ $opt_ip = "Quit" ]; then break; fi
+                if [ $opt_ip = "Quit" ]; then break 2; fi
                 target_ip=$opt_ip
                 echo "---- Selected option $REPLY, tunneling into $target_ip ----"
                 break
@@ -92,7 +92,7 @@ function sshjump() {
         "OS root access, via SSH stdin/stdout forwarding proxy")
             echo ">>> Chosen option $REPLY: $opt"
             select opt_ssh in "$${target_host_array[@]}"; do
-                if [ $opt_ssh = "Quit" ]; then break; fi
+                if [ $opt_ssh = "Quit" ]; then break 2; fi
                 target_ip=$opt_ssh
                 echo "---- Selected option $REPLY, logging into $target_ip ----"
                 break
