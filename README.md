@@ -177,7 +177,8 @@ The execution/controller host of the Terraform Templates must contain:
 - Python 3.9.7 (i.e. CPython distribution)
 
 **Tests with Operating System release versions:**
-- macOS 11.6 (Big Sur), with Homebrew used for Python 3.x via PyEnv
+- macOS 11.6 (Big Sur) and 12.3 (Monterey), with Homebrew used for Python 3.x via PyEnv
+- Windows 10, November 2021 Update (21H2), with Windows Subsystem for Linux v2 (WSL2) and Ubuntu 20.04
 
 ## Disclaimer
 
