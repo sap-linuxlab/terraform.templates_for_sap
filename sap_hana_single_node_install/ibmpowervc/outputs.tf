@@ -9,7 +9,7 @@ resource "local_file" "hosts_rsa" {
 
 
 output "ssh_sap_connection_details" {
-  value = local.detect_windows ? "IGNORE" : <<EOF
+  value = local.is_wsl ? "IGNORE" : <<EOF
 
 #### SSH Connections details ####
 
@@ -24,7 +24,7 @@ target_host_array=(${join(" ", flatten([for key, value in module.run_host_provis
 function sshjump() {
     select opt in "$${target_host_array[@]}"
     do
-        if [ $opt == "Quit" ]; then exit; fi
+        if [ $opt = "Quit" ]; then break; fi
         target_ip=$opt
         echo "---- Selected option $REPLY, logging into $target_ip ----"
         break
@@ -45,7 +45,7 @@ EOF
 
 
 output "ssh_sap_connection_details_windows" {
-  value = local.detect_shell ? "IGNORE" : <<EOF
+  value = local.not_wsl ? "IGNORE" : <<EOF
 
 #### PowerShell and Windows 10 OpenSSH client and SSH Connections details ####
 
@@ -65,7 +65,7 @@ foreach ($target_host in $target_host_array) {
 }
 $target_host_selection = Read-Host "Please make a selection"
 if ($target_host_array[$target_host_selection] -eq "Quit" ){
-    exit
+    break
 }else {
     $target_ip = $target_host_array[$target_host_selection]
     #echo ">>> Chosen option $(PSItem)"

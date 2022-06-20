@@ -58,7 +58,7 @@ function ansible_version_check()
 function sap_solution_scenario_choice()
 {
 
-    options=(
+    scenario_options=(
         "SAP HANA - Install single node"
         "SAP S/4HANA - Install single node"
         "SAP S/4HANA - System Copy single node (Homogeneous with SAP HANA Backup / Recovery)"
@@ -66,31 +66,31 @@ function sap_solution_scenario_choice()
         "Quit"
     )
 
-    select opt in "${options[@]}"
+    select opt_scenario in "${scenario_options[@]}"
     do
-        case $opt in
+        case $opt_scenario in
             "SAP HANA - Install single node")
-                echo ">>> Chosen option $REPLY: $opt"
+                echo ">>> Chosen option $REPLY: $opopt_scenariot"
                 sap_solution_scenario="sap_hana_single_node_install"
                 break
                 ;;
             "SAP S/4HANA - Install single node")
-                echo ">>> Chosen option $REPLY: $opt"
+                echo ">>> Chosen option $REPLY: $opt_scenario"
                 sap_solution_scenario="sap_s4hana_single_node_install"
                 break
                 ;;
             "SAP S/4HANA - System Copy single node (Homogeneous with SAP HANA Backup / Recovery)")
-                echo ">>> Chosen option $REPLY: $opt"
+                echo ">>> Chosen option $REPLY: $opt_scenario"
                 sap_solution_scenario="sap_s4hana_single_node_system_copy_homogeneous_hdb"
                 break
                 ;;
             "SAP ECC on HANA - System Copy single node (Homogeneous with SAP HANA Backup / Recovery)")
-                echo ">>> Chosen option $REPLY: $opt"
+                echo ">>> Chosen option $REPLY: $opt_scenario"
                 sap_solution_scenario="sap_ecc_hana_system_copy_single_node"
                 break
                 ;;
             "Quit")
-                exit
+                break
                 ;;
             *) echo "Invalid option $REPLY";;
         esac
@@ -102,7 +102,7 @@ function sap_solution_scenario_choice()
 function infrastructure_platform_choice()
 {
 
-    options=(
+    infrastructure_options=(
         "AWS - EC2 instance"
 #        "GCP - Compute Engine Virtual Machine"
         "IBM Cloud - Intel Virtual Server"
@@ -114,51 +114,51 @@ function infrastructure_platform_choice()
         "Quit"
     )
 
-    select opt in "${options[@]}"
+    select opt_infrastructure in "${infrastructure_options[@]}"
     do
-        case $opt in
+        case $opt_infrastructure in
             "AWS - EC2 instance")
-                echo ">>> Chosen option $REPLY: $opt"
+                echo ">>> Chosen option $REPLY: $opt_infrastructure"
                 infrastructure_platform="aws_ec2_instance"
                 break
                 ;;
 #            "GCP - Compute Engine Virtual Machine")
-#                echo ">>> Chosen option $REPLY: $opt"
+#                echo ">>> Chosen option $REPLY: $opt_infrastructure"
 #                infrastructure_platform="gcp_ce_vm"
 #                break
 #                ;;
             "IBM Cloud - Intel Virtual Server")
-                echo ">>> Chosen option $REPLY: $opt"
+                echo ">>> Chosen option $REPLY: $opt_infrastructure"
                 infrastructure_platform="ibmcloud_vs"
                 break
                 ;;
             "IBM Cloud - IBM Power Virtual Server")
-                echo ">>> Chosen option $REPLY: $opt"
+                echo ">>> Chosen option $REPLY: $opt_infrastructure"
                 infrastructure_platform="ibmcloud_powervs"
                 break
                 ;;
             "IBM PowerVC - PHYP LPAR")
-                echo ">>> Chosen option $REPLY: $opt"
+                echo ">>> Chosen option $REPLY: $opt_infrastructure"
                 infrastructure_platform="ibmpowervc"
                 break
                 ;;
             "MS Azure - Virtual Machine")
-                echo ">>> Chosen option $REPLY: $opt"
+                echo ">>> Chosen option $REPLY: $opt_infrastructure"
                 infrastructure_platform="msazure_vm"
                 break
                 ;;
 #            "oVirt - Red Hat Virtualization (RHV)")
-#                echo ">>> Chosen option $REPLY: $opt"
+#                echo ">>> Chosen option $REPLY: $opt_infrastructure"
 #                infrastructure_platform="ovirt_rhv"
 #                break
 #                ;;
 #            "VMware vSphere - Virtual Machine")
-#                echo ">>> Chosen option $REPLY: $opt"
+#                echo ">>> Chosen option $REPLY: $opt_infrastructure"
 #                infrastructure_platform="vmware"
 #                break
 #                ;;
             "Quit")
-                exit
+                break
                 ;;
             *) echo "Invalid option $REPLY";;
         esac
@@ -170,27 +170,27 @@ function infrastructure_platform_choice()
 function terraform_tfvars_choice()
 {
 
-    options=(
+    vars_options=(
         "No"
         "Yes"
         "Quit"
     )
 
-    select opt in "${options[@]}"
+    select opt_variables in "${vars_options[@]}"
     do
         case $opt in
             "No")
-                echo ">>> Chosen option $REPLY: $opt"
+                echo ">>> Chosen option $REPLY: $opt_variables"
                 tfvars_enable=0
                 break
                 ;;
             "Yes")
-                echo ">>> Chosen option $REPLY: $opt"
+                echo ">>> Chosen option $REPLY: $opt_variables"
                 tfvars_enable=1
                 break
                 ;;
             "Quit")
-                exit
+                break
                 ;;
             *) echo "Invalid option $REPLY";;
         esac

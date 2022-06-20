@@ -19,7 +19,7 @@ resource "local_file" "hosts_rsa" {
 
 
 output "ssh_sap_connection_details" {
-  value = local.detect_windows ? "IGNORE" : <<EOF
+  value = local.is_wsl ? "IGNORE" : <<EOF
 
 #### SSH Connections details ####
 
@@ -50,19 +50,19 @@ sap_hana_instance_no="${var.sap_hana_install_instance_number}"
 
 function sshjump() {
 
-    options=(
+    ssh_options=(
         "SAP HANA Studio, via SSH port forward binding proxy"
         "OS root access, via SSH stdin/stdout forwarding proxy"
         "Quit"
     )
 
-    select opt in "$${options[@]}"; do
+    select opt in "$${ssh_options[@]}"; do
         case $opt in
         "SAP HANA Studio, via SSH port forward binding proxy")
             echo ">>> Chosen option $REPLY: $opt"
-            select opt in "$${target_host_array[@]}"; do
-                if [ $opt == "Quit" ]; then exit; fi
-                target_ip=$opt
+            select opt_ip in "$${target_host_array[@]}"; do
+                if [ $opt_ip = "Quit" ]; then break; fi
+                target_ip=$opt_ip
                 echo "---- Selected option $REPLY, tunneling into $target_ip ----"
                 break
             done
@@ -70,7 +70,7 @@ function sshjump() {
             echo "#### For SAP HANA Studio, use Add System with host name as localhost; do not add port numbers."
             echo "#### If selecting 'Connect using SSL' on Connection Properties, then on Additional Properties (final) screen deselect 'Validate the SSL certificate'"
             echo ""
-            # SSH port forward binding, using -L local_host:local_port:remote_host:remote_port [add -vv for debugging]
+            # SSH port forward binding, using -L local_host:local_port:remote_host:remote_port (add -vv for debugging)
             ssh -N \
                 $bastion_user@$bastion_host -p $bastion_port -i $bastion_private_key_file \
                 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
@@ -84,9 +84,9 @@ function sshjump() {
             ;;
         "OS root access, via SSH stdin/stdout forwarding proxy")
             echo ">>> Chosen option $REPLY: $opt"
-            select opt in "$${target_host_array[@]}"; do
-                if [ $opt == "Quit" ]; then exit; fi
-                target_ip=$opt
+            select opt_ssh in "$${target_host_array[@]}"; do
+                if [ $opt_ssh = "Quit" ]; then break; fi
+                target_ip=$opt_ssh
                 echo "---- Selected option $REPLY, logging into $target_ip ----"
                 break
             done
@@ -98,7 +98,7 @@ function sshjump() {
             break
             ;;
         "Quit")
-            exit
+            break
             ;;
         *) echo "Invalid option $REPLY" ;;
         esac
@@ -113,7 +113,7 @@ EOF
 
 
 output "ssh_sap_connection_details_windows" {
-  value = local.detect_shell ? "IGNORE" : <<EOF
+  value = local.not_wsl ? "IGNORE" : <<EOF
 
 #### PowerShell and Windows 10 OpenSSH client and SSH Connections details ####
 
@@ -159,7 +159,7 @@ function sshjump {
             }
             $target_host_selection = Read-Host "Please make a selection"
             if ($target_host_array[$target_host_selection] -eq "Quit" ){
-                exit
+                break
             }else {
                 $target_ip = $target_host_array[$target_host_selection]
                 #echo ">>> Chosen option $(PSItem)"
@@ -167,7 +167,7 @@ function sshjump {
                 echo "#### For SAP HANA Studio, use Add System with host name as localhost; do not add port numbers."
                 echo "#### If selecting 'Connect using SSL' on Connection Properties, then on Additional Properties (final) screen deselect 'Validate the SSL certificate'"
                 echo ""
-                # SSH port forward binding, using -L local_host:local_port:remote_host:remote_port [add -vv for debugging]
+                # SSH port forward binding, using -L local_host:local_port:remote_host:remote_port (add -vv for debugging)
                 ssh -N `
                 $bastion_user@$bastion_host -p $bastion_port -i $bastion_private_key_file `
                 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null `
@@ -186,7 +186,7 @@ function sshjump {
             }
             $target_host_selection = Read-Host "Please make a selection"
             if ($target_host_array[$target_host_selection] -eq "Quit" ){
-                exit
+                break
             }else {
                 $target_ip = $target_host_array[$target_host_selection]
                 #echo ">>> Chosen option $(PSItem)"
@@ -196,7 +196,7 @@ function sshjump {
             }
         }
         3 {
-            exit
+            break
         }
     }
 }
