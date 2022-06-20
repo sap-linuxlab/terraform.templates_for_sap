@@ -43,7 +43,7 @@ target_private_key_file="$PWD/ssh/hosts_rsa"
 bastion_user="${var.bastion_user}"
 bastion_host="${module.run_bastion_inject_module.output_bastion_ip}"
 bastion_port="${var.bastion_ssh_port}"
-target_host_array=(${join(" ", flatten([for key, value in module.run_host_provision_module : value.*.output_host_private_ip]))} "Quit")
+target_host_array=(${join(" ", flatten([for key, value in module.run_powervs_host_provision_module : value.*.output_host_private_ip]))} "Quit")
 
 sap_hana_instance_no="${var.sap_hana_install_instance_number}"
 sap_nwas_pas_instance_no="${var.sap_nwas_pas_instance_no}"
@@ -149,7 +149,7 @@ $target_private_key_file = "\\wsl$\${data.external.wsl_distro_name[0].result.std
 $bastion_user = "${var.bastion_user}"
 $bastion_host = "${module.run_bastion_inject_module.output_bastion_ip}"
 $bastion_port = "${var.bastion_ssh_port}"
-$target_host_string = "${join("','",flatten([for key, value in module.run_host_provision_module : value.*.output_host_private_ip]))}"
+$target_host_string = "${join("','",flatten([for key, value in module.run_powervs_host_provision_module : value.*.output_host_private_ip]))}"
 $target_host_array = @($target_host_string.Split(","),"Quit")
 
 $sap_hana_instance_no = "${var.sap_hana_install_instance_number}"

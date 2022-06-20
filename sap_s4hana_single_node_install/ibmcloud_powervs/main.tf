@@ -117,6 +117,28 @@ module "run_bastion_inject_module" {
 }
 
 
+module "run_host_network_access_sap_public_via_proxy_module" {
+
+  depends_on = [
+    module.run_account_init_module,
+    module.run_account_bootstrap_module,
+    module.run_bastion_inject_module
+  ]
+
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/host_network_access_sap_public_via_proxy?ref=main"
+
+  module_var_ibmcloud_vpc_subnet_name = local.ibmcloud_vpc_subnet_create_boolean ? module.run_account_init_module.output_vpc_subnet_name : var.ibmcloud_vpc_subnet_name
+
+  module_var_bastion_security_group_id = module.run_bastion_inject_module.output_bastion_security_group_id
+  module_var_bastion_connection_security_group_id = module.run_bastion_inject_module.output_bastion_connection_security_group_id
+  module_var_host_security_group_id   = module.run_account_bootstrap_module.output_host_security_group_id
+
+  module_var_sap_nwas_pas_instance_no = var.sap_nwas_pas_instance_no
+  module_var_sap_hana_instance_no     = var.sap_hana_install_instance_number
+
+}
+
+
 module "run_powervs_account_bootstrap_module" {
 
   depends_on = [
