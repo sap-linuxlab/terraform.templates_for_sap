@@ -63,7 +63,7 @@ module "run_account_bootstrap_module" {
   module_var_az_availability_zone_no = local.az_availability_zone_no
 
   module_var_az_vnet_name        = module.run_account_init_module.output_vnet_name
-  module_var_az_vnet_subnet_name = module.run_account_init_module.output_vpc_subnet_name
+  module_var_az_vnet_subnet_name = module.run_account_init_module.output_vnet_subnet_name
 
   module_var_dns_root_domain_name = var.dns_root_domain
 }
@@ -101,7 +101,7 @@ module "run_bastion_inject_module" {
   module_var_az_availability_zone_no = local.az_availability_zone_no
 
   module_var_az_vnet_name        = module.run_account_init_module.output_vnet_name
-  module_var_az_vnet_subnet_name = module.run_account_init_module.output_vpc_subnet_name
+  module_var_az_vnet_subnet_name = module.run_account_init_module.output_vnet_subnet_name
 
   module_var_bastion_user            = var.bastion_user
   module_var_bastion_ssh_port        = var.bastion_ssh_port
@@ -127,9 +127,35 @@ module "run_host_network_access_sap_module" {
   module_var_az_resource_group_name = module.run_account_init_module.output_resource_group_name
 
   module_var_az_vnet_name        = module.run_account_init_module.output_vnet_name
-  module_var_az_vnet_subnet_name = module.run_account_init_module.output_vpc_subnet_name
+  module_var_az_vnet_subnet_name = module.run_account_init_module.output_vnet_subnet_name
 
   module_var_host_security_group_name = module.run_account_bootstrap_module.output_host_security_group_name
+
+}
+
+
+module "run_host_network_access_sap_public_via_proxy_module" {
+
+  depends_on = [
+    module.run_account_init_module,
+    module.run_account_bootstrap_module,
+    module.run_bastion_inject_module,
+    module.run_host_network_access_sap_module
+  ]
+
+ source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/host_network_access_sap_public_via_proxy?ref=main"
+
+  module_var_az_resource_group_name = module.run_account_init_module.output_resource_group_name
+
+  module_var_az_vnet_name        = module.run_account_init_module.output_vnet_name
+  module_var_az_vnet_subnet_name = module.run_account_init_module.output_vnet_subnet_name
+  module_var_az_vnet_bastion_subnet_name = module.run_bastion_inject_module.output_vnet_bastion_subnet_name
+
+  module_var_host_security_group_name               = module.run_account_bootstrap_module.output_host_security_group_name
+  module_var_bastion_security_group_name            = module.run_bastion_inject_module.output_bastion_security_group_name
+  module_var_bastion_connection_security_group_name = module.run_bastion_inject_module.output_bastion_connection_security_group_name
+
+  module_var_sap_hana_instance_no     = var.sap_hana_install_instance_number
 
 }
 
@@ -152,7 +178,7 @@ module "run_host_provision_module" {
   module_var_az_availability_zone_no = local.az_availability_zone_no
 
   module_var_az_vnet_name        = module.run_account_init_module.output_vnet_name
-  module_var_az_vnet_subnet_name = module.run_account_init_module.output_vpc_subnet_name
+  module_var_az_vnet_subnet_name = module.run_account_init_module.output_vnet_subnet_name
 
   module_var_bastion_user             = var.bastion_user
   module_var_bastion_ssh_port         = var.bastion_ssh_port
