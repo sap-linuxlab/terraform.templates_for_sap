@@ -143,7 +143,7 @@ module "run_host_network_access_sap_public_via_proxy_module" {
     module.run_host_network_access_sap_module
   ]
 
- source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/host_network_access_sap_public_via_proxy?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/host_network_access_sap_public_via_proxy?ref=main"
 
   module_var_az_resource_group_name = module.run_account_init_module.output_resource_group_name
 
