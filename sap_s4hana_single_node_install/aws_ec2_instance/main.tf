@@ -114,8 +114,7 @@ module "run_host_network_access_sap_public_via_proxy_module" {
     module.run_bastion_inject_module
   ]
 
-#  source = "github.com/sap-linuxlab/terraform.modules_for_sap//aws_ec2_instance/host_network_access_sap?ref=main"
-  source = "../../../terraform.modules_for_sap//aws_ec2_instance/host_network_access_sap_public_via_proxy"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//aws_ec2_instance/host_network_access_sap_public_via_proxy?ref=main"
 
   module_var_resource_prefix = var.resource_prefix
 
