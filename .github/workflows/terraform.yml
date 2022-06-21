@@ -17,7 +17,7 @@ jobs:
       fail-fast: false
       max-parallel: 10
       matrix:
-        terraform_ver: [~1.0.0, ~1.1.0]
+        terraform_ver: [~1.0.0, ~1.1.0, ~1.2.0]
         sap_solution_scenario: [sap_hana_single_node_install, sap_ecc_hana_single_node_system_copy_homogeneous_hdb, sap_s4hana_single_node_install, sap_s4hana_single_node_system_copy_homogeneous_hdb]
         infrastructure_platform: [aws_ec2_instance, ibmcloud_vs, ibmcloud_powervs, ibmpowervc, msazure_vm]
     steps:
