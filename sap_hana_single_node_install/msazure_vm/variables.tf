@@ -66,11 +66,12 @@ variable "host_os_image" {
 }
 
 variable "disk_volume_capacity_software" {
-  description = "Disk volume capacity for downloads of SAP Software and any backup files"
+  type        = number
+  description = "Disk volume capacity for downloads of SAP Software"
 }
 
 variable "sap_software_download_directory" {
-  description = "Mount point for downloads of SAP Software and any backup files"
+  description = "Mount point for downloads of SAP Software"
 }
 
 

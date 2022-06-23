@@ -4,6 +4,7 @@ variable "ibmcloud_api_key" {
 }
 
 variable "resource_tags" {
+  type        = list(string)
   description = "Tags applied to each resource created"
 }
 
@@ -66,15 +67,16 @@ variable "os_vendor_account_user_passcode" {
 }
 
 variable "disk_volume_capacity_software" {
-  description = "Disk volume capacity for downloads of SAP Software and any backup files"
+  type        = number
+  description = "Disk volume capacity for downloads of SAP Software"
 }
 
 variable "disk_volume_type_software" {
-  description = "Disk volume type for downloads of SAP Software and any backup files"
+  description = "Disk volume type for downloads of SAP Software"
 }
 
 variable "sap_software_download_directory" {
-  description = "Mount point for downloads of SAP Software and any backup files"
+  description = "Mount point for downloads of SAP Software"
 }
 
 
