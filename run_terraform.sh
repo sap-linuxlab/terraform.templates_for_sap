@@ -70,7 +70,7 @@ function sap_solution_scenario_choice()
     do
         case $opt_scenario in
             "SAP HANA - Install single node")
-                echo ">>> Chosen option $REPLY: $opopt_scenariot"
+                echo ">>> Chosen option $REPLY: $opt_scenario"
                 sap_solution_scenario="sap_hana_single_node_install"
                 break
                 ;;
