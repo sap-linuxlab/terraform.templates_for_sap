@@ -178,7 +178,7 @@ function terraform_tfvars_choice()
 
     select opt_variables in "${vars_options[@]}"
     do
-        case $opt in
+        case $opt_variables in
             "No")
                 echo ">>> Chosen option $REPLY: $opt_variables"
                 tfvars_enable=0
