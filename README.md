@@ -32,6 +32,20 @@ To get started immediately, requirements:
 </details>
 
 <br/>
+<details>
+  <summary><b>Advanced users summary:</b></summary>
+  
+  The `./run_terraform.sh` script is provided as for entry point users, with prompts for the target SAP Scenario and Infrastructure Platform which will then switch to the correct directory for the specific Terraform Template of those choices.
+
+  As an example, the script would run the following 3 commands for a user selecting SAP S/4HANA on IBM Cloud and using default variable values:
+  ```
+  cd /terraform.templates_for_sap/sap_s4hana_single_node_install/ibmcloud_vs
+  terraform init
+  terraform apply -var-file=variables_generic_for_cli.tfvars
+  ```
+</details>
+
+<br/>
 
 <details>
   <summary><b>Windows OS instructions summary:</b></summary>
