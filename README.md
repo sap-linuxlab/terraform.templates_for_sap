@@ -62,7 +62,7 @@ To get started immediately, requirements:
 <details>
   <summary><b>Advanced users summary:</b></summary>
   
-  The `./run_terraform.sh` script is provided as for entry point users, with prompts for the target SAP Scenario and Infrastructure Platform which will then switch to the correct directory for the specific Terraform Template of those choices.
+  The `./run_terraform.sh` script is provided as an entry point for beginner users, with prompts for the target SAP Scenario and Infrastructure Platform which will then switch to the correct directory for the specific Terraform Template of those choices.
 
   As an example, the script would run the following 3 commands for a user selecting SAP S/4HANA on IBM Cloud and using default variable values:
   ```
