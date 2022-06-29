@@ -13,10 +13,10 @@ Project is built of two components:
 It is recommended to fully read the README below for context and understanding, before you execute this code.
 
 To get started immediately, requirements:
-- Terraform and Ansible installed
-- Infrastructure Platform credentials; depending on choice may require OS Vendor subscription
+- Infrastructure Platform credentials and required authorizations (see [Infrastructure Guidance](./docs/INFRASTRUCTURE_GUIDANCE.md)); depending on choice may require OS Vendor subscription
 - SAP ONE Support Launchpad credentials, with Software Download privileges
-- Optional depending on choice SAP solution scenario: SAP System Copy backup file
+- Terraform and Ansible installed
+- Optional, depending on choice SAP solution scenario: SAP System Copy backup file
 
 <br/>
 <details>
