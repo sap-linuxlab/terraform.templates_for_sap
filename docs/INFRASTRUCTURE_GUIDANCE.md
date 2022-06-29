@@ -1,13 +1,39 @@
 # Infrastructure platforms guidance
 
-The following document contains information relevant to executing the Terraform Templates for SAP on each infrastructure platform.
+`This document is for Administrator/s.` The Terraform Templates for SAP require a user to have delegated limited administration privileges.
 
-This document does not contain all information relevant to each Cloud Service Provider hyperscaler and Hypervisor. These Terraform Template for SAP anticipate an end user has a basic level of knowledge for the target infrastructure platform and has requested the necessary access from their Administrator/s.
+
+The following document contains information relevant to and minimum authorizations for executing the Terraform Templates for SAP on each infrastructure platform. This document does not contain all information relevant to each Cloud Service Provider hyperscaler and Hypervisor, or the specific configuration circumstances.
+
+Each Terraform Template for SAP anticipates that an end user has a basic level of knowledge for the target infrastructure platform, and has requested the necessary access from their Administrator/s.
+
+The below document contains guidance for:
+- AWS hyperscaler, Cloud Service Provider
+- IBM Cloud hyperscaler, Cloud Service Provider
+- IBM PowerVC hypervisor
+- Microsoft Azure hyperscaler, Cloud Service Provider
+
+<br/>
+
+## AWS hyperscaler
+
+There are options within the Terraform Templates to:
+- Create VPC, or re-use existing VPC Subnet
+- Create Resource Group, or re-use existing Resource Group
+
+```
+# Login
+aws configure
+
+# Create AWS IAM Policy Group
+aws iam create-group --group-name 'ag-terraform-exec'
+aws iam attach-group-policy --group-name 'ag-terraform-exec' --policy-arn arn:aws:iam::aws:policy/AmazonVPCFullAccess
+aws iam attach-group-policy --group-name 'ag-terraform-exec' --policy-arn arn:aws:iam::aws:policy/AmazonEC2FullAccess
+aws iam attach-group-policy --group-name 'ag-terraform-exec' --policy-arn arn:aws:iam::aws:policy/AmazonRoute53FullAccess
+```
 
 
 ## IBM Cloud hyperscaler
-
-The Terraform Templates for IBM Cloud are designed to be executed by an Administrator or a user with limited delegated administration privileges.
 
 There are options within the Terraform Templates to:
 - Create VPC, or re-use existing VPC Subnet
@@ -43,6 +69,12 @@ ibmcloud iam access-group-policy-create 'ag-terraform-exec' --roles Editor --ser
 ibmcloud iam access-group-policy-create 'ag-terraform-exec' --roles Editor --service-name=iam-groups
 ```
 
+**Assign to a specified Account User or Service User**
+```
+ibmcloud iam access-group-user-add 'ag-terraform-exec' <<<IBMid>>>
+ibmcloud iam access-group-service-id-add 'ag-terraform-exec' <<<SERVICE_ID_UUID>>>
+```
+
 **Create the IAM Access Group with the minimum user permissions, using IBM Cloud web console UI:**
 
 - Open cloud.ibm.com - click Manage on navbar, click Access IAM, then on left nav menu click Access Groups
@@ -57,9 +89,11 @@ ibmcloud iam access-group-policy-create 'ag-terraform-exec' --roles Editor --ser
 
 ## IBM PowerVC hypervisor
 
+The Terraform Templates for IBM Power hardware are designed to be executed by an Administrator or a user with limited delegated administration privileges.
+
 IBM Power Virtualization Center (IBM PowerVC) is the centralized management component for IBM Power hardware running with the IBM PowerVM Type 1 hypervisor (PHYP firmware) or KVM on IBM Power Type 2 hypervisor (OPAL firmware).
 
-The IBM PowerVC engine supports and is able to interpret Openstack API commands, therefore all Terraform for IBM Power hardware uses the Terraform Provider for Openstack to provision to either hypervisor technologies avaialble with IBM Power hardware.
+The IBM PowerVC engine supports and is able to interpret Openstack API commands, therefore all Terraform for IBM Power hardware uses the Terraform Provider for Openstack to provision to either hypervisor technologies available with IBM Power hardware. However please note, only LPARs with Linux OS are approved for SAP HANA as noted in the summary below.
 
 Summary of hypervisor technologies for IBM Power hardware:
 - **IBM PowerVM for SAP**
@@ -75,7 +109,7 @@ Summary of hypervisor technologies for IBM Power hardware:
     - SLES (SAP Note 1522993)
     - RHEL (SAP Note 1400911)
     - RHV (SAP Note 1400911)
-  - NO support for SAP HANA; Virtual Machines cannot run SAP HANA using KVM on IBM Power
+  - `NO support` for SAP HANA; Virtual Machines cannot run SAP HANA using KVM on IBM Power
 
 For more information on IBM PowerVM (PHYP firmware) and KVM (OPAL firmware) for SAP workloads, please read:
 [Red Book March 2020 - IBM Power Systems Virtualization Operation Management for SAP Applications](http://www.redbooks.ibm.com/redpapers/pdfs/redp5579.pdf)

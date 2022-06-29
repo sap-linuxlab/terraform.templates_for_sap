@@ -13,10 +13,10 @@ Project is built of two components:
 It is recommended to fully read the README below for context and understanding, before you execute this code.
 
 To get started immediately, requirements:
-- Terraform and Ansible installed
-- Infrastructure Platform credentials; depending on choice may require OS Vendor subscription
+- Infrastructure Platform credentials and required authorizations (see [Infrastructure Guidance](./docs/INFRASTRUCTURE_GUIDANCE.md)); depending on choice may require OS Vendor subscription
 - SAP ONE Support Launchpad credentials, with Software Download privileges
-- Optional depending on choice SAP solution scenario: SAP System Copy backup file
+- Terraform and Ansible installed
+- Optional, depending on choice SAP solution scenario: SAP System Copy backup file
 
 <br/>
 <details>
@@ -56,6 +56,20 @@ To get started immediately, requirements:
   11. Once completed, follow output copy/paste to open SSH connection to OS or an SSH tunnel for SAP HANA Studio and SAPGUI
 
   `NOTE:` If editing any code, please ensure the file is saved in LF and not the Windows default CRLF as the format for End of Line Sequence. Terraform and Ansible may not work correctly if files are CRLF.
+</details>
+
+<br/>
+<details>
+  <summary><b>Advanced users summary:</b></summary>
+  
+  The `./run_terraform.sh` script is provided as an entry point for beginner users, with prompts for the target SAP Scenario and Infrastructure Platform which will then switch to the correct directory for the specific Terraform Template of those choices.
+
+  As an example, the script would run the following 3 commands for a user selecting SAP S/4HANA on IBM Cloud and using default variable values:
+  ```
+  cd /terraform.templates_for_sap/sap_s4hana_single_node_install/ibmcloud_vs
+  terraform init
+  terraform apply -var-file=variables_generic_for_cli.tfvars
+  ```
 </details>
 
 ---
