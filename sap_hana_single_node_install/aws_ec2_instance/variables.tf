@@ -60,6 +60,12 @@ variable "disk_volume_type_software" {
 
 variable "sap_software_download_directory" {
   description = "Mount point for downloads of SAP Software"
+
+  validation {
+    error_message = "Directory must start with forward slash."
+    condition = can(regex("^/", var.sap_software_download_directory))
+  }
+
 }
 
 
@@ -81,5 +87,11 @@ variable "sap_hana_install_sid" {
 }
 
 variable "sap_hana_install_instance_number" {
-  description = "Ansible - SAP HANA install: Instance Number (e.g. 00)"
+  description = "Ansible - SAP HANA install: Instance Number (e.g. 10)"
+
+  validation {
+    error_message = "Cannot use Instance Number 43 (HA port number) or 89 (Windows Remote Desktop Services)."
+    condition = !can(regex("(43|89)", var.sap_hana_install_instance_number))
+  }
+
 }
