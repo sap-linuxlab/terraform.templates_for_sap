@@ -72,7 +72,7 @@ variable "sap_software_download_directory" {
 
   validation {
     error_message = "Directory must start with forward slash."
-    condition = regex("^/", var.sap_software_download_directory)
+    condition = can(regex("^/", var.sap_software_download_directory))
   }
 
 }
