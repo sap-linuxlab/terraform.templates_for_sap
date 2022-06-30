@@ -1,4 +1,4 @@
-name: Smoke Tests for terraform.templates_for_sap
+name: Terraform Validate Tests
 
 on:
   push:
