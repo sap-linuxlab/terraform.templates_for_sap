@@ -79,7 +79,7 @@ variable "sap_software_download_directory" {
   description = "Mount point for downloads of SAP Software"
 
   validation {
-    error_message = "Directory must start with forward slash"
+    error_message = "Directory must start with forward slash."
     condition = regex("^/", var.sap_software_download_directory)
   }
 
@@ -110,7 +110,7 @@ variable "sap_hana_install_instance_number" {
   description = "Ansible - SAP HANA install: Instance Number (e.g. 10)"
 
   validation {
-    error_message = "Cannot use Instance Number 43 (HA port number) or 89 (Windows Remote Desktop Services)"
+    error_message = "Cannot use Instance Number 43 (HA port number) or 89 (Windows Remote Desktop Services)."
     condition = !can(regex("(43|89)", var.sap_hana_install_instance_number))
   }
 
@@ -152,7 +152,7 @@ variable "sap_nwas_ascs_instance_no" {
   description = "Ansible - SAP NetWeaver AS (ABAP) - ABAP Central Services (ASCS) instance number"
 
   validation {
-    error_message = "Cannot use Instance Number 43 (HA port number) or 89 (Windows Remote Desktop Services)"
+    error_message = "Cannot use Instance Number 43 (HA port number) or 89 (Windows Remote Desktop Services)."
     condition = !can(regex("(43|89)", var.sap_nwas_ascs_instance_no))
   }
 
@@ -162,7 +162,7 @@ variable "sap_nwas_pas_instance_no" {
   description = "Ansible - SAP NetWeaver AS (ABAP) - Primary Application Server instance number"
 
   validation {
-    error_message = "Cannot use Instance Number 43 (HA port number) or 89 (Windows Remote Desktop Services)"
+    error_message = "Cannot use Instance Number 43 (HA port number) or 89 (Windows Remote Desktop Services)."
     condition = !can(regex("(43|89)", var.sap_nwas_pas_instance_no))
   }
 
