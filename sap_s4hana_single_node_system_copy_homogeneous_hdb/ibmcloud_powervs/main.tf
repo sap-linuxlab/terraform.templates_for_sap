@@ -403,7 +403,7 @@ module "run_ansible_sap_s4hana_system_copy_hdb" {
   module_var_sap_swpm_db_sidadm_password      = var.sap_hana_install_master_password
   module_var_sap_swpm_ddic_000_password       = var.sap_swpm_ddic_000_password
   module_var_sap_swpm_pas_instance_nr         = var.sap_nwas_pas_instance_no
-  module_var_sap_swpm_ascs_instance_nr        = "02"
+  module_var_sap_swpm_ascs_instance_nr        = var.sap_nwas_ascs_instance_no
 
   module_var_sap_swpm_master_password         = var.sap_hana_install_master_password
 
