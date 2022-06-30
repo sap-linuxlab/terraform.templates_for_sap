@@ -68,7 +68,13 @@ variable "disk_volume_type_software" {
 }
 
 variable "sap_software_download_directory" {
-  description = "Mount point for downloads of SAP Software and any backup files"
+  description = "Mount point for downloads of SAP Software"
+
+  validation {
+    error_message = "Directory must start with forward slash"
+    condition = regex("^/", var.sap_software_download_directory)
+  }
+
 }
 
 variable "ibmcos_bucket" {
