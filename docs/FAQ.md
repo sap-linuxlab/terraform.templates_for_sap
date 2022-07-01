@@ -1,9 +1,13 @@
 # FAQ
 
-This FAQ document includes the most common questions.
+This FAQ document includes the most common questions, split into 3 sections:
+- [Customized deployments of SAP Software solution scenarios](#customized-deployments-of-a-sap-software-solution-scenarios)
+- [Design choices of the Terraform Templates for SAP](#design-choices-of-the-terraform-templates-for-sap)
+- [Common Errors](#common-errors)
 
+<br/>
 
-## Customized deployments of a SAP Software solution scenarios
+## Customized deployments of SAP Software solution scenarios
 ---
 
 ### <samp>I'm an SAP Customer, can I use and amend this code for custom business purposes?</samp>
@@ -85,6 +89,7 @@ In principle, each Cloud Service Provider uses the same geographical location lo
 
 Each Terraform Template for SAP uses fixed logic, to deploy to the first Availability Zone within a Region, edit the logic in file `variable_locals.tf`.
 
+<br/>
 
 ## Design choices of the Terraform Templates for SAP
 ---
@@ -115,7 +120,7 @@ These end-user activities, often map to various business-focused outcomes and in
 
 ### <samp>Why are SSH key output to files into the Terraform Template directory?</samp>
 
-Please read *<samp>Why are the Terraform Templates for SAP designed for end-user laptops?</samp>* first.
+Please read [*Why are the Terraform Templates for SAP designed for end-user laptops?*](#why-are-the-terraform-templates-for-sap-designed-for-end-user-laptops) first.
 
 Each Terraform Template for SAP is designed to be modular, but the execution is enclosed/self-contained (and often the deployment is only temporary). The output of the SSH Key files during the `terraform apply` execution into the directory path *`<<sap_solution_scenario>> / <<infrastructure_platform>> / ssh`* enables:
 - the Ansible execution to be performed immediately
@@ -142,13 +147,13 @@ There are already a significant number of uncontrollable factors (e.g. non-confl
 
 Potentially this feature will be added in the future.
 
-Please read *<samp>Why can SSH Public Keys already uploaded into the Infrastructure Platform not be used for deployments?</samp>* first, as this explains in more detail.
+Please read [*Why can SSH Public Keys already uploaded into the Infrastructure Platform not be used for deployments?*](#why-can-ssh-public-keys-already-uploaded-into-the-infrastructure-platform-not-be-used-for-deployments) first, as this explains in more detail.
 
 The use of an existing Bastion increases the likelihood of catastrophic failures throughout the Terraform Template, as the SSH Server (sshd) configuration will already be set and the network controls already in place, which potentially cannot be altered to allow jump-through of TCP Ports required for SAP Systems.
 
 ### <samp>Why is there no guidance for using with `X` tool?</samp>
 
-Please read *<samp>Why are the Terraform Templates for SAP designed for end-user laptops?</samp>* first.
+Please read [*Why are the Terraform Templates for SAP designed for end-user laptops?*](#why-are-the-terraform-templates-for-sap-designed-for-end-user-laptops) first.
 
 Each of these deployment approaches are bespoke to every business, with significant differences in setup of each tool for different authorization/approval security flows etc. It is possible sample code will be provided in future, but not within the Terraform Templates for SAP repository.
 
@@ -161,6 +166,7 @@ In short summary, the benefits of the Terraform Templates for SAP using a Bastio
 - Keeping the Host behind the firewall, allows the SSH Port to remain as `22` and to open all other SAP System ports (e.g. `3200` or `44301`) without exposing direct connectivity to the internet that an attacker could use.
 - If the SAP Systems are used for extended testing periods and connected to other hosts within the account, the Bastion can be removed and network security design of the Cloud account would not be compromised.
 
+<br/>
 
 ## Common Errors
 ---
