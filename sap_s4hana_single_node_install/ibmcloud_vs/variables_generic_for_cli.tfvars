@@ -1,8 +1,8 @@
-resource_tags = ["sf5", "saps4hana"]
+resource_tags = ["sap", "saps4hana"]
 
-resource_prefix = "sf5"
+resource_prefix = "sap"
 
-dns_root_domain = "sf5.cloud"
+dns_root_domain = "sap.cloud"
 
 bastion_os_image = "rhel-8-4"
 

@@ -109,6 +109,7 @@ Segregation of definitions for the Infrastructure and SAP Software follows the s
 An overview of the execution flow is provided in the image below, for full details please see:
 - [the Execution Flow documentation](/docs/EXECUTION_FLOW.md)
 - [the Infrastructure Platform guidance to use Terraform Templates for SAP](/docs/INFRASTRUCTURE_GUIDANCE.md)
+- [the FAQ, includes information for customized deployments of a SAP Software solution scenarios](/docs/FAQ.md)
 - [the detailed documentation in Terraform Modules for SAP](https://github.com/sap-linuxlab/terraform.modules_for_sap)
 
 ![Terraform execution flow](./docs/terraform_sap_infrastructure_exec_flow.svg)
@@ -139,7 +140,7 @@ The following is a list of Infrastructure Platforms and Operating System vendors
 | **SAP HANA single-node installation** | Installation of SAP HANA Database Server to a single virtual machine on a Cloud or Hypervisor | <ul><li>:white_check_mark: AWS EC2</li><li>:x: GCP VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:white_check_mark: Microsoft Azure</li><li>:white_check_mark: IBM PowerVM LPAR</li><li>:x: OVirt VM</li><li>:x: VMware vSphere VM</li></ul> |
 | **SAP S/4HANA single-node installation, using SAP Maintenance Planner** | Installation of SAP S/4HANA using SAP HANA Database Server and SAP NetWeaver to a single virtual machine on a Cloud or Hypervisor | <ul><li>:white_check_mark: AWS EC2</li><li>:x: GCP VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:white_check_mark: Microsoft Azure</li><li>:white_check_mark: IBM PowerVM LPAR</li><li>:x: OVirt VM</li><li>:x: VMware vSphere VM</li></ul> |
 | **SAP S/4HANA single-node System Copy (Homogeneous with SAP HANA Backup / Recovery) installation** | Installation of SAP S/4HANA from an SAP HANA data backup file and using SAP HANA Database Server and SAP NetWeaver to a single virtual machine on a Cloud or Hypervisor | <ul><li>:warning: AWS EC2</li><li>:x: GCP VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:warning: Microsoft Azure</li><li>:warning: IBM PowerVM LPAR</li><li>:x: OVirt VM</li><li>:x: VMware vSphere VM</li></ul> |
-| **SAP ECC on SAP HANA single-node System Copy** | Installation of SAP ECC from an SAP HANA data backup file and using SAP HANA Database Server and SAP NetWeaver to a single virtual machine on a Cloud or Hypervisor | <ul><li>:warning: AWS EC2</li><li>:x: GCP VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:warning: IBM Cloud, Power VS</li><li>:warning: Microsoft Azure</li><li>:warning: IBM PowerVM LPAR</li><li>:x: OVirt VM</li><li>:x: VMware vSphere VM</li></ul> |
+| **SAP ECC on SAP HANA single-node System Copy** | Installation of SAP ECC from an SAP HANA data backup file and using SAP HANA Database Server and SAP NetWeaver to a single virtual machine on a Cloud or Hypervisor | <ul><li>:warning: AWS EC2</li><li>:x: GCP VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:warning: Microsoft Azure</li><li>:warning: IBM PowerVM LPAR</li><li>:x: OVirt VM</li><li>:x: VMware vSphere VM</li></ul> |
 
 Key:
 - :white_check_mark: Ready and Tested
