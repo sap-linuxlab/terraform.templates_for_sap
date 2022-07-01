@@ -1,7 +1,7 @@
 # FAQ
 
 This FAQ document includes the most common questions, split into 3 sections:
-- [Customized deployments of SAP Software solution scenarios](#customized-deployments-of-a-sap-software-solution-scenarios)
+- [Customized deployments of SAP Software solution scenarios](#customized-deployments-of-sap-software-solution-scenarios)
 - [Design choices of the Terraform Templates for SAP](#design-choices-of-the-terraform-templates-for-sap)
 - [Common Errors](#common-errors)
 
