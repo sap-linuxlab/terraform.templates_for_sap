@@ -109,7 +109,7 @@ Segregation of definitions for the Infrastructure and SAP Software follows the s
 An overview of the execution flow is provided in the image below, for full details please see:
 - [the Execution Flow documentation](/docs/EXECUTION_FLOW.md)
 - [the Infrastructure Platform guidance to use Terraform Templates for SAP](/docs/INFRASTRUCTURE_GUIDANCE.md)
-- [the FAQ, includes information for customized deployments of a SAP Software solution scenarios](/docs/FAQ.md)
+- [the FAQ, includes information for customized deployments of SAP Software solution scenarios](/docs/FAQ.md)
 - [the detailed documentation in Terraform Modules for SAP](https://github.com/sap-linuxlab/terraform.modules_for_sap)
 
 ![Terraform execution flow](./docs/terraform_sap_infrastructure_exec_flow.svg)
