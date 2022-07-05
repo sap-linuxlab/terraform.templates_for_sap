@@ -171,7 +171,7 @@ In short summary, the benefits of the Terraform Templates for SAP using a Bastio
 ## Common Errors
 ---
 
-### <samp>SAP Software installation media pre-check or downloads have error 'authentication failed - 401 Client Error'</samp>
+### <samp>SAP Software installation media pre-check (dry-run) or downloads have error 'SAP SSO authentication failed - 401 Client Error'</samp>
 
 SAP software installation media must be obtained from SAP directly, and requires valid license agreements with SAP in order to access these files.
 
@@ -185,10 +185,18 @@ This is documented:
 - summary version under [Terraform Templates for SAP - Requirements, Dependencies and Testing](https://github.com/sap-linuxlab/terraform.templates_for_sap#sap-user-id-credentials)
 - full detail under [Ansible Collection for SAP Launchpad - Requirements, Dependencies and Testing](https://github.com/sap-linuxlab/community.sap_launchpad#requirements-dependencies-and-testing)
 
-### <samp>SAP Software installation media from SAP Maintenance Planner fails with 'download link `https://softwaredownloads.sap.com/file/___` is not available'</samp>
+### <samp>SAP Software installation media pre-check (dry-run) from SAP Maintenance Planner fails with 'download link `https://softwaredownloads.sap.com/file/___` is not available'</samp>
 
 SAP has refreshed the installation media (new revisions or patch levels) for the files in your SAP Maintenance Planner stack, and you will need to update / create a new plan to re-generate the up to date files.
 
-### <samp>SAP Software installation media pre-check or downloads have error '403'</samp>
+### <samp>SAP Software installation media downloads from SAP Maintenance Planner fails with 'SAP SSO authentication failed - 404 Client Error: Not Found for url: `https://origin.softwaredownloads.sap.com/tokengen/?file=___`'</samp>
+
+SAP has refreshed the installation media (new revisions or patch levels) for the files in your SAP Maintenance Planner stack, and you will need to update / create a new plan to re-generate the up to date files.
+
+### <samp>SAP Software Center search has error 'An exception has occurred - no result found for `FILENAME_HERE.SAR`'</samp>
+
+SAP has refreshed the installation media (new revisions or patch levels), this filename cannot be found and you will need to search for the updated filename (usually an increment, e.g. `_0` to `_1` otherwise the file cannot be downloaded.
+
+### <samp>SAP Software installation media pre-check (dry-run) or downloads have error 'SAP SSO authentication failed - 403 Client Error: Forbidden for url: `https://softwaredownloads.sap.com/file/___`'</samp>
 
 SAP Software Center is likely experiencing temporary problems, please try again later. The Ansible Collection for SAP Launchpad will always attempt 3 retries if a HTTP 403 error code is received, if after 3 attempts the file is not available then a failure will occur.
