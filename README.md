@@ -1,13 +1,27 @@
 # Terraform Templates for SAP
 ![Terraform Validate Tests](https://github.com/sap-linuxlab/terraform.templates_for_sap/actions/workflows/terraform_validate.yml/badge.svg?branch=main)
 
+## Terraform Templates for SAP summary:
+
 Terraform Templates for deployment of various SAP Software solution scenarios onto different Hyperscaler Cloud Service Providers and Hypervisors platforms.
 
-These Terraform Templates for SAP are designed to be simple to understand and highly reconfigurable. Each Terraform Template uses the [Terraform Modules for SAP](https://github.com/sap-linuxlab/terraform.modules_for_sap).
+Infrastructure-as-Code (IaC) for deployment of host infrastructure uses **Terraform**, which will subsequently perform Configuration-as-Code (CaC) for configuraton of OS and installation of SAP Software using **Ansible**.
 
-Project is built of two components:
-- Infrastructure-as-Code (IaC) for deployment of host infrastructure. Uses Terraform.
-- Configuration-as-Code (CaC) for configuraton of OS and installation of SAP Software. Uses Ansible, dynamically altered by Terraform.
+These Terraform Templates for SAP are designed to be:
+- simple to understand,
+- highly reconfigurable,
+- result in an equal installation performed to any Infrastructure Platform
+
+> *for more detail: [Available SAP solution scenarios and Infrastructure Platforms](#available-sap-solution-scenarios-and-infrastructure-platforms)*
+
+| Scenario | Infrastructure Platform |
+|:--- |:--- |
+| **SAP HANA 2.0 (any version)**<br/>single-node installation | <sub><ul><li>:white_check_mark: AWS EC2</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:white_check_mark: Microsoft Azure</li><li>:white_check_mark: IBM PowerVM LPAR</li></ul>*Coming Soon: GCP VM, OVirt VM, VMware vSphere VM*</sub> |
+| **SAP S/4HANA (2020, 2021)**<br/>single-node installation,<br/>using SAP Maintenance Planner | <sub><ul><li>:white_check_mark: AWS EC2</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:white_check_mark: Microsoft Azure</li><li>:white_check_mark: IBM PowerVM LPAR</li></ul>*Coming Soon: GCP VM, OVirt VM, VMware vSphere VM*</sub> |
+| **SAP S/4HANA (1909, 2020, 2021)**<br/>single-node System Copy installation</br>(Homogeneous with SAP HANA Backup / Recovery) | <sub><ul><li>:warning: AWS EC2</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:warning: Microsoft Azure</li><li>:warning: IBM PowerVM LPAR</li></ul>*Coming Soon: GCP VM, OVirt VM, VMware vSphere VM*</sub> |
+| **SAP ECC on SAP HANA (EHP7, EHP8)**<br/>single-node System Copy installation</br>(Homogeneous with SAP HANA Backup / Recovery) | <sub><ul><li>:warning: AWS EC2</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:warning: Microsoft Azure</li><li>:warning: IBM PowerVM LPAR</li></ul>*Coming Soon: GCP VM, OVirt VM, VMware vSphere VM*</sub> |
+
+---
 
 # Get started
 
@@ -81,6 +95,10 @@ This project is designed to be outcome-focused and highly-reusable.
 
 Each Terraform Template is for a pre-defined SAP Software solution scenario on a given Infrastructure Platform, e.g. SAP HANA installation to Microsoft Azure, or SAP ECC on HANA System Copy (Homogeneous) to IBM Cloud.
 
+This Project is built of two technology components:
+- Infrastructure-as-Code (IaC) for deployment of host infrastructure. Uses Terraform.
+- Configuration-as-Code (CaC) for configuraton of OS and installation of SAP Software. Uses Ansible, dynamically altered by Terraform.
+
 These Terraform Templates are constructed using the custom [Terraform Modules for SAP](https://github.com/sap-linuxlab/terraform.modules_for_sap), which can be combined to create new Terraform Templates for different scenarios. **The provided solution scenarios are a baseline, from which amendments and extensions can be made to create any SAP Software solution scenario on any Infrastructure Platform.**
 
 The project addresses common SAP System activities such as:
@@ -137,10 +155,10 @@ The following is a list of Infrastructure Platforms and Operating System vendors
 **Solution Architecture scenarios, provisioned via Ansible:**
 | Scenario | Description | Infrastructure Platform&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; |
 |:--- |:--- |:--- |
-| **SAP HANA single-node installation** | Installation of SAP HANA Database Server to a single virtual machine on a Cloud or Hypervisor | <ul><li>:white_check_mark: AWS EC2</li><li>:x: GCP VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:white_check_mark: Microsoft Azure</li><li>:white_check_mark: IBM PowerVM LPAR</li><li>:x: OVirt VM</li><li>:x: VMware vSphere VM</li></ul> |
-| **SAP S/4HANA single-node installation, using SAP Maintenance Planner** | Installation of SAP S/4HANA using SAP HANA Database Server and SAP NetWeaver to a single virtual machine on a Cloud or Hypervisor | <ul><li>:white_check_mark: AWS EC2</li><li>:x: GCP VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:white_check_mark: Microsoft Azure</li><li>:white_check_mark: IBM PowerVM LPAR</li><li>:x: OVirt VM</li><li>:x: VMware vSphere VM</li></ul> |
-| **SAP S/4HANA single-node System Copy (Homogeneous with SAP HANA Backup / Recovery) installation** | Installation of SAP S/4HANA from an SAP HANA data backup file and using SAP HANA Database Server and SAP NetWeaver to a single virtual machine on a Cloud or Hypervisor | <ul><li>:warning: AWS EC2</li><li>:x: GCP VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:warning: Microsoft Azure</li><li>:warning: IBM PowerVM LPAR</li><li>:x: OVirt VM</li><li>:x: VMware vSphere VM</li></ul> |
-| **SAP ECC on SAP HANA single-node System Copy** | Installation of SAP ECC from an SAP HANA data backup file and using SAP HANA Database Server and SAP NetWeaver to a single virtual machine on a Cloud or Hypervisor | <ul><li>:warning: AWS EC2</li><li>:x: GCP VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:warning: Microsoft Azure</li><li>:warning: IBM PowerVM LPAR</li><li>:x: OVirt VM</li><li>:x: VMware vSphere VM</li></ul> |
+| **SAP HANA 2.0 (any version)**<br/>single-node installation | Installation of SAP HANA Database Server to a single virtual machine on a Cloud or Hypervisor | <ul><li>:white_check_mark: AWS EC2</li><li>:x: GCP VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:white_check_mark: Microsoft Azure</li><li>:white_check_mark: IBM PowerVM LPAR</li><li>:x: OVirt VM</li><li>:x: VMware vSphere VM</li></ul> |
+| **SAP S/4HANA (2020, 2021)**<br/>single-node installation,<br/>using SAP Maintenance Planner | Installation of SAP S/4HANA using SAP HANA Database Server and SAP NetWeaver to a single virtual machine on a Cloud or Hypervisor | <ul><li>:white_check_mark: AWS EC2</li><li>:x: GCP VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:white_check_mark: Microsoft Azure</li><li>:white_check_mark: IBM PowerVM LPAR</li><li>:x: OVirt VM</li><li>:x: VMware vSphere VM</li></ul> |
+| **SAP S/4HANA (1909, 2020, 2021)**<br/>single-node System Copy installation</br>(Homogeneous with SAP HANA Backup / Recovery) | Installation of SAP S/4HANA from an SAP HANA data backup file using SAP HANA Database Server and SAP NetWeaver to a single virtual machine on a Cloud or Hypervisor | <ul><li>:warning: AWS EC2</li><li>:x: GCP VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:warning: Microsoft Azure</li><li>:warning: IBM PowerVM LPAR</li><li>:x: OVirt VM</li><li>:x: VMware vSphere VM</li></ul> |
+| **SAP ECC on SAP HANA (EHP7, EHP8)**<br/>single-node System Copy installation</br>(Homogeneous with SAP HANA Backup / Recovery) | Installation of SAP ECC from an SAP HANA data backup file using SAP HANA Database Server and SAP NetWeaver to a single virtual machine on a Cloud or Hypervisor | <ul><li>:warning: AWS EC2</li><li>:x: GCP VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:warning: Microsoft Azure</li><li>:warning: IBM PowerVM LPAR</li><li>:x: OVirt VM</li><li>:x: VMware vSphere VM</li></ul> |
 
 Key:
 - :white_check_mark: Ready and Tested

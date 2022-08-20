@@ -89,6 +89,53 @@ In principle, each Cloud Service Provider uses the same geographical location lo
 
 Each Terraform Template for SAP uses fixed logic, to deploy to the first Availability Zone within a Region, edit the logic in file `variable_locals.tf`.
 
+
+### <samp>How to use existing SSH Keys?</samp>
+
+This modification/customization will allow you to re-use existing SSH Keys. By default this not provided in the Terraform Templates for SAP to avoid user error (i.e. wrong keys) causing bad experiences that developers cannot debug and would have to close any issue without resolution; therefore these steps are considered `‘at your own risk’` and should be performed only with a good understanding of OS SSH Security, the Infrastructure Platform and Terraform.
+
+The following steps assume you already have an SSH Key Pairs generated (different keys for the Bastion and for the Hosts), with the Public/Private Key files on the machine running the Terraform Templates for SAP and the Public Key string uploaded to the Infrastructure Platform (and given a resource id).
+
+**Replace the SSH Key IDs:**
+
+1. In the Terraform Template `main.tf` file, search for all declared Terraform Modules where the suffix *ssh_key_id variable is set. For example, in the declared Terraform Modules for 'bastion_inject' and 'host_provision'.
+2. Set the variables to the resource ID, for example:
+
+*bastion_inject TF Module call:*
+```
+  module_var_bastion_ssh_key_id     = '123456-7890'   // replaces module.run_account_bootstrap_module.output_bastion_ssh_key_id
+```
+
+*host_provision TF Module call:*
+```
+  module_var_host_ssh_key_id        = '123456-7890'   // replaces module.run_account_bootstrap_module.output_host_ssh_key_id
+```
+
+**Replace the SSH Key file paths:**
+
+1. In the Terraform Template `main.tf` file, search for all declared Terraform Modules where the suffix *public_ssh_key or private_ssh_key variable is set. For example, in the declared Terraform Modules for 'bastion_inject', 'host_provision' and any with ansible_ prefix
+2. Set the variables to the key file path on the machine running the Terraform Templates for SAP, for example:
+
+*bastion_inject TF Module call:*
+```
+  module_var_bastion_public_ssh_key  = file("/path_here/bastion_key_file_here_rsa.pub")   // replaces  module.run_account_bootstrap_module.output_bastion_public_ssh_key
+  module_var_bastion_private_ssh_key = file("/path_here/bastion_key_file_here_rsa")       // replaces  module.run_account_bootstrap_module.output_bastion_private_ssh_key
+```
+
+*host_provision TF Module call:*
+```
+  module_var_bastion_private_ssh_key = file("/path_here/bastion_key_file_here_rsa")       // replaces  module.run_account_bootstrap_module.output_bastion_private_ssh_key
+
+  module_var_host_private_ssh_key    = file("/path_here/host_key_file_here_rsa")          // replaces  module.run_account_bootstrap_module.output_bastion_private_ssh_key
+```
+
+*ansible_ * TF Module call:*
+```
+  module_var_bastion_private_ssh_key = file("/path_here/bastion_key_file_here_rsa")       // replaces  module.run_account_bootstrap_module.output_bastion_private_ssh_key
+
+  module_var_host_private_ssh_key    = file("/path_here/host_key_file_here_rsa")          // replaces  module.run_account_bootstrap_module.output_bastion_private_ssh_key
+```
+
 <br/>
 
 ## Design choices of the Terraform Templates for SAP
