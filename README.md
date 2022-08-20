@@ -67,7 +67,7 @@ To get started immediately, requirements:
 
   As an example, the script would run the following 3 commands for a user selecting SAP S/4HANA on IBM Cloud and using default variable values:
   ```
-  cd /terraform.templates_for_sap/sap_s4hana_single_node_install/ibmcloud_vs
+  cd /terraform.templates_for_sap/sap_s4hana_single_node_install_maintenance_plan/ibmcloud_vs
   terraform init
   terraform apply -var-file=variables_generic_for_cli.tfvars
   ```
