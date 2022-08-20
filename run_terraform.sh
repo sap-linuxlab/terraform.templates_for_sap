@@ -76,7 +76,7 @@ function sap_solution_scenario_choice()
                 ;;
             "SAP S/4HANA - Install single node")
                 echo ">>> Chosen option $REPLY: $opt_scenario"
-                sap_solution_scenario="sap_s4hana_single_node_install"
+                sap_solution_scenario="sap_s4hana_single_node_install_maintenance_plan"
                 break
                 ;;
             "SAP S/4HANA - System Copy single node (Homogeneous with SAP HANA Backup / Recovery)")
