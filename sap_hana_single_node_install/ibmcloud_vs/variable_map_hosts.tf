@@ -50,6 +50,8 @@ variable "map_host_specifications" {
         filesystem_hana_shared = "xfs"
         physical_partition_filesystem_block_size_hana_shared = "4k" // only if LVM is set to false; if XFS then only 4k value allowed otherwise will be overridden (see README about XFS and Page Size)
 
+        disk_volume_count_anydb      = 0
+
         disk_volume_count_usr_sap    = 0 // max of 1
         disk_volume_type_usr_sap     = "general-purpose"
         disk_volume_capacity_usr_sap = 64
@@ -112,6 +114,8 @@ variable "map_host_specifications" {
         filesystem_hana_shared = "xfs"
         physical_partition_filesystem_block_size_hana_shared = "4k" // only if LVM is set to false; if XFS then only 4k value allowed otherwise will be overridden (see README about XFS and Page Size)
 
+        disk_volume_count_anydb      = 0
+
         disk_volume_count_usr_sap    = 0 // max of 1
         disk_volume_type_usr_sap     = "general-purpose"
         disk_volume_capacity_usr_sap = 64
@@ -169,6 +173,8 @@ variable "map_host_specifications" {
         #lvm_lv_stripe_size_hana_shared = "64K" //default 64KiB. Akin to Virtualized Block Size.
         filesystem_hana_shared = "xfs"
         physical_partition_filesystem_block_size_hana_shared = "4k" // only if LVM is set to false; if XFS then only 4k value allowed otherwise will be overridden (see README about XFS and Page Size)
+
+        disk_volume_count_anydb      = 0
 
         disk_volume_count_usr_sap    = 0 // max of 1
         disk_volume_type_usr_sap     = "general-purpose"
