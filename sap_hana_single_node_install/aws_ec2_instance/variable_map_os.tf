@@ -7,15 +7,15 @@ variable "map_os_image_regex" {
 
   default = {
 
-    rhel-7-6-sap = "*SAP-7.6*"
-
     rhel-7-7-sap = "*RHEL-SAP-7.7*"
 
     rhel-7-9-sap = "*RHEL-SAP-7.9*"
 
-    rhel-8-1-sap = "*RHEL-8.1.0-SAP*"
+    rhel-8-1-sap = "*RHEL-SAP-8.1.0*"
 
-    rhel-8-2-sap = "*RHEL-8.2.0-SAP*"
+    rhel-8-2-sap = "*RHEL-SAP-8.2.0*"
+
+    rhel-8-4-sap = "*RHEL-SAP-8.4.0*"
 
     sles-12-5-sap = ".*suse-sles-12-sp5-v202.*-hvm-ssd-x86_64.*"
 
