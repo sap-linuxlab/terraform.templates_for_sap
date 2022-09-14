@@ -20,19 +20,19 @@ variable "map_os_image_regex" {
       sku       = "84-gen2"
     },
 
-    rhel-8-1-sap-hana = {
+    rhel-8-1-sap-ha = {
       publisher = "RedHat"
       offer     = "RHEL-SAP-HA"
       sku       = "81sapha-gen2"
     },
 
-    rhel-8-2-sap-hana = {
+    rhel-8-2-sap-ha = {
       publisher = "RedHat"
       offer     = "RHEL-SAP-HA"
       sku       = "82sapha-gen2"
     },
 
-    rhel-8-4-sap-hana = {
+    rhel-8-4-sap-ha = {
       publisher = "RedHat"
       offer     = "RHEL-SAP-HA"
       sku       = "84sapha-gen2"

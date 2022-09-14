@@ -9,9 +9,9 @@ variable "map_os_image_regex" {
 
     rhel-8-4 = ".*redhat.*8-4.*minimal.*amd64.*"
 
-    rhel-8-1-power-sap-byol = "Linux-RHEL-SAP-8-1"
+    rhel-8-1-sap-ha-byol = "Linux-RHEL-SAP-8-1"
 
-    sles-12-4-power-sap-byol = "Linux-SUSE-SAP-12-4"
+    sles-12-4-sap-ha-byol = "Linux-SUSE-SAP-12-4"
 
   }
 
