@@ -12,7 +12,7 @@ bastion_ssh_port = 50222
 
 host_specification_plan = "small_256gb"
 
-host_os_image = "rhel-8-1-power-sap-byol"
+host_os_image = "rhel-8-1-sap-ha-byol"
 
 disk_volume_capacity_software = 368
 

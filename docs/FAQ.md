@@ -57,7 +57,7 @@ variable "map_host_specifications" {
 
 ### <samp>How to use custom OS Images on each Cloud hyperscaler?</samp>
 
-Each Terraform Template for SAP for a Cloud Service Provider, includes an OS Image lookup name for all available OS Images from the Cloud Service Provider; such as `sles-15-2-sap-hana` or `rhel-8-4-sap-hana`.
+Each Terraform Template for SAP for a Cloud Service Provider, includes an OS Image lookup name for all available OS Images from the Cloud Service Provider; such as `sles-15-2-sap-ha` or `rhel-8-4-sap-ha`.
 
 Each of these OS Image lookup names refer to a regex pattern to retrieve the latest OS Image for the specific OS distribution version (i.e. major.minor release). This is necessary for some Cloud Service Providers which provide different OS Image versions / naming per Region.
 

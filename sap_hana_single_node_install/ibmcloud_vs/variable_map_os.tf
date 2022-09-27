@@ -7,13 +7,13 @@ variable "map_os_image_regex" {
 
   default = {
 
-    rhel-7-6-sap-hana = ".*redhat.*7-6.*amd64.*hana.*"
+    rhel-7-6-sap-ha = ".*redhat.*7-6.*amd64.*hana.*"
 
-    rhel-8-1-sap-hana = ".*redhat.*8-1.*amd64.*hana.*"
+    rhel-8-1-sap-ha = ".*redhat.*8-1.*amd64.*hana.*"
 
-    rhel-8-2-sap-hana = ".*redhat.*8-2.*amd64.*hana.*"
+    rhel-8-2-sap-ha = ".*redhat.*8-2.*amd64.*hana.*"
 
-    rhel-8-4-sap-hana = ".*redhat.*8-4.*amd64.*hana.*"
+    rhel-8-4-sap-ha = ".*redhat.*8-4.*amd64.*hana.*"
 
     rhel-7-6-sap-applications = ".*redhat.*7-6.*amd64.*applications.*"
 
@@ -25,11 +25,11 @@ variable "map_os_image_regex" {
 
     rhel-8-4 = ".*redhat.*8-4.*minimal.*amd64.*"
 
-    sles-12-4-sap-hana = ".*sles.*12-4.*amd64.*hana.*"
+    sles-12-4-sap-ha = ".*sles.*12-4.*amd64.*hana.*"
 
-    sles-15-1-sap-hana = ".*sles.*15-1.*amd64.*hana.*"
+    sles-15-1-sap-ha = ".*sles.*15-1.*amd64.*hana.*"
 
-    sles-15-2-sap-hana = ".*sles.*15-2.*amd64.*hana.*"
+    sles-15-2-sap-ha = ".*sles.*15-2.*amd64.*hana.*"
 
     sles-12-4-sap-applications = ".*sles.*12-4.*amd64.*applications.*"
 
