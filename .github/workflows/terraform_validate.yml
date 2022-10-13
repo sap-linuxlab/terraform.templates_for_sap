@@ -33,18 +33,18 @@ jobs:
           # Check directory, add result to empty_string, make visible to other step tasks (use string, not boolean)
           if [ -d "$PWD/${{ matrix.sap_solution_scenario }}/${{ matrix.infrastructure_platform }}" ]; then
             dir_test=$(ls -lha "$PWD/${{ matrix.sap_solution_scenario }}/${{ matrix.infrastructure_platform }}" | grep main.tf)
-            if [ -z "${dir_test}" ]; then echo 'null' && exit 0 ; else FLAG="true" && echo "::set-output name=FLAG::$FLAG" ; fi
+            if [ -z "${dir_test}" ]; then echo 'null' && exit 0 ; else FLAG="true" && echo "FLAG=$FLAG" >> $GITHUB_ENV ; fi
           else
             echo 'null' && exit 0
           fi
       - name: Terraform Init, if directory is not empty
-        if: ${{ steps.directory_empty_flag.outputs.FLAG == 'true' }}
+        if: ${{ env.FLAG == 'true' }}
         id: init
         run: |
           cd "./${{ matrix.sap_solution_scenario }}/${{ matrix.infrastructure_platform }}"
           terraform init
       - name: Terraform Validate, if directory is not empty
-        if: ${{ steps.directory_empty_flag.outputs.FLAG == 'true' }}
+        if: ${{ env.FLAG == 'true' }}
         id: validate
         run: |
           cd "./${{ matrix.sap_solution_scenario }}/${{ matrix.infrastructure_platform }}"

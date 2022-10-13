@@ -6,7 +6,7 @@ terraform {
     ibm = {
       #source  = "localdomain/provider/ibm" // Local, on macOS path to place files would be $HOME/.terraform.d/plugins/localdomain/provider/ibm/1.xx.xx/darwin_amd6
       source  = "IBM-Cloud/ibm" // Terraform Registry
-      version = ">=1.35.0"
+      version = ">=1.45.0"
     }
   }
 }
