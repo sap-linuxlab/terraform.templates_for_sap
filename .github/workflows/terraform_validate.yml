@@ -22,7 +22,7 @@ jobs:
         infrastructure_platform: [aws_ec2_instance, ibmcloud_vs, ibmcloud_powervs, ibmpowervc, msazure_vm]
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3.1.0
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
