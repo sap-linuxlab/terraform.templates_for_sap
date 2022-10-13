@@ -271,7 +271,7 @@ module "run_host_provision_module" {
   module_var_disk_volume_capacity_software   = var.map_host_specifications[var.host_specification_plan][each.key].disk_volume_capacity_software
   module_var_sap_software_download_directory = var.sap_software_download_directory
 
-  module_var_enable_ip_anti_spoofing = false
+  module_var_disable_ip_anti_spoofing = false
 
 }
 
