@@ -11,7 +11,7 @@ on:
 
 jobs:
   terraform_validate:
-    name: 'Terraform Validate ALL'
+    name: 'TF Validate'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
