@@ -1,4 +1,4 @@
-name: TF Validate 1.0.0 and 1.1.0
+name: Terraform Validate Tests 1.0.0 and 1.1.0
 
 on:
   push:
