@@ -1,7 +1,7 @@
 
 module "run_ansible_dry_run" {
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap.git//all/ansible_sap_ecc_sapmaxdb_install?ref=dev"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_nwas_abap_ibmdb2_install?ref=dev"
 
   module_var_dry_run_test = "x86_64" // x86_64 or ppc64le
 
@@ -276,11 +276,12 @@ module "run_host_provision_module" {
 }
 
 
-module "run_ansible_sap_ecc_sapmaxdb_install" {
+module "run_ansible_sap_nwas_abap_ibmdb2_install" {
 
   depends_on = [module.run_host_provision_module]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap.git//all/ansible_sap_ecc_sapmaxdb_install?ref=dev"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_nwas_abap_ibmdb2_install?ref=dev"
+
 
   # Terraform Module Variables using the prior Terraform Module Variables (from bootstrap module)
   module_var_bastion_boolean         = true // required as true boolean for any Cloud Service Provider (CSP)
@@ -306,7 +307,7 @@ module "run_ansible_sap_ecc_sapmaxdb_install" {
   module_var_sap_anydb_install_sid             = var.sap_anydb_install_sid
   module_var_sap_anydb_install_instance_number = var.sap_anydb_install_instance_number
 
-  module_var_sap_swpm_sid                     = var.sap_ecc_install_sid
+  module_var_sap_swpm_sid                     = var.sap_nwas_install_sid
 
   module_var_sap_swpm_db_schema_abap          = "ABAP"
   module_var_sap_swpm_db_schema_abap_password = var.sap_anydb_install_master_password
