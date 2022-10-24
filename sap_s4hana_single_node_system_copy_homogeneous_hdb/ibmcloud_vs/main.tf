@@ -168,7 +168,7 @@ module "run_host_provision_module" {
     module.run_bastion_inject_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/host_provision?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/host_provision?ref=dev"
 
   # Set Terraform Module Variables using Terraform Variables at runtime
 
