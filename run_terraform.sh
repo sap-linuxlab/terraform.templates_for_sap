@@ -61,8 +61,19 @@ function sap_solution_scenario_choice()
     scenario_options=(
         "SAP HANA - Install single node"
         "SAP S/4HANA - Install single node"
+        "SAP S/4HANA - Install single node (use Maintenance Planner download)"
         "SAP S/4HANA - System Copy single node (Homogeneous with SAP HANA Backup / Recovery)"
+        "SAP BW/4HANA - Install single node"
         "SAP ECC on HANA - System Copy single node (Homogeneous with SAP HANA Backup / Recovery)"
+        "SAP ECC on IBM DB2 - Install single node"
+        "SAP ECC on Oracle DB - Install single node"
+        "SAP ECC on SAP ASE - Install single node"
+        "SAP ECC on SAP MaxDB - Install single node"
+        "SAP NetWeaver AS (ABAP) with SAP HANA - Install single node"
+        "SAP NetWeaver AS (ABAP) with IBM DB2 - Install single node"
+        "SAP NetWeaver AS (ABAP) with Oracle DB - Install single node"
+        "SAP NetWeaver AS (ABAP) with SAP ASE - Install single node"
+        "SAP NetWeaver AS (ABAP) with SAP MaxDB - Install single node"
         "Quit"
     )
 
@@ -76,6 +87,11 @@ function sap_solution_scenario_choice()
                 ;;
             "SAP S/4HANA - Install single node")
                 echo ">>> Chosen option $REPLY: $opt_scenario"
+                sap_solution_scenario="sap_s4hana_single_node_install"
+                break
+                ;;
+            "SAP S/4HANA - Install single node (use Maintenance Planner download)")
+                echo ">>> Chosen option $REPLY: $opt_scenario"
                 sap_solution_scenario="sap_s4hana_single_node_install_maintenance_plan"
                 break
                 ;;
@@ -84,9 +100,59 @@ function sap_solution_scenario_choice()
                 sap_solution_scenario="sap_s4hana_single_node_system_copy_homogeneous_hdb"
                 break
                 ;;
+            "SAP BW/4HANA - Install single node")
+                echo ">>> Chosen option $REPLY: $opt_scenario"
+                sap_solution_scenario="sap_bw4hana_single_node_install"
+                break
+                ;;
             "SAP ECC on HANA - System Copy single node (Homogeneous with SAP HANA Backup / Recovery)")
                 echo ">>> Chosen option $REPLY: $opt_scenario"
                 sap_solution_scenario="sap_ecc_hana_system_copy_single_node"
+                break
+                ;;
+            "SAP ECC on IBM DB2 - Install single node")
+                echo ">>> Chosen option $REPLY: $opt_scenario"
+                sap_solution_scenario="sap_ecc_ibmdb2_single_node_install"
+                break
+                ;;
+            "SAP ECC on Oracle DB - Install single node")
+                echo ">>> Chosen option $REPLY: $opt_scenario"
+                sap_solution_scenario="sap_ecc_oracledb_single_node_install"
+                break
+                ;;
+            "SAP ECC on SAP ASE - Install single node")
+                echo ">>> Chosen option $REPLY: $opt_scenario"
+                sap_solution_scenario="sap_ecc_sapase_single_node_install"
+                break
+                ;;
+            "SAP ECC on SAP MaxDB - Install single node")
+                echo ">>> Chosen option $REPLY: $opt_scenario"
+                sap_solution_scenario="sap_ecc_sapmaxdb_single_node_install"
+                break
+                ;;
+            "SAP NetWeaver AS (ABAP) with SAP HANA - Install single node")
+                echo ">>> Chosen option $REPLY: $opt_scenario"
+                sap_solution_scenario="sap_nwas_abap_hana_install"
+                break
+                ;;
+            "SAP NetWeaver AS (ABAP) with IBM DB2 - Install single node")
+                echo ">>> Chosen option $REPLY: $opt_scenario"
+                sap_solution_scenario="sap_nwas_abap_ibmdb2_install"
+                break
+                ;;
+            "SAP NetWeaver AS (ABAP) with Oracle DB - Install single node")
+                echo ">>> Chosen option $REPLY: $opt_scenario"
+                sap_solution_scenario="sap_nwas_abap_oracledb_install"
+                break
+                ;;
+            "SAP NetWeaver AS (ABAP) with SAP ASE - Install single node")
+                echo ">>> Chosen option $REPLY: $opt_scenario"
+                sap_solution_scenario="sap_nwas_abap_sapase_install"
+                break
+                ;;
+            "SAP NetWeaver AS (ABAP) with SAP MaxDB - Install single node")
+                echo ">>> Chosen option $REPLY: $opt_scenario"
+                sap_solution_scenario="sap_nwas_abap_sapmaxdb_install"
                 break
                 ;;
             "Quit")
