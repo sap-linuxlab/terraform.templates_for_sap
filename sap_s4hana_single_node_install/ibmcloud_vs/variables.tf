@@ -110,7 +110,7 @@ variable "sap_s4hana_install_sid" {
 }
 
 variable "sap_swpm_template_selected" {
-  description = "Ansible - Select template to use: sap_s4hana_2021_onehost_install"
+  description = "Ansible - Select template to use: sap_s4hana_2021_onehost_install, sap_s4hana_2022_onehost_install"
 }
 
 variable "sap_nwas_ascs_instance_no" {
