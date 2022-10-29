@@ -9,7 +9,7 @@ variable "map_host_specifications" {
 
     small_256gb = {
 
-      nw01 = {
+      nw01 = {  // Hostname
         virtual_server_profile = "mx2-32x256"
 
         // N.B. all capacities must be different from each other, due to Shell loop searching based on capacity GB

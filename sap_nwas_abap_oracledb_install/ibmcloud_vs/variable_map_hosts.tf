@@ -9,7 +9,7 @@ variable "map_host_specifications" {
 
     small_32vcpu = {
 
-      nw01c = {
+      nw01 = {  // Hostname
         virtual_server_profile = "bx2-32x128"
 
         // N.B. all capacities must be different from each other, due to Shell loop searching based on capacity GB
