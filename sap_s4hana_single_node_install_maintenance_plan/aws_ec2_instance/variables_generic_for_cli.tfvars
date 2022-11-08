@@ -22,9 +22,9 @@ sap_hana_install_sid = "H01"
 
 sap_hana_install_instance_number = "10"
 
-sap_nwas_ascs_instance_no = "00"
+sap_nwas_abap_ascs_instance_no = "01"
 
-sap_nwas_pas_instance_no = "02"
+sap_nwas_abap_pas_instance_no = "00"
 
 sap_s4hana_install_sid = "S01"
 

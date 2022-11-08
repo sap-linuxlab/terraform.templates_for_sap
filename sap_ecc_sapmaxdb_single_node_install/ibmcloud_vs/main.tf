@@ -129,7 +129,7 @@ module "run_host_network_access_sap_module" {
   module_var_ibmcloud_vpc_subnet_name = local.ibmcloud_vpc_subnet_create_boolean ? module.run_account_init_module.output_vpc_subnet_name : var.ibmcloud_vpc_subnet_name
   module_var_host_security_group_id   = module.run_account_bootstrap_module.output_host_security_group_id
 
-  module_var_sap_nwas_pas_instance_no = var.sap_nwas_pas_instance_no
+  module_var_sap_nwas_abap_pas_instance_no = var.sap_nwas_abap_pas_instance_no
   module_var_sap_hana_instance_no     = ""
 
 }
@@ -151,7 +151,7 @@ module "run_host_network_access_sap_public_via_proxy_module" {
   module_var_bastion_connection_security_group_id = module.run_bastion_inject_module.output_bastion_connection_security_group_id
   module_var_host_security_group_id   = module.run_account_bootstrap_module.output_host_security_group_id
 
-  module_var_sap_nwas_pas_instance_no = var.sap_nwas_pas_instance_no
+  module_var_sap_nwas_abap_pas_instance_no = var.sap_nwas_abap_pas_instance_no
   module_var_sap_hana_instance_no     = ""
 
 }
@@ -314,8 +314,8 @@ module "run_ansible_sap_ecc_sapmaxdb_install" {
   module_var_sap_swpm_db_systemdb_password    = var.sap_anydb_install_master_password
   module_var_sap_swpm_db_sidadm_password      = var.sap_anydb_install_master_password
   module_var_sap_swpm_ddic_000_password       = var.sap_anydb_install_master_password
-  module_var_sap_swpm_pas_instance_nr         = var.sap_nwas_pas_instance_no
-  module_var_sap_swpm_ascs_instance_nr        = var.sap_nwas_ascs_instance_no
+  module_var_sap_swpm_pas_instance_nr         = var.sap_nwas_abap_pas_instance_no
+  module_var_sap_swpm_ascs_instance_nr        = var.sap_nwas_abap_ascs_instance_no
 
   module_var_sap_swpm_master_password         = var.sap_anydb_install_master_password
 

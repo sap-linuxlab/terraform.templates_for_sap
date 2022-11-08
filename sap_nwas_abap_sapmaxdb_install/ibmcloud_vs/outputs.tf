@@ -45,7 +45,7 @@ bastion_host="${module.run_bastion_inject_module.output_bastion_ip}"
 bastion_port="${var.bastion_ssh_port}"
 target_host_array=(${join(" ", flatten([for key, value in module.run_host_provision_module : value.*.output_host_private_ip]))} "Quit")
 
-sap_nwas_pas_instance_no="${var.sap_nwas_pas_instance_no}"
+sap_nwas_abap_pas_instance_no="${var.sap_nwas_abap_pas_instance_no}"
 
 
 function sshjump() {
@@ -68,15 +68,15 @@ function sshjump() {
             done
             echo ""
             echo "#### For SAPGUI, use expert mode SAP Logon String as: ####"
-            echo "conn=/H/localhost/S/32$sap_nwas_pas_instance_no&expert=true"
+            echo "conn=/H/localhost/S/32$sap_nwas_abap_pas_instance_no&expert=true"
             echo ""
             # SSH port forward binding, using -L local_host:local_port:remote_host:remote_port (add -vv for debugging)
             ssh -N \
                 $bastion_user@$bastion_host -p $bastion_port -i $bastion_private_key_file \
                 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
-                -L localhost:32$sap_nwas_pas_instance_no:$target_ip:32$sap_nwas_pas_instance_no \
-                -L localhost:33$sap_nwas_pas_instance_no:$target_ip:33$sap_nwas_pas_instance_no \
-                -L localhost:443$sap_nwas_pas_instance_no:$target_ip:443$sap_nwas_pas_instance_no
+                -L localhost:32$sap_nwas_abap_pas_instance_no:$target_ip:32$sap_nwas_abap_pas_instance_no \
+                -L localhost:33$sap_nwas_abap_pas_instance_no:$target_ip:33$sap_nwas_abap_pas_instance_no \
+                -L localhost:443$sap_nwas_abap_pas_instance_no:$target_ip:443$sap_nwas_abap_pas_instance_no
             break
             ;;
         "OS root access, via SSH stdin/stdout forwarding proxy")
@@ -143,7 +143,7 @@ $bastion_port = "${var.bastion_ssh_port}"
 $target_host_string = "${join("','",flatten([for key, value in module.run_host_provision_module : value.*.output_host_private_ip]))}"
 $target_host_array = @($target_host_string.Split(","),"Quit")
 
-$sap_nwas_pas_instance_no = "${var.sap_nwas_pas_instance_no}"
+$sap_nwas_abap_pas_instance_no = "${var.sap_nwas_abap_pas_instance_no}"
 
 
 function sshjump {
@@ -177,15 +177,15 @@ function sshjump {
                 #echo ">>> Chosen option $(PSItem)"
                 echo ""
                 echo "#### For SAPGUI, use expert mode SAP Logon String as: ####"
-                echo "conn=/H/localhost/S/32$sap_nwas_pas_instance_no&expert=true"
+                echo "conn=/H/localhost/S/32$sap_nwas_abap_pas_instance_no&expert=true"
                 echo ""
                 # SSH port forward binding, using -L local_host:local_port:remote_host:remote_port (add -vv for debugging)
                 ssh -N `
                 $bastion_user@$bastion_host -p $bastion_port -i $temp_bastion_private_key_file `
                 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null `
-                -L localhost:32$${sap_nwas_pas_instance_no}:$${target_ip}:32$${sap_nwas_pas_instance_no} `
-                -L localhost:33$${sap_nwas_pas_instance_no}:$${target_ip}:33$${sap_nwas_pas_instance_no} `
-                -L localhost:443$${sap_nwas_pas_instance_no}:$${target_ip}:443$${sap_nwas_pas_instance_no}
+                -L localhost:32$${sap_nwas_abap_pas_instance_no}:$${target_ip}:32$${sap_nwas_abap_pas_instance_no} `
+                -L localhost:33$${sap_nwas_abap_pas_instance_no}:$${target_ip}:33$${sap_nwas_abap_pas_instance_no} `
+                -L localhost:443$${sap_nwas_abap_pas_instance_no}:$${target_ip}:443$${sap_nwas_abap_pas_instance_no}
             }
         }
         2 {

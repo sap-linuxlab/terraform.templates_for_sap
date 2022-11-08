@@ -20,9 +20,9 @@ sap_anydb_install_sid = "MX1"
 
 sap_anydb_install_instance_number = "10"
 
-sap_nwas_ascs_instance_no = "00"
+sap_nwas_abap_ascs_instance_no = "01"
 
-sap_nwas_pas_instance_no = "02"
+sap_nwas_abap_pas_instance_no = "00"
 
 sap_ecc_install_sid = "E01"
 
