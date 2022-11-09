@@ -64,6 +64,25 @@ To get started immediately, requirements:
   ```
 </details>
 
+<br/>
+<details>
+  <summary><b>Execution from Terraform Cloud or Terraform Enterprise:</b></summary>
+  
+  It is also possible to re-use the Terraform Templates for SAP with Terraform Cloud or Terraform Enterprise:
+  1. Add any Terraform Template for SAP into the git repository
+    - If preference is to use default tfvars file to reduce Terraform Input Variables, then rename `variables_generic_for_cli.tfvars` to `terraform.tfvars` (auto-detected by Terraform Cloud, but not by Terraform Enterprise). Be aware that many .gitignore files will by default ignore files with this file extension.
+  2. [Create the Terraform Cloud/Enterprise Organization.](https://app.terraform.io/app/organizations/new)
+  3. Within the Organization, [create the Terraform Cloud/Enterprise Workspace.](https://app.terraform.io/app/sll-osi/workspaces/new)
+    - Select which execution workflow to use with the Workspace (e.g. API-driven, CLI-driven, or VCS-driven).
+      - For example, select Version Control System (VCS) such as GitHub.com or GitHub Enterprise repository. This git repository must contain a Terraform Template, and any existing Terraform State files.
+      - The Terraform Template will be loaded into the Terraform Cloud/Enterprise Workspace.
+      - Each commit to a git repository, will automatically be detected by Terraform Cloud/Enterprise and execute a Terraform Plan.
+  4. [Open the created Terraform Cloud/Enterprise Workspace](https://app.terraform.io/app/sll-osi/workspaces), use the left navigation and click `'Runs'`. Click on the first run shown, which will display a list of required Terraform Input Variables which are required before starting a new run; the list will be smaller if the .tfvars file was used.
+  5. [Open the created Terraform Cloud/Enterprise Workspace](https://app.terraform.io/app/sll-osi/workspaces), use the left navigation and click `'Variables'`. Add the missing variables from the previous screen; due to the non-interactive design, the Terraform Input Varaible Descriptions are not shown and therefore the expected variables input must be read from the `variables.tf` file.
+  6. Return to the `'Runs'` page and click ***Actions > Start new run***. When prompted, it is suggested to use the run type drop-down as 'Plan only' as a first test, then afterwards use 'Plan and apply (standard)'. Click ***Start Run*** to begun the Terraform Template for SAP execution - which will provision to the infrastructure platform and perform the SAP Software installation.
+</details>
+
+
 ---
 
 ## Introduction
