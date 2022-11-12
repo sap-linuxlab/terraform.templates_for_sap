@@ -107,7 +107,7 @@ function sap_solution_scenario_choice()
                 ;;
             "SAP ECC on HANA - System Copy single node (Homogeneous with SAP HANA Backup / Recovery)")
                 echo ">>> Chosen option $REPLY: $opt_scenario"
-                sap_solution_scenario="sap_ecc_hana_system_copy_single_node"
+                sap_solution_scenario="sap_ecc_hana_single_node_system_copy_homogeneous_hdb"
                 break
                 ;;
             "SAP ECC on IBM DB2 - Install single node")
