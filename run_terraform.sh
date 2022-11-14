@@ -74,6 +74,8 @@ function sap_solution_scenario_choice()
         "SAP NetWeaver AS (ABAP) with Oracle DB - Install single node"
         "SAP NetWeaver AS (ABAP) with SAP ASE - Install single node"
         "SAP NetWeaver AS (ABAP) with SAP MaxDB - Install single node"
+        "SAP NetWeaver AS (JAVA) with IBM DB2 - Install single node"
+        "SAP NetWeaver AS (JAVA) with SAP ASE - Install single node"
         "Quit"
     )
 
@@ -153,6 +155,16 @@ function sap_solution_scenario_choice()
             "SAP NetWeaver AS (ABAP) with SAP MaxDB - Install single node")
                 echo ">>> Chosen option $REPLY: $opt_scenario"
                 sap_solution_scenario="sap_nwas_abap_sapmaxdb_install"
+                break
+                ;;
+            "SAP NetWeaver AS (JAVA) with IBM DB2 - Install single node")
+                echo ">>> Chosen option $REPLY: $opt_scenario"
+                sap_solution_scenario="sap_nwas_java_ibmdb2_install"
+                break
+                ;;
+            "SAP NetWeaver AS (JAVA) with SAP ASE - Install single node")
+                echo ">>> Chosen option $REPLY: $opt_scenario"
+                sap_solution_scenario="sap_nwas_java_sapase_install"
                 break
                 ;;
             "Quit")
