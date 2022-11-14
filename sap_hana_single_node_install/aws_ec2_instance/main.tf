@@ -37,6 +37,8 @@ module "run_account_init_module" {
 
   module_var_aws_vpc_subnet_create_boolean = local.aws_vpc_subnet_create_boolean
 
+  module_var_aws_vpc_availability_zone     = var.aws_vpc_availability_zone
+
 }
 
 
@@ -83,6 +85,8 @@ module "run_bastion_inject_module" {
   module_var_bastion_ssh_key_name    = module.run_account_bootstrap_module.output_bastion_ssh_key_name
   module_var_bastion_public_ssh_key  = module.run_account_bootstrap_module.output_bastion_public_ssh_key
   module_var_bastion_private_ssh_key = module.run_account_bootstrap_module.output_bastion_private_ssh_key
+
+  module_var_aws_vpc_availability_zone = var.aws_vpc_availability_zone
 
 }
 

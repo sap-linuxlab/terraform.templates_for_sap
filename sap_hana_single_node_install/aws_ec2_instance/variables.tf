@@ -11,8 +11,8 @@ variable "resource_prefix" {
   description = "Prefix to resource names"
 }
 
-variable "aws_region" {
-  description = "AWS Region"
+variable "aws_vpc_availability_zone" {
+  description = "Target AWS VPC Availability Zone (the AWS Region will be calculated from this value)"
 }
 
 variable "aws_vpc_subnet_id" {

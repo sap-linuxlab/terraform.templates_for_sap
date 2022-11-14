@@ -14,4 +14,6 @@ locals {
   # /proc/version contains WSL subsstring, if detected then running Windows Subsystem for Linux
   is_wsl = fileexists("/proc/version") ? length(regexall("WSL", file("/proc/version"))) > 0 ? true : false : false
 
+  aws_region = replace(var.aws_vpc_availability_zone,"/[a-c]$/","")
+
 }
