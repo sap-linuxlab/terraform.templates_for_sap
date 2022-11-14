@@ -11,7 +11,7 @@ locals {
       )
   ) ? true : false)
 
-  ibmcloud_vpc_availability_zone = "${var.ibmcloud_region}-1"
+  ibmcloud_region = replace(var.ibmcloud_vpc_availability_zone, "/-[^-]*$/", "")
 
   # Directories start with "C:..." on Windows; All other OSs use "/" for root.
   detect_windows = substr(pathexpand("~"), 0, 1) == "/" ? false : true
