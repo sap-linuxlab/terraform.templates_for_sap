@@ -44,8 +44,6 @@ module "run_account_init_module" {
   module_var_ibmcloud_vpc_subnet_create_boolean = local.ibmcloud_vpc_subnet_create_boolean
   module_var_ibmcloud_vpc_availability_zone     = var.ibmcloud_vpc_availability_zone
 
-  module_var_ibmcloud_api_key = var.ibmcloud_api_key
-
 }
 
 
