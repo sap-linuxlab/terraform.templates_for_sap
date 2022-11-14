@@ -33,7 +33,7 @@ module "run_host_bootstrap_module" {
     module.run_ansible_dry_run
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmpowervc/host_bootstrap?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmpowervc/host_bootstrap?ref=dev"
 
   # Set Terraform Module Variables using Terraform Variables at runtime
   module_var_resource_prefix = var.resource_prefix
@@ -43,7 +43,7 @@ module "run_host_bootstrap_module" {
 
 module "run_host_provision_module" {
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmpowervc/host_provision?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmpowervc/host_provision?ref=dev"
 
   # Set Terraform Module Variables using Terraform Variables at runtime
 
