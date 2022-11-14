@@ -27,6 +27,6 @@ provider "ibm" {
 
   # If using IBM Cloud Schematics, the Provider declaration values are populated automatically
 
-  region = var.ibmcloud_region
+  region = local.ibmcloud_region
 
 }

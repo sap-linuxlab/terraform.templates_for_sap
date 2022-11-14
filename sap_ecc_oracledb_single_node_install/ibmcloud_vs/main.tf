@@ -39,13 +39,9 @@ module "run_account_init_module" {
 
   module_var_resource_prefix = var.resource_prefix
 
-  module_var_ibmcloud_region = var.ibmcloud_region
-
   module_var_ibmcloud_vpc_subnet_name           = local.ibmcloud_vpc_subnet_create_boolean ? 0 : var.ibmcloud_vpc_subnet_name
   module_var_ibmcloud_vpc_subnet_create_boolean = local.ibmcloud_vpc_subnet_create_boolean
   module_var_ibmcloud_vpc_availability_zone     = local.ibmcloud_vpc_availability_zone
-
-  module_var_ibmcloud_api_key = var.ibmcloud_api_key
 
 }
 
@@ -60,8 +56,6 @@ module "run_account_bootstrap_module" {
 
   module_var_resource_group_id = module.run_account_init_module.output_resource_group_id
   module_var_resource_prefix   = var.resource_prefix
-
-  module_var_ibmcloud_region = var.ibmcloud_region
 
   module_var_ibmcloud_vpc_subnet_name           = local.ibmcloud_vpc_subnet_create_boolean ? module.run_account_init_module.output_vpc_subnet_name : var.ibmcloud_vpc_subnet_name
   module_var_ibmcloud_vpc_subnet_create_boolean = local.ibmcloud_vpc_subnet_create_boolean
@@ -100,8 +94,6 @@ module "run_bastion_inject_module" {
   module_var_resource_group_id = module.run_account_init_module.output_resource_group_id
   module_var_resource_prefix   = var.resource_prefix
   module_var_resource_tags     = var.resource_tags
-
-  module_var_ibmcloud_region = var.ibmcloud_region
 
   module_var_ibmcloud_vpc_subnet_name = local.ibmcloud_vpc_subnet_create_boolean ? module.run_account_init_module.output_vpc_subnet_name : var.ibmcloud_vpc_subnet_name
 

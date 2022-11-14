@@ -16,8 +16,8 @@ variable "ibmcloud_resource_group" {
   description = "Enter existing/target Resource Group name, or enter 'new' to create a Resource Group using the defined prefix for all resources"
 }
 
-variable "ibmcloud_region" {
-  description = "Target Region"
+variable "ibmcloud_vpc_availability_zone" {
+  description = "Target IBM Cloud Availability Zone (the IBM Cloud Region will be calculated from this value)"
 }
 
 variable "ibmcloud_iam_yesno" {
