@@ -148,19 +148,6 @@ The following is a list of Infrastructure Platforms and Operating System vendors
 - Red Hat Enterprise Linux for SAP Solutions (RHEL4SAP)
 - SUSE Linux Enterprise Server for SAP Applications (SLES4SAP)
 
-**Solution Architecture scenarios, provisioned via Ansible:**
-| Scenario | Description | Infrastructure Platform&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; |
-|:--- |:--- |:--- |
-| **SAP HANA 2.0 (any version)**<br/>single-node installation | Installation of SAP HANA Database Server to a single virtual machine on a Cloud or Hypervisor | <ul><li>:white_check_mark: AWS EC2</li><li>:x: GCP VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:white_check_mark: Microsoft Azure</li><li>:white_check_mark: IBM PowerVM LPAR</li><li>:x: OVirt VM</li><li>:x: VMware vSphere VM</li></ul> |
-| **SAP S/4HANA (2020, 2021)**<br/>single-node installation,<br/>using SAP Maintenance Planner | Installation of SAP S/4HANA using SAP HANA Database Server and SAP NetWeaver to a single virtual machine on a Cloud or Hypervisor | <ul><li>:white_check_mark: AWS EC2</li><li>:x: GCP VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:white_check_mark: Microsoft Azure</li><li>:white_check_mark: IBM PowerVM LPAR</li><li>:x: OVirt VM</li><li>:x: VMware vSphere VM</li></ul> |
-| **SAP S/4HANA (1909, 2020, 2021)**<br/>single-node System Copy installation</br>(Homogeneous with SAP HANA Backup / Recovery) | Installation of SAP S/4HANA from an SAP HANA data backup file using SAP HANA Database Server and SAP NetWeaver to a single virtual machine on a Cloud or Hypervisor | <ul><li>:warning: AWS EC2</li><li>:x: GCP VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:warning: Microsoft Azure</li><li>:warning: IBM PowerVM LPAR</li><li>:x: OVirt VM</li><li>:x: VMware vSphere VM</li></ul> |
-| **SAP ECC on SAP HANA (EHP7, EHP8)**<br/>single-node System Copy installation</br>(Homogeneous with SAP HANA Backup / Recovery) | Installation of SAP ECC from an SAP HANA data backup file using SAP HANA Database Server and SAP NetWeaver to a single virtual machine on a Cloud or Hypervisor | <ul><li>:warning: AWS EC2</li><li>:x: GCP VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:warning: Microsoft Azure</li><li>:warning: IBM PowerVM LPAR</li><li>:x: OVirt VM</li><li>:x: VMware vSphere VM</li></ul> |
-
-Key:
-- :white_check_mark: Ready and Tested
-- :warning: Pending work; either the Terraform Template has not been created/tested for this SAP solution scenario and infrastructure platform, or work is pending to underlying [Terraform Modules for SAP](https://github.com/sap-linuxlab/terraform.modules_for_sap)
-- :x: Not available yet
-
 **Future SAP solution scenarios:**
 
 There are various suggested/requested SAP solution scenarios under consideration by the SAP LinuxLab open-source team (across multiple SAP Technology Partners), which have been suggested from customers and SAP Service Partners.

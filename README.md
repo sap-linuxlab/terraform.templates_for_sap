@@ -16,7 +16,7 @@ These Terraform Templates for SAP are designed to be:
 
 # Terraform Templates for SAP - available scenarios
 
-| Scenario | Infrastructure Platform |
+| SAP Software solution scenario | Infrastructure Platform |
 |:--- |:--- |
 | **SAP HANA 2.0 (any version)**<br/>single-node installation | <sub><ul><li>:white_check_mark: AWS EC2</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:white_check_mark: Microsoft Azure</li><li>:white_check_mark: IBM PowerVM LPAR</li></ul>*Coming Soon: GCP VM, OVirt VM, VMware vSphere VM*</sub> |
 | **SAP S/4HANA (2020, 2021, 2022)**<br/>single-node installation | <sub><ul><li>:large_blue_circle: AWS EC2</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:large_blue_circle: IBM Cloud, Power VS</li><li>:large_blue_circle: Microsoft Azure</li><li>:large_blue_circle: IBM PowerVM LPAR</li></ul>*Coming Soon: GCP VM, OVirt VM, VMware vSphere VM*</sub> |
@@ -35,6 +35,13 @@ These Terraform Templates for SAP are designed to be:
 | **SAP NetWeaver AS (ABAP) with SAP MaxDB (7.50, 7.52)**<br/>single-node installation | <sub><ul><li>:large_blue_circle: AWS EC2</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:large_blue_circle: IBM Cloud, Power VS</li><li>:large_blue_circle: Microsoft Azure</li><li>:large_blue_circle: IBM PowerVM LPAR</li></ul>*Coming Soon: GCP VM, OVirt VM, VMware vSphere VM*</sub> |
 | **SAP NetWeaver AS (`JAVA`) with IBM Db2 (7.50)**<br/>single-node installation | <sub><ul><li>:large_blue_circle: AWS EC2</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:large_blue_circle: IBM Cloud, Power VS</li><li>:large_blue_circle: Microsoft Azure</li><li>:large_blue_circle: IBM PowerVM LPAR</li></ul>*Coming Soon: GCP VM, OVirt VM, VMware vSphere VM*</sub> |
 | **SAP NetWeaver AS (`JAVA`) with SAP ASE (7.50)**<br/>single-node installation | <sub><ul><li>:large_blue_circle: AWS EC2</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:large_blue_circle: IBM Cloud, Power VS</li><li>:large_blue_circle: Microsoft Azure</li><li>:large_blue_circle: IBM PowerVM LPAR</li></ul>*Coming Soon: GCP VM, OVirt VM, VMware vSphere VM*</sub> |
+
+
+<sub>**Key:**</sub>
+- :white_check_mark: <sub>Ready and Tested</sub>
+- :warning: <sub>Pending work; either the Terraform Template has not been created/tested for this SAP solution scenario and infrastructure platform, or work is pending to underlying [Terraform Modules for SAP](https://github.com/sap-linuxlab/terraform.modules_for_sap)</sub>
+- :x: <sub>Not available yet</sub>
+
 
 ## Disclaimer
 
