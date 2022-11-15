@@ -1,5 +1,3 @@
-resource_tags = ["sap", "sapnwas"]
-
 resource_prefix = "sap"
 
 dns_root_domain = "poc.cloud"
@@ -10,13 +8,15 @@ bastion_user = "bastionuser"
 
 bastion_ssh_port = 50222
 
-host_specification_plan = "small_32vcpu"
+host_specification_plan = "small_256gb"
 
 host_os_image = "rhel-8-4-sap-ha"
 
+disk_volume_capacity_software = 304
+
 sap_anydb_install_master_password = "NewPass@321"
 
-sap_anydb_install_sid = "DB2"
+sap_anydb_install_sid = "AS1"
 
 sap_anydb_install_instance_number = "10"
 
