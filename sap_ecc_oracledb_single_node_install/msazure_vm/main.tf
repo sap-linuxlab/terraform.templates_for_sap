@@ -284,11 +284,11 @@ module "run_host_provision_module" {
 }
 
 
-module "run_ansible_sap_ecc_sapase_install" {
+module "run_ansible_sap_ecc_oracledb_install" {
 
   depends_on = [module.run_host_provision_module]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap.git//all/ansible_sap_ecc_sapase_install?ref=dev"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap.git//all/ansible_sap_ecc_oracledb_install?ref=dev"
 
   # Terraform Module Variables using the prior Terraform Module Variables (from bootstrap module)
   module_var_bastion_boolean         = true // required as true boolean for any Cloud Service Provider (CSP)
@@ -316,7 +316,7 @@ module "run_ansible_sap_ecc_sapase_install" {
 
   module_var_sap_swpm_sid                     = var.sap_ecc_install_sid
 
-  module_var_sap_swpm_db_schema_abap          = "ABAP"
+  module_var_sap_swpm_db_schema_abap          = "SAPSR3" // Must be 6 characters
   module_var_sap_swpm_db_schema_abap_password = var.sap_anydb_install_master_password
   module_var_sap_swpm_db_system_password      = var.sap_anydb_install_master_password
   module_var_sap_swpm_db_systemdb_password    = var.sap_anydb_install_master_password

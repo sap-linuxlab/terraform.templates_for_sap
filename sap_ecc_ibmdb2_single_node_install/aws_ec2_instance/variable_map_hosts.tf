@@ -29,7 +29,7 @@ variable "map_host_specifications" {
         lvm_vg_data_alignment_anydb = "1M" //default 1MiB offset from disk start before first LVM VG Physical Extent.
         lvm_vg_physical_extent_size_anydb = "4M" //default 4MiB, difficult to change once set. Akin to Physical Block Size.
         lvm_lv_stripe_size_anydb = "64K" //default 64KiB. Akin to Virtualized Block Size.
-        filesystem_mount_path_anydb    = "/sybase"
+        filesystem_mount_path_anydb    = "/db2"
         filesystem_anydb               = "xfs"
         physical_partition_filesystem_block_size_anydb = "4k" // only if LVM is set to false; if XFS then only 4k value allowed otherwise will be overridden (see README about XFS and Page Size)
 
