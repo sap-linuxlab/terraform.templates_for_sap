@@ -1,7 +1,7 @@
 
 module "run_ansible_dry_run" {
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_nwas_java_ibmdb2_install?ref=dev"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap.git//all/ansible_sap_ecc_oracledb_install?ref=dev"
 
   module_var_dry_run_test = "x86_64" // x86_64 or ppc64le
 
@@ -107,8 +107,7 @@ module "run_host_network_access_sap_module" {
   module_var_aws_vpc_subnet_id = local.aws_vpc_subnet_create_boolean ? module.run_account_init_module.output_aws_vpc_subnet_id : var.aws_vpc_subnet_id
   module_var_host_security_group_id = module.run_account_bootstrap_module.output_host_security_group_id
 
-  module_var_sap_nwas_abap_pas_instance_no = ""
-  module_var_sap_nwas_java_ci_instance_no = var.sap_nwas_java_ci_instance_no
+  module_var_sap_nwas_abap_pas_instance_no = var.sap_nwas_abap_pas_instance_no
   module_var_sap_hana_instance_no     = ""
 
 }
@@ -129,8 +128,7 @@ module "run_host_network_access_sap_public_via_proxy_module" {
   module_var_bastion_sg_id = module.run_bastion_inject_module.output_bastion_security_group_id
   module_var_bastion_connection_sg_id = module.run_bastion_inject_module.output_bastion_connection_security_group_id
 
-  module_var_sap_nwas_abap_pas_instance_no = ""
-  module_var_sap_nwas_java_ci_instance_no = var.sap_nwas_java_ci_instance_no
+  module_var_sap_nwas_abap_pas_instance_no = var.sap_nwas_abap_pas_instance_no
   module_var_sap_hana_instance_no     = ""
 
 }
@@ -251,12 +249,11 @@ module "run_host_provision_module" {
 }
 
 
-module "run_ansible_sap_nwas_java_ibmdb2_install" {
+module "run_ansible_sap_ecc_oracledb_install" {
 
   depends_on = [module.run_host_provision_module]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_nwas_java_ibmdb2_install?ref=dev"
-
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap.git//all/ansible_sap_ecc_oracledb_install?ref=dev"
 
   # Terraform Module Variables using the prior Terraform Module Variables (from bootstrap module)
   module_var_bastion_boolean         = true // required as true boolean for any Cloud Service Provider (CSP)
@@ -282,16 +279,16 @@ module "run_ansible_sap_nwas_java_ibmdb2_install" {
   module_var_sap_anydb_install_sid             = var.sap_anydb_install_sid
   module_var_sap_anydb_install_instance_number = var.sap_anydb_install_instance_number
 
-  module_var_sap_swpm_sid                     = var.sap_nwas_install_sid
+  module_var_sap_swpm_sid                     = var.sap_ecc_install_sid
 
-  module_var_sap_swpm_db_schema_abap          = "SAPJAVA1"
+  module_var_sap_swpm_db_schema_abap          = "SAPSR3" // Must be 6 characters
   module_var_sap_swpm_db_schema_abap_password = var.sap_anydb_install_master_password
   module_var_sap_swpm_db_system_password      = var.sap_anydb_install_master_password
   module_var_sap_swpm_db_systemdb_password    = var.sap_anydb_install_master_password
   module_var_sap_swpm_db_sidadm_password      = var.sap_anydb_install_master_password
   module_var_sap_swpm_ddic_000_password       = var.sap_anydb_install_master_password
-
-  module_var_sap_swpm_nwas_java_instance_nr   = var.sap_nwas_java_ci_instance_no
+  module_var_sap_swpm_pas_instance_nr         = var.sap_nwas_abap_pas_instance_no
+  module_var_sap_swpm_ascs_instance_nr        = var.sap_nwas_abap_ascs_instance_no
 
   module_var_sap_swpm_master_password         = var.sap_anydb_install_master_password
 
