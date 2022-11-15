@@ -1,18 +1,20 @@
-resource_tags = ["sf88", "sapnwas"]
+resource_prefix = "sap"
 
-resource_prefix = "sf88"
+dns_root_domain = "poc.cloud"
 
-dns_root_domain = "sf88.cloud"
-
-bastion_os_image = "rhel-8-4"
+bastion_os_image = "rhel-8-4-sap-ha"
 
 bastion_user = "bastionuser"
 
 bastion_ssh_port = 50222
 
-host_specification_plan = "small_32vcpu"
+host_specification_plan = "small_256gb"
 
 host_os_image = "rhel-8-4-sap-ha"
+
+disk_volume_capacity_software = 304
+
+disk_volume_type_software = "gp3"
 
 sap_anydb_install_master_password = "NewPass@321"
 
