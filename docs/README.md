@@ -5,7 +5,7 @@
 It is recommended to fully read the README below for context and understanding, before you execute this code.
 
 To get started immediately, requirements:
-- Infrastructure Platform credentials and required authorizations (see [Infrastructure Guidance](./docs/INFRASTRUCTURE_GUIDANCE.md)); depending on choice may require OS Vendor subscription
+- Infrastructure Platform credentials and required authorizations (see [Infrastructure Guidance](./DEV_INFRASTRUCTURE_GUIDANCE.md)); depending on choice may require OS Vendor subscription
 - SAP ONE Support Launchpad credentials, with Software Download privileges
 - Terraform and Ansible installed
 - Optional, depending on choice SAP solution scenario: SAP System Copy backup file
@@ -121,12 +121,12 @@ Segregation of definitions for the Infrastructure and SAP Software follows the s
 - Ansible defines the SAP Software installation / SAP System templates
 
 An overview of the execution flow is provided in the image below, for full details please see:
-- [the Execution Flow documentation](/docs/EXECUTION_FLOW.md)
-- [the Infrastructure Platform guidance to use Terraform Templates for SAP](/docs/INFRASTRUCTURE_GUIDANCE.md)
-- [the FAQ, includes information for customized deployments of SAP Software solution scenarios](/docs/FAQ.md)
+- [the Execution Flow documentation](./DEV_EXECUTION_FLOW.md)
+- [the Infrastructure Platform guidance to use Terraform Templates for SAP](./DEV_INFRASTRUCTURE_GUIDANCE.md)
+- [the FAQ, includes information for customized deployments of SAP Software solution scenarios](./FAQ.md)
 - [the detailed documentation in Terraform Modules for SAP](https://github.com/sap-linuxlab/terraform.modules_for_sap)
 
-![Terraform execution flow](./docs/terraform_sap_infrastructure_exec_flow.svg)
+![Terraform execution flow](./terraform_sap_infrastructure_exec_flow.svg)
 
 ## Available SAP solution scenarios and Infrastructure Platforms
 
@@ -167,7 +167,7 @@ There are various suggested/requested SAP solution scenarios under consideration
 
 While the Ansible Collections for SAP are compatbile with almost any installation (e.g. SAP SolMan, SAP WebDispatcher, SAP BW/4HANA) - our focus in this project is to provide a common end-to-end automated deployment for common scenarios, therefore we are unable to working code for all combinations. For additional detail, see [Disclaimer](#disclaimer) section.
 
-Any contributors who would are available for development and testing of these proposed future SAP solution scenarios in this project are greatly welcomed, please read the [Contributors document](/docs/CONTRIBUTORS.md). As described in the SAP LinuxLab initiative governance processes, any customer or SAP Partner may submit proposals of new code or direction.
+Any contributors who would are available for development and testing of these proposed future SAP solution scenarios in this project are greatly welcomed, please read the [Contributors document](./DEV_CONTRIBUTORS.md). As described in the SAP LinuxLab initiative governance processes, any customer or SAP Partner may submit proposals of new code or direction.
 
 The following list is **`not`** a commitment but is a statement of intent beyond the initial release, the terraform.templates_for_sap project seeks to include in future:
 
