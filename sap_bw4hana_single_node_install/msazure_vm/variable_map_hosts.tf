@@ -1,7 +1,7 @@
 
 variable "map_host_specifications" {
 
-  description = "Map of host specficiations for SAP S/4HANA single node install"
+  description = "Map of host specficiations for SAP BW/4HANA single node install"
 
   type = map(any)
 
@@ -9,7 +9,7 @@ variable "map_host_specifications" {
 
     small_256gb = {
 
-      s4h01 = {  // Hostname
+      bwh01 = {  // Hostname
         vm_instance = "Standard_M32ls"
 
         // N.B. all capacities must be different from each other, due to Shell loop searching based on capacity GB
