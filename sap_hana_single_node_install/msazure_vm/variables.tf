@@ -16,27 +16,31 @@ variable "az_app_client_secret" {
 }
 
 variable "resource_prefix" {
-  description = "Prefix to resources"
+  description = "Enter prefix to resource names"
 }
 
 variable "az_resource_group_name" {
-  description = "Azure Resource Group Name, enter existing/target Resource Group name or enter 'new' to create a Resource Group"
+  description = "Enter existing/target Azure Resource Group name, or enter 'new' to create a Resource Group using the defined prefix for all resources"
 }
 
-variable "az_region" {
-  description = "Azure Region aka. Azure Location Display Name (e.g. 'West Europe')"
+variable "az_location_region" {
+  description = "Target Azure Region aka. Azure Location Display Name (e.g. 'West Europe')"
+}
+
+variable "az_location_availability_zone_no" {
+  description = "Target Azure Availability Zone (e.g. 1)"
 }
 
 variable "az_vnet_name" {
-  description = "Azure VNet name (cannot be 'new' if using existing VNet Subnet)"
+  description = "Enter existing/target Azure VNet name, or enter 'new' to create a VPC with a default VPC Address Prefix Range (cannot be 'new' if using existing VNet Subnet)"
 }
 
 variable "az_vnet_subnet_name" {
-  description = "Azure VNet Subnet name (if using existing VNet, ensure default subnet range matches to VNet address space and does not conflict with existing Subnet)"
+  description = "Enter existing/target Azure VNet Subnet name, or enter 'new' to create a VPC with a default VPC Address Prefix Range (if using existing VNet, ensure default subnet range matches to VNet address space and does not conflict with existing Subnet)"
 }
 
 variable "dns_root_domain" {
-  description = "Root Domain for Private DNS used with the Virtual Server"
+  description = "Root Domain for Private DNS used with the Virtual Machine"
 }
 
 variable "bastion_os_image" {

@@ -36,8 +36,8 @@ module "run_account_init_module" {
 
   module_var_resource_prefix = var.resource_prefix
 
-  module_var_az_region               = var.az_region
-  module_var_az_availability_zone_no = local.az_availability_zone_no
+  module_var_az_location_region               = var.az_location_region
+  module_var_az_location_availability_zone_no = var.az_location_availability_zone_no
 
   module_var_az_vnet_name                = local.az_vnet_name_create_boolean ? 0 : var.az_vnet_name
   module_var_az_vnet_name_create_boolean = local.az_vnet_name_create_boolean
@@ -59,8 +59,8 @@ module "run_account_bootstrap_module" {
   module_var_az_resource_group_name = module.run_account_init_module.output_resource_group_name
   module_var_resource_prefix        = var.resource_prefix
 
-  module_var_az_region               = var.az_region
-  module_var_az_availability_zone_no = local.az_availability_zone_no
+  module_var_az_location_region               = var.az_location_region
+  module_var_az_location_availability_zone_no = var.az_location_availability_zone_no
 
   module_var_az_vnet_name        = module.run_account_init_module.output_vnet_name
   module_var_az_vnet_subnet_name = module.run_account_init_module.output_vnet_subnet_name
@@ -97,8 +97,8 @@ module "run_bastion_inject_module" {
   module_var_az_resource_group_name = module.run_account_init_module.output_resource_group_name
   module_var_resource_prefix        = var.resource_prefix
 
-  module_var_az_region               = var.az_region
-  module_var_az_availability_zone_no = local.az_availability_zone_no
+  module_var_az_location_region               = var.az_location_region
+  module_var_az_location_availability_zone_no = var.az_location_availability_zone_no
 
   module_var_az_vnet_name        = module.run_account_init_module.output_vnet_name
   module_var_az_vnet_subnet_name = module.run_account_init_module.output_vnet_subnet_name
@@ -174,8 +174,8 @@ module "run_host_provision_module" {
   module_var_az_resource_group_name = module.run_account_init_module.output_resource_group_name
   module_var_resource_prefix        = var.resource_prefix
 
-  module_var_az_region               = var.az_region
-  module_var_az_availability_zone_no = local.az_availability_zone_no
+  module_var_az_location_region               = var.az_location_region
+  module_var_az_location_availability_zone_no = var.az_location_availability_zone_no
 
   module_var_az_vnet_name        = module.run_account_init_module.output_vnet_name
   module_var_az_vnet_subnet_name = module.run_account_init_module.output_vnet_subnet_name
