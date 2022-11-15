@@ -1,46 +1,26 @@
 
-variable "az_tenant_id" {
-  description = "Azure Tenant ID"
+variable "aws_access_key" {
+  description = "AWS Access Key"
 }
 
-variable "az_subscription_id" {
-  description = "Azure Subscription ID"
-}
-
-variable "az_app_client_id" {
-  description = "Azure AD App Client ID"
-}
-
-variable "az_app_client_secret" {
-  description = "Azure AD App Client Secret"
+variable "aws_secret_key" {
+  description = "AWS Secret Key"
 }
 
 variable "resource_prefix" {
-  description = "Enter prefix to resource names"
+  description = "Prefix to resource names"
 }
 
-variable "az_resource_group_name" {
-  description = "Enter existing/target Azure Resource Group name, or enter 'new' to create a Resource Group using the defined prefix for all resources"
+variable "aws_vpc_availability_zone" {
+  description = "Target AWS VPC Availability Zone (the AWS Region will be calculated from this value)"
 }
 
-variable "az_location_region" {
-  description = "Target Azure Region aka. Azure Location Display Name (e.g. 'West Europe')"
-}
-
-variable "az_location_availability_zone_no" {
-  description = "Target Azure Availability Zone (e.g. 1)"
-}
-
-variable "az_vnet_name" {
-  description = "Enter existing/target Azure VNet name, or enter 'new' to create a VPC with a default VPC Address Prefix Range (cannot be 'new' if using existing VNet Subnet)"
-}
-
-variable "az_vnet_subnet_name" {
-  description = "Enter existing/target Azure VNet Subnet name, or enter 'new' to create a VPC with a default VPC Address Prefix Range (if using existing VNet, ensure default subnet range matches to VNet address space and does not conflict with existing Subnet)"
+variable "aws_vpc_subnet_id" {
+  description = "Enter existing/target VPC Subnet ID, or enter 'new' to create a VPC with a default VPC prefix range"
 }
 
 variable "dns_root_domain" {
-  description = "Root Domain for Private DNS used with the Virtual Machine"
+  description = "Root Domain for Private DNS used with the Virtual Server"
 }
 
 variable "bastion_os_image" {
@@ -74,6 +54,10 @@ variable "disk_volume_capacity_software" {
   description = "Disk volume capacity for downloads of SAP Software"
 }
 
+variable "disk_volume_type_software" {
+  description = "Disk volume type for downloads of SAP Software"
+}
+
 variable "sap_software_download_directory" {
   description = "Mount point for downloads of SAP Software"
 
@@ -83,6 +67,7 @@ variable "sap_software_download_directory" {
   }
 
 }
+
 
 
 variable "sap_id_user" {
@@ -111,12 +96,12 @@ variable "sap_hana_install_instance_number" {
 
 }
 
-variable "sap_bw4hana_install_sid" {
-  description = "Ansible - SAP BW/4HANA install: System ID (e.g. W01)"
+variable "sap_s4hana_install_sid" {
+  description = "Ansible - SAP S/4HANA install: System ID (e.g. S01)"
 }
 
 variable "sap_swpm_template_selected" {
-  description = "Ansible - Select template to use: sap_bw4hana_2021_onehost_install"
+  description = "Ansible - Select template to use: sap_s4hana_2020_onehost_install, sap_s4hana_2021_onehost_install, sap_s4hana_2022_onehost_install"
 }
 
 variable "sap_nwas_abap_ascs_instance_no" {

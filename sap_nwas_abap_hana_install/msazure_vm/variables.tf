@@ -111,12 +111,16 @@ variable "sap_hana_install_instance_number" {
 
 }
 
-variable "sap_bw4hana_install_sid" {
-  description = "Ansible - SAP BW/4HANA install: System ID (e.g. W01)"
+variable "sap_s4hana_install_sid" {
+  description = "Ansible - SAP S/4HANA install: System ID (e.g. S01)"
+}
+
+variable "sap_maintenance_planner_transaction_name" {
+  description = "Ansible - SAP Maintenance Planner Transaction name for SAP S/4HANA, required to perform download of this stack"
 }
 
 variable "sap_swpm_template_selected" {
-  description = "Ansible - Select template to use: sap_bw4hana_2021_onehost_install"
+  description = "Ansible - Select template to use: sap_s4hana_2020_onehost_install, sap_s4hana_2021_onehost_install, sap_s4hana_2022_onehost_install"
 }
 
 variable "sap_nwas_abap_ascs_instance_no" {
