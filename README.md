@@ -12,6 +12,10 @@ These Terraform Templates for SAP are designed to be:
 
 **Please read the [full documentation](/docs#readme) for how-to guidance, requirements, and all other details**
 
+**Summary diagram:**
+
+![Terraform execution flow](./docs/terraform_sap_summary.svg)
+
 ---
 
 # Terraform Templates for SAP - available scenarios
@@ -28,7 +32,7 @@ These Terraform Templates for SAP are designed to be:
 | **SAP ECC on Oracle DB (EHP7, EHP8)**<br/>single-node installation | <sub><ul><li>:large_blue_circle: AWS EC2</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:large_blue_circle: IBM Cloud, Power VS</li><li>:large_blue_circle: Microsoft Azure</li><li>:large_blue_circle: IBM PowerVM LPAR</li></ul>*Coming Soon: GCP VM, OVirt VM, VMware vSphere VM*</sub> |
 | **SAP ECC on SAP ASE (EHP7, EHP8)**<br/>single-node installation | <sub><ul><li>:large_blue_circle: AWS EC2</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:large_blue_circle: IBM Cloud, Power VS</li><li>:large_blue_circle: Microsoft Azure</li><li>:large_blue_circle: IBM PowerVM LPAR</li></ul>*Coming Soon: GCP VM, OVirt VM, VMware vSphere VM*</sub> |
 | **SAP ECC on SAP MaxDB (EHP7, EHP8)**<br/>single-node installation | <sub><ul><li>:large_blue_circle: AWS EC2</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:large_blue_circle: IBM Cloud, Power VS</li><li>:large_blue_circle: Microsoft Azure</li><li>:large_blue_circle: IBM PowerVM LPAR</li></ul>*Coming Soon: GCP VM, OVirt VM, VMware vSphere VM*</sub> |
-| **SAP NetWeaver AS (ABAP) with SAP HANA (7.50, 7.52)**<br/>single-node installation | <sub><ul><li>:large_blue_circle: AWS EC2</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:large_blue_circle: IBM Cloud, Power VS</li><li>:large_blue_circle: Microsoft Azure</li><li>:large_blue_circle: IBM PowerVM LPAR</li></ul>*Coming Soon: GCP VM, OVirt VM, VMware vSphere VM*</sub> |
+| **SAP NetWeaver AS (ABAP) with SAP HANA (7.50, 7.52)**<br/>single-node installation | <sub><ul><li>:white_check_mark: AWS EC2</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:large_blue_circle: IBM Cloud, Power VS</li><li>:white_check_mark: Microsoft Azure</li><li>:large_blue_circle: IBM PowerVM LPAR</li></ul>*Coming Soon: GCP VM, OVirt VM, VMware vSphere VM*</sub> |
 | **SAP NetWeaver AS (ABAP) with IBM Db2 (7.50, 7.52)**<br/>single-node installation | <sub><ul><li>:large_blue_circle: AWS EC2</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:large_blue_circle: IBM Cloud, Power VS</li><li>:large_blue_circle: Microsoft Azure</li><li>:large_blue_circle: IBM PowerVM LPAR</li></ul>*Coming Soon: GCP VM, OVirt VM, VMware vSphere VM*</sub> |
 | **SAP NetWeaver AS (ABAP) with Oracle DB (7.50, 7.52)**<br/>single-node installation | <sub><ul><li>:large_blue_circle: AWS EC2</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:large_blue_circle: IBM Cloud, Power VS</li><li>:large_blue_circle: Microsoft Azure</li><li>:large_blue_circle: IBM PowerVM LPAR</li></ul>*Coming Soon: GCP VM, OVirt VM, VMware vSphere VM*</sub> |
 | **SAP NetWeaver AS (ABAP) with SAP ASE (7.50, 7.52)**<br/>single-node installation | <sub><ul><li>:large_blue_circle: AWS EC2</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:large_blue_circle: IBM Cloud, Power VS</li><li>:large_blue_circle: Microsoft Azure</li><li>:large_blue_circle: IBM PowerVM LPAR</li></ul>*Coming Soon: GCP VM, OVirt VM, VMware vSphere VM*</sub> |
