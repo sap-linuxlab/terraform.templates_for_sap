@@ -69,6 +69,7 @@ variable "sap_software_download_directory" {
 }
 
 
+
 variable "sap_id_user" {
   description = "Ansible - Please enter your SAP ID user (e.g. S-User)"
 }
@@ -82,7 +83,7 @@ variable "sap_anydb_install_master_password" {
 }
 
 variable "sap_anydb_install_sid" {
-  description = "Ansible - SAP AnyDB install: System ID (e.g. MX1)"
+  description = "Ansible - SAP AnyDB install: System ID (e.g. AS1)"
 }
 
 variable "sap_anydb_install_instance_number" {
@@ -97,29 +98,19 @@ variable "sap_anydb_install_instance_number" {
 
 
 variable "sap_swpm_template_selected" {
-  description = "Ansible - Select template to use: sap_nwas_752_sp00_abap_sapmaxdb_onehost, sap_nwas_750_sp00_abap_sapmaxdb_onehost"
+  description = "Ansible - Select template to use: sap_nwas_750_sp22_java_sapase_onehost_ads"
 }
 
 variable "sap_nwas_install_sid" {
   description = "Ansible - SAP NetWeaver AS (ABAP) install: System ID (e.g. N01)"
 }
 
-variable "sap_nwas_abap_ascs_instance_no" {
-  description = "Ansible - SAP NetWeaver AS (ABAP) - ABAP Central Services (ASCS) instance number"
+variable "sap_nwas_java_ci_instance_no" {
+  description = "Ansible - SAP NetWeaver AS (JAVA) - JAVA Central Instance (CI) instance number"
 
   validation {
     error_message = "Cannot use Instance Number 43 (HA port number) or 89 (Windows Remote Desktop Services)."
-    condition = !can(regex("(43|89)", var.sap_nwas_abap_ascs_instance_no))
-  }
-
-}
-
-variable "sap_nwas_abap_pas_instance_no" {
-  description = "Ansible - SAP NetWeaver AS (ABAP) - Primary Application Server instance number"
-
-  validation {
-    error_message = "Cannot use Instance Number 43 (HA port number) or 89 (Windows Remote Desktop Services)."
-    condition = !can(regex("(43|89)", var.sap_nwas_abap_pas_instance_no))
+    condition = !can(regex("(43|89)", var.sap_nwas_java_ci_instance_no))
   }
 
 }
