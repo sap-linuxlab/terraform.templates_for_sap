@@ -1,7 +1,7 @@
 
 module "run_ansible_dry_run" {
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_s4hana_install_maintplan?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_s4hana_install_maintplan?ref=0.7.0"
 
   module_var_dry_run_test = "x86_64" // x86_64 or ppc64le
 
@@ -33,15 +33,15 @@ module "run_account_init_module" {
     module.run_ansible_dry_run
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/account_init?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/account_init?ref=0.7.0"
 
   module_var_az_resource_group_name           = local.resource_group_create_boolean ? 0 : var.az_resource_group_name
   module_var_az_resource_group_create_boolean = local.resource_group_create_boolean
 
   module_var_resource_prefix = var.resource_prefix
 
-  module_var_az_region               = var.az_region
-  module_var_az_availability_zone_no = local.az_availability_zone_no
+  module_var_az_location_region               = var.az_location_region
+  module_var_az_location_availability_zone_no = var.az_location_availability_zone_no
 
   module_var_az_vnet_name                = local.az_vnet_name_create_boolean ? 0 : var.az_vnet_name
   module_var_az_vnet_name_create_boolean = local.az_vnet_name_create_boolean
@@ -58,13 +58,13 @@ module "run_account_bootstrap_module" {
     module.run_account_init_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/account_bootstrap?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/account_bootstrap?ref=0.7.0"
 
   module_var_az_resource_group_name = module.run_account_init_module.output_resource_group_name
   module_var_resource_prefix        = var.resource_prefix
 
-  module_var_az_region               = var.az_region
-  module_var_az_availability_zone_no = local.az_availability_zone_no
+  module_var_az_location_region               = var.az_location_region
+  module_var_az_location_availability_zone_no = var.az_location_availability_zone_no
 
   module_var_az_vnet_name        = module.run_account_init_module.output_vnet_name
   module_var_az_vnet_subnet_name = module.run_account_init_module.output_vnet_subnet_name
@@ -81,7 +81,7 @@ module "run_account_bootstrap_module" {
 #
 #  count = var.az_iam_yesno == "yes" ? 1 : 0
 #
-#  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/account_iam?ref=main"
+#  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/account_iam?ref=0.7.0"
 #
 #  module_var_az_resource_group_name = module.run_account_init_module.output_resource_group_name
 #  module_var_resource_prefix = var.resource_prefix
@@ -96,13 +96,13 @@ module "run_bastion_inject_module" {
     module.run_account_bootstrap_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/bastion_inject?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/bastion_inject?ref=0.7.0"
 
   module_var_az_resource_group_name = module.run_account_init_module.output_resource_group_name
   module_var_resource_prefix        = var.resource_prefix
 
-  module_var_az_region               = var.az_region
-  module_var_az_availability_zone_no = local.az_availability_zone_no
+  module_var_az_location_region               = var.az_location_region
+  module_var_az_location_availability_zone_no = var.az_location_availability_zone_no
 
   module_var_az_vnet_name        = module.run_account_init_module.output_vnet_name
   module_var_az_vnet_subnet_name = module.run_account_init_module.output_vnet_subnet_name
@@ -126,7 +126,7 @@ module "run_host_network_access_sap_module" {
     module.run_bastion_inject_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/host_network_access_sap?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/host_network_access_sap?ref=0.7.0"
 
   module_var_az_resource_group_name = module.run_account_init_module.output_resource_group_name
 
@@ -146,7 +146,7 @@ module "run_host_network_access_sap_public_via_proxy_module" {
     module.run_bastion_inject_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/host_network_access_sap_public_via_proxy?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/host_network_access_sap_public_via_proxy?ref=0.7.0"
 
   module_var_az_resource_group_name = module.run_account_init_module.output_resource_group_name
 
@@ -158,7 +158,7 @@ module "run_host_network_access_sap_public_via_proxy_module" {
   module_var_bastion_security_group_name            = module.run_bastion_inject_module.output_bastion_security_group_name
   module_var_bastion_connection_security_group_name = module.run_bastion_inject_module.output_bastion_connection_security_group_name
 
-  module_var_sap_nwas_pas_instance_no = var.sap_nwas_pas_instance_no
+  module_var_sap_nwas_abap_pas_instance_no = var.sap_nwas_abap_pas_instance_no
   module_var_sap_hana_instance_no     = var.sap_hana_install_instance_number
 
 }
@@ -172,14 +172,14 @@ module "run_host_provision_module" {
     module.run_bastion_inject_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/host_provision?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/host_provision?ref=0.7.0"
 
 
   module_var_az_resource_group_name = module.run_account_init_module.output_resource_group_name
   module_var_resource_prefix        = var.resource_prefix
 
-  module_var_az_region               = var.az_region
-  module_var_az_availability_zone_no = local.az_availability_zone_no
+  module_var_az_location_region               = var.az_location_region
+  module_var_az_location_availability_zone_no = var.az_location_availability_zone_no
 
   module_var_az_vnet_name        = module.run_account_init_module.output_vnet_name
   module_var_az_vnet_subnet_name = module.run_account_init_module.output_vnet_subnet_name
@@ -286,7 +286,7 @@ module "run_ansible_sap_s4hana_install_maintplan" {
 
   depends_on = [module.run_host_provision_module]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_s4hana_install_maintplan?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_s4hana_install_maintplan?ref=0.7.0"
 
   # Terraform Module Variables using the prior Terraform Module Variables (from bootstrap module)
   module_var_bastion_boolean         = true // required as true boolean for any Cloud Service Provider (CSP)
@@ -321,8 +321,8 @@ module "run_ansible_sap_s4hana_install_maintplan" {
   module_var_sap_swpm_db_systemdb_password    = var.sap_hana_install_master_password
   module_var_sap_swpm_db_sidadm_password      = var.sap_hana_install_master_password
   module_var_sap_swpm_ddic_000_password       = var.sap_hana_install_master_password
-  module_var_sap_swpm_pas_instance_nr         = var.sap_nwas_pas_instance_no
-  module_var_sap_swpm_ascs_instance_nr        = var.sap_nwas_ascs_instance_no
+  module_var_sap_swpm_pas_instance_nr         = var.sap_nwas_abap_pas_instance_no
+  module_var_sap_swpm_ascs_instance_nr        = var.sap_nwas_abap_ascs_instance_no
 
   module_var_sap_swpm_master_password         = var.sap_hana_install_master_password
 

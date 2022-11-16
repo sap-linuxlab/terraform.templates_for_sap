@@ -18,6 +18,6 @@ sap_hana_install_master_password = "NewPass$321"
 
 sap_hana_install_sid = "H01"
 
-sap_hana_install_instance_number = "00"
+sap_hana_install_instance_number = "10"
 
 sap_software_download_directory = "/software"

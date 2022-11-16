@@ -24,6 +24,6 @@ provider "aws" {
   # Define Provider inputs from given Terraform Variables
   access_key = var.aws_access_key
   secret_key = var.aws_secret_key
-  region     = var.aws_region
+  region     = local.aws_region
 
 }

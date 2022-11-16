@@ -9,7 +9,7 @@ variable "map_host_specifications" {
 
     small_256gb = {
 
-      ecc01 = {
+      ecc01 = { // Hostname
         virtual_server_profile = "ush1-4x256"
 
         // N.B. all capacities must be different from each other, due to Shell loop searching based on capacity GB

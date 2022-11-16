@@ -51,7 +51,7 @@ variable "bastion_ssh_port" {
 }
 
 variable "host_specification_plan" {
-  description = "Host specification plans are small_256gb, small_256gb_ha. This variable uses the locals mapping with a nested list of host specifications, and will alter host provisioning."
+  description = "Host specification plans are small_256gb. This variable uses the locals mapping with a nested list of host specifications, and will alter host provisioning."
 }
 
 variable "host_os_image" {
@@ -149,22 +149,22 @@ variable "sap_swpm_template_selected" {
   description = "Ansible - Select template to use: sap_ecc6_ehp7_hana_onehost_system_copy"
 }
 
-variable "sap_nwas_ascs_instance_no" {
+variable "sap_nwas_abap_ascs_instance_no" {
   description = "Ansible - SAP NetWeaver AS (ABAP) - ABAP Central Services (ASCS) instance number"
 
   validation {
     error_message = "Cannot use Instance Number 43 (HA port number) or 89 (Windows Remote Desktop Services)."
-    condition = !can(regex("(43|89)", var.sap_nwas_ascs_instance_no))
+    condition = !can(regex("(43|89)", var.sap_nwas_abap_ascs_instance_no))
   }
 
 }
 
-variable "sap_nwas_pas_instance_no" {
+variable "sap_nwas_abap_pas_instance_no" {
   description = "Ansible - SAP NetWeaver AS (ABAP) - Primary Application Server instance number"
 
   validation {
     error_message = "Cannot use Instance Number 43 (HA port number) or 89 (Windows Remote Desktop Services)."
-    condition = !can(regex("(43|89)", var.sap_nwas_pas_instance_no))
+    condition = !can(regex("(43|89)", var.sap_nwas_abap_pas_instance_no))
   }
 
 }

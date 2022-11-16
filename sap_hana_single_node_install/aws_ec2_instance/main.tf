@@ -1,7 +1,7 @@
 
 module "run_ansible_dry_run" {
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_hana_install?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_hana_install?ref=0.7.0"
 
   module_var_dry_run_test = "x86_64" // x86_64 or ppc64le
 
@@ -29,13 +29,15 @@ module "run_account_init_module" {
     module.run_ansible_dry_run
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//aws_ec2_instance/account_init?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//aws_ec2_instance/account_init?ref=0.7.0"
 
   module_var_resource_prefix = var.resource_prefix
 
   module_var_aws_vpc_subnet_id = var.aws_vpc_subnet_id
 
   module_var_aws_vpc_subnet_create_boolean = local.aws_vpc_subnet_create_boolean
+
+  module_var_aws_vpc_availability_zone     = var.aws_vpc_availability_zone
 
 }
 
@@ -46,7 +48,7 @@ module "run_account_bootstrap_module" {
     module.run_account_init_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//aws_ec2_instance/account_bootstrap?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//aws_ec2_instance/account_bootstrap?ref=0.7.0"
 
   module_var_resource_prefix = var.resource_prefix
 
@@ -70,7 +72,7 @@ module "run_bastion_inject_module" {
     module.run_account_bootstrap_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//aws_ec2_instance/bastion_inject?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//aws_ec2_instance/bastion_inject?ref=0.7.0"
 
   module_var_resource_prefix = var.resource_prefix
 
@@ -84,6 +86,8 @@ module "run_bastion_inject_module" {
   module_var_bastion_public_ssh_key  = module.run_account_bootstrap_module.output_bastion_public_ssh_key
   module_var_bastion_private_ssh_key = module.run_account_bootstrap_module.output_bastion_private_ssh_key
 
+  module_var_aws_vpc_availability_zone = var.aws_vpc_availability_zone
+
 }
 
 
@@ -93,7 +97,7 @@ module "run_host_network_access_sap_module" {
     module.run_bastion_inject_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//aws_ec2_instance/host_network_access_sap?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//aws_ec2_instance/host_network_access_sap?ref=0.7.0"
 
   module_var_resource_prefix = var.resource_prefix
 
@@ -111,7 +115,7 @@ module "run_host_network_access_sap_public_via_proxy_module" {
     module.run_bastion_inject_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//aws_ec2_instance/host_network_access_sap_public_via_proxy?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//aws_ec2_instance/host_network_access_sap_public_via_proxy?ref=0.7.0"
 
   module_var_resource_prefix = var.resource_prefix
 
@@ -133,7 +137,7 @@ module "run_host_provision_module" {
     module.run_bastion_inject_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//aws_ec2_instance/host_provision?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//aws_ec2_instance/host_provision?ref=0.7.0"
 
   # Set Terraform Module Variables using Terraform Variables at runtime
 
@@ -236,6 +240,8 @@ module "run_host_provision_module" {
   module_var_disk_volume_capacity_software   = var.disk_volume_capacity_software
   module_var_sap_software_download_directory = var.sap_software_download_directory
 
+  module_var_disable_ip_anti_spoofing = false
+
 }
 
 
@@ -243,7 +249,7 @@ module "run_ansible_sap_hana_install" {
 
   depends_on = [module.run_host_provision_module]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_hana_install?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_hana_install?ref=0.7.0"
 
   # Terraform Module Variables using the prior Terraform Module Variables (from bootstrap module)
   module_var_bastion_boolean         = true // required as true boolean for any Cloud Service Provider (CSP)
