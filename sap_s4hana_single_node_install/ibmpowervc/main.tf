@@ -151,12 +151,11 @@ module "run_ansible_sap_s4hana_install" {
   source = "github.com/sap-linuxlab/terraform.modules_for_sap.git//all/ansible_sap_s4hana_install?ref=dev"
 
   # Terraform Module Variables using the prior Terraform Module Variables (from bootstrap module)
-  module_var_bastion_boolean         = true // required as true boolean for any Cloud Service Provider (CSP)
-  module_var_bastion_user            = var.bastion_user
-  module_var_bastion_ssh_port        = var.bastion_ssh_port
-  module_var_bastion_private_ssh_key = module.run_account_bootstrap_module.output_bastion_private_ssh_key
-
-  module_var_bastion_floating_ip = module.run_bastion_inject_module.output_bastion_ip
+  module_var_bastion_boolean         = var.bastion_boolean
+  module_var_bastion_user            = var.bastion_boolean ? var.bastion_user : ""
+  module_var_bastion_ssh_port        = var.bastion_boolean ? var.bastion_ssh_port : 0
+  module_var_bastion_private_ssh_key = var.bastion_boolean ? var.bastion_private_ssh_key : 0
+  module_var_bastion_floating_ip     = var.bastion_boolean ? var.bastion_ip : 0
 
   module_var_host_private_ssh_key = module.run_account_bootstrap_module.output_host_private_ssh_key
 

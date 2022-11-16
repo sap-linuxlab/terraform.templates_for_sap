@@ -206,7 +206,7 @@ module "run_powervs_interconnect_proxy_provision_module" {
 }
 
 
-module "run_powervs_host_provision_module" {
+module "run_host_provision_module" {
 
   depends_on = [
     module.run_account_init_module,

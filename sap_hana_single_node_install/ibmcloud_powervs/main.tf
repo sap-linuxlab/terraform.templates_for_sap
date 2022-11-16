@@ -202,7 +202,7 @@ module "run_powervs_interconnect_proxy_provision_module" {
 }
 
 
-module "run_powervs_host_provision_module" {
+module "run_host_provision_module" {
 
   depends_on = [
     module.run_account_init_module,
@@ -323,7 +323,7 @@ module "run_powervs_host_provision_module" {
 
 module "run_ansible_sap_hana_install" {
 
-  depends_on = [module.run_powervs_host_provision_module]
+  depends_on = [module.run_host_provision_module]
 
   source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_hana_install?ref=dev"
 
@@ -339,7 +339,7 @@ module "run_ansible_sap_hana_install" {
 
   # Set Terraform Module Variables using for_each loop on a map Terraform Variable at runtime
 
-  for_each                   = module.run_powervs_host_provision_module
+  for_each                   = module.run_host_provision_module
   module_var_host_private_ip = join(", ", each.value.*.output_host_private_ip)
   module_var_hostname        = join(", ", each.value.*.output_host_name)
 
