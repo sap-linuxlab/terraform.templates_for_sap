@@ -69,6 +69,7 @@ To get started immediately, requirements:
   <summary><b>Hosted - Execution from Terraform Cloud or Terraform Enterprise:</b></summary>
   
   It is also possible to re-use the Terraform Templates for SAP with Terraform Cloud or Terraform Enterprise:
+
   1. Add any Terraform Template for SAP into the git repository
     - If preference is to use default tfvars file to reduce Terraform Input Variables, then rename `variables_generic_for_cli.tfvars` to `terraform.tfvars` (auto-detected by Terraform Cloud, but not by Terraform Enterprise). Be aware that many .gitignore files will by default ignore files with this file extension.
   2. [Create the Terraform Cloud/Enterprise Organization.](https://app.terraform.io/app/organizations/new)
@@ -78,16 +79,18 @@ To get started immediately, requirements:
       - The Terraform Template will be loaded into the Terraform Cloud/Enterprise Workspace.
       - Each commit to a git repository, will automatically be detected by Terraform Cloud/Enterprise and execute a Terraform Plan.
   4. [Open the created Terraform Cloud/Enterprise Workspace](https://app.terraform.io/app/sll-osi/workspaces), use the left navigation and click `'Runs'`. Click on the first run shown, which will display a list of required Terraform Input Variables which are required before starting a new run; the list will be smaller if the .tfvars file was used.
-  5. [Open the created Terraform Cloud/Enterprise Workspace](https://app.terraform.io/app/sll-osi/workspaces), use the left navigation and click `'Variables'`. Add the missing variables from the previous screen; due to the non-interactive design, the Terraform Input Varaible Descriptions are not shown and therefore the expected variables input must be read from the `variables.tf` file.
-  6. Return to the `'Runs'` page and click ***Actions > Start new run***. When prompted, it is suggested to use the run type drop-down as 'Plan only' as a first test, then afterwards use 'Plan and apply (standard)'. Click ***Start Run*** to begun the Terraform Template for SAP execution - which will provision to the infrastructure platform and perform the SAP Software installation.
+  5. [Open the created Terraform Cloud/Enterprise Workspace](https://app.terraform.io/app/sll-osi/workspaces), use the left navigation and click `'Variables'`. Add the missing variables from the previous screen; due to the non-interactive design, the Terraform Input Variable Descriptions are not shown and therefore the expected variables input must be read from the `variables.tf` file.
+  6. Return to the `'Runs'` page and click ***Actions > Start new run***. When prompted, it is suggested to use the run type drop-down as 'Plan only' as a first test, then afterwards use 'Plan and apply (standard)'. Click ***Start Run*** to begin the Terraform Template for SAP execution - which will provision to the infrastructure platform and perform the SAP Software installation.
 </details>
 
 <br/>
 <details>
   <summary><b>Hosted - Execution from Azure DevOps Service:</b></summary>
-
+  
+  It is also possible to execute the Terraform Templates for SAP from an Azure DevOps Service Release Pipeline:
+  
   Before starting, please ensure an Azure Resource Group and Azure Blob Container (and the parent Azure Storage Account) are created and all Billing setup for Azure DevOps is completed (including allocation of at least 1 Paid parallel jobs).
-
+  
   1. Open [Azure DevOps Services](https://dev.azure.com) (provides access to Azure Pipelines) and login
   2. Create an Azure DevOps Organization on the [Azure DevOps AEX Portal](https://aex.dev.azure.com/)
   3. Within the Azure DevOps Organization, create a new Private Project from the [Azure DevOps Services](https://dev.azure.com) homepage. Ensure version control is set to Git.
@@ -105,6 +108,33 @@ To get started immediately, requirements:
   15. Once completed, click 'Save' for this Release Pipeline
   16. To provision the Terraform Template for SAP, click 'Create release' on the Release Pipeline.
 </details>
+
+<br/>
+<details>
+  <summary><b>Hosted - Execution from IBM Cloud Schematics:</b></summary>
+  
+  It is also possible to execute the Terraform Templates for SAP from an IBM Cloud Schematics:
+  
+  1. Open [IBM Cloud Schematics](https://cloud.ibm.com/schematics)
+  2. [Create an IBM Cloud Schematics Workspace](https://cloud.ibm.com/schematics/workspaces/create), and specify the Terraform Template for SAP to use:
+    - The URL will reference the specific Terraform Template for SAP `https://github.com/sap-linuxlab/terraform.templates_for_sap/tree/main/<<sap_software_scenario>>/<<infrastructure_platform>>`. For example, use the SAP HANA installation Terraform Template for IBM Cloud VS `https://github.com/sap-linuxlab/terraform.templates_for_sap/tree/main/sap_hana_single_node_install/ibmcloud_vs`.
+    - Ensure 'Use full repository' is not selected, so that only the specific Terraform Template for SAP is loaded.
+    - Ensure the Terraform version is Terraform 1.2 and above.
+    - Click next.
+    - Define the Workspace Name, Location and the Resource Group. *Note: this the location where the Terraform Template will be executed from, it does not restrict where the resources are provisioned to.*
+    - Click next.
+    - Review the input, then click Create.
+  3. After creating the workspace, it will open onto the Workspace Settings page. The Terraform Input Variables defined for the selected Terraform Template will be imported here.
+    - *Note: each Terraform Template for SAP by default does not store default values for the Terraform Input Variables. When executing from CLI, it is optional to load suggested default variable values from `variables_generic_for_cli.tfvars` and then Terraform will only prompt for the remaining Input Variables (e.g. API key, provisioning locatio etc). From IBM Cloud Schematics this file is not loaded, and all values must be populated*
+    - Click 'Type' to sort the Terraform Input Variables which are 'Map' type, to the bottom and ignore these.
+    - For each Terraform Input Variable, read the Descriptions for the expected input. Click 'Edit' and enter a value. View the `variables_generic_for_cli.tfvars` for suggested values.
+    - The variables for Infrastructure Platform credentials must be provided; even if using IBM Cloud Schematics to provision resources on IBM Cloud, the variable `ibmcloud_api_key` is not automatically populated.
+  4. Once all variables are set, then click 'Generate Plan'. This will run `terraform plan` as a first test to check the configuration is ready for provisioning.
+  5. Then click 'Apply Plan' which will run `terraform apply` to begin the Terraform Template for SAP execution - which will provision to the infrastructure platform and perform the SAP Software installation.
+
+  *Note: If the provisioned resources are no longer required, click **Actions > Destroy resources** to run `terraform destroy`.
+</details>
+
 
 ---
 
