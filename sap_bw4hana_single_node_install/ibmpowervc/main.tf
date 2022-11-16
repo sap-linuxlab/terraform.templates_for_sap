@@ -157,7 +157,7 @@ module "run_ansible_sap_bw4hana_install" {
   module_var_bastion_private_ssh_key = var.bastion_boolean ? var.bastion_private_ssh_key : 0
   module_var_bastion_floating_ip     = var.bastion_boolean ? var.bastion_ip : 0
 
-  module_var_host_private_ssh_key = module.run_account_bootstrap_module.output_host_private_ssh_key
+  module_var_host_private_ssh_key = module.run_host_bootstrap_module.output_host_private_ssh_key
 
 
   # Set Terraform Module Variables using for_each loop on a map Terraform Variable at runtime
