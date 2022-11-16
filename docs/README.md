@@ -12,7 +12,7 @@ To get started immediately, requirements:
 
 <br/>
 <details>
-  <summary><b>macOS instructions summary:</b></summary>
+  <summary><b>Local - macOS instructions summary:</b></summary>
   
   Tested steps to use Terraform Templates for SAP from local machines running Windows 10:
 
@@ -26,7 +26,7 @@ To get started immediately, requirements:
 <br/>
 
 <details>
-  <summary><b>Windows OS instructions summary:</b></summary>
+  <summary><b>Local - Windows OS instructions summary:</b></summary>
   
   Windows cannot natively run Ansible because of Python package dependencies which are not available for Windows. Therefore the only tested method is to use Windows Subsystem for Linux v2 (WSL2) with Ubuntu 20.04 to execute the Terraform Templates for SAP from; after which output is given in PowerShell to use the native OpenSSH Client in Windows 10 and above.
 
@@ -52,7 +52,7 @@ To get started immediately, requirements:
 
 <br/>
 <details>
-  <summary><b>Advanced users summary:</b></summary>
+  <summary><b>Local - Advanced users summary:</b></summary>
   
   The `./run_terraform.sh` script is provided as an entry point for beginner users, with prompts for the target SAP Scenario and Infrastructure Platform which will then switch to the correct directory for the specific Terraform Template of those choices.
 
@@ -66,7 +66,7 @@ To get started immediately, requirements:
 
 <br/>
 <details>
-  <summary><b>Execution from Terraform Cloud or Terraform Enterprise:</b></summary>
+  <summary><b>Hosted - Execution from Terraform Cloud or Terraform Enterprise:</b></summary>
   
   It is also possible to re-use the Terraform Templates for SAP with Terraform Cloud or Terraform Enterprise:
   1. Add any Terraform Template for SAP into the git repository
@@ -82,6 +82,29 @@ To get started immediately, requirements:
   6. Return to the `'Runs'` page and click ***Actions > Start new run***. When prompted, it is suggested to use the run type drop-down as 'Plan only' as a first test, then afterwards use 'Plan and apply (standard)'. Click ***Start Run*** to begun the Terraform Template for SAP execution - which will provision to the infrastructure platform and perform the SAP Software installation.
 </details>
 
+<br/>
+<details>
+  <summary><b>Hosted - Execution from Azure DevOps Service:</b></summary>
+
+  Before starting, please ensure an Azure Resource Group and Azure Blob Container (and the parent Azure Storage Account) are created and all Billing setup for Azure DevOps is completed (including allocation of at least 1 Paid parallel jobs).
+
+  1. Open [Azure DevOps Services](https://dev.azure.com) (provides access to Azure Pipelines) and login
+  2. Create an Azure DevOps Organization on the [Azure DevOps AEX Portal](https://aex.dev.azure.com/)
+  3. Within the Azure DevOps Organization, create a new Private Project from the [Azure DevOps Services](https://dev.azure.com) homepage. Ensure version control is set to Git.
+  4. Install the [Terraform Extension for Azure DevOps by Microsoft DevLabs](https://marketplace.visualstudio.com/items?itemName=ms-devlabs.custom-terraform-tasks) to the Azure DevOps Organization. This can be subsequently managed from the Azure Organization Settings - Extension page (e.g. `https://dev.azure.com/<<ORG>>/_settings/extensions?tab=installed`)
+  5. Open Repos from the navigation menu. Click 'Import a repository' and use 'https://github.com/sap-linuxlab/terraform.templates_for_sap'
+  6. Open Pipelines from the navigation menu, then click Releases. Then create a new Release Pipeline. When the Release Pipeline workflow creation page opens, it will open onto the Pipeline tab. At the top of the page, the Release Pipeline can be named.
+  7. On the Pipeline tab, a pop-up for the Release Pipeline Stage will open on the right-side and prompt to use a template or create 'Empty job'. Choose 'Empty job'.
+  8. On the Pipeline tab, click to 'Add an Artifact'. Choose 'Azure Repo' and select the previously imported Terraform Templates for SAP repo. It is recommended to use the 'main' branch. Then click 'Add'.
+  9. Select the Tasks tab, by default an Agent Job will be added to the Release Pipeline Stage 1..n and have the Agent Pool set to to 'Hosted Windows 2019'.
+  10. Change the Agent Pool to 'Azure Pipelines', which will prompt for the Agent Specification. Choose 'ubuntu-latest' for the Agent Specification.
+  11. Click the `+` button to 'Add a task to Agent Job'. On the right-side search "terraform" which will display two tasks from the Terraform Extension for Azure DevOps by Microsoft DevLabs. Add the 'Terraform tool installer' followed by adding 'Terraform' twice. This will add three tasks under the Agent Job.
+  12. In both the second and third task of the Agent Job, change the 'Configuration directory' to `$(System.DefaultWorkingDirectory)/<<Azure_Repo_name_here>>/<<sap_software_scenario>>/<<infrastructure_platform>>`. For example, `$(System.DefaultWorkingDirectory)/_tf-templates-sap/sap_hana_single_node_install/msazure_vm`.
+  13. In the second task of the Agent Job, select an Azure Subscription and click 'Authorize' to create a new Azure service principal for this Azure DevOps Release Pipeline. Subsequently select where the Terraform State Files will be stored by selecting an Azure Resource Group and the Azure Blob Container (and the parent Azure Storage Account). The 'Key' option can be set to standard 'terraform.tfstate'. 
+  14. In the third task of the Agent Job, change the command to 'apply' and append the '-auto-approve' for the Additional command arguments and if preferring to use default variables for the SAP Software solution scenario then instead append `-auto-approve -var-file=variables_generic_for_cli.tfvars -var "az_app_client_id=value" -var "az_app_client_secret=value" -var "az_location_availability_zone_no=value" -var "az_location_region=value" -var "az_resource_group_name=value" -var "az_subscription_id=value" -var "az_tenant_id=value" -var "az_vnet_name=value" -var "az_vnet_subnet_name=value" -var "sap_id_user=value" -var "sap_id_user_password=value"`
+  15. Once completed, click 'Save' for this Release Pipeline
+  16. To provision the Terraform Template for SAP, click 'Create release' on the Release Pipeline.
+</details>
 
 ---
 
