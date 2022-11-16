@@ -1,7 +1,7 @@
 
 module "run_ansible_dry_run" {
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap.git//all/ansible_sap_nwas_abap_hana_install?ref=dev"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap.git//all/ansible_sap_nwas_abap_hana_install?ref=0.7.0"
 
   module_var_dry_run_test = "x86_64" // x86_64 or ppc64le
 
@@ -32,7 +32,7 @@ module "run_host_bootstrap_module" {
     module.run_ansible_dry_run
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmpowervc/host_bootstrap?ref=dev"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmpowervc/host_bootstrap?ref=0.7.0"
 
   # Set Terraform Module Variables using Terraform Variables at runtime
   module_var_resource_prefix = var.resource_prefix
@@ -42,7 +42,7 @@ module "run_host_bootstrap_module" {
 
 module "run_host_provision_module" {
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmpowervc/host_provision?ref=dev"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmpowervc/host_provision?ref=0.7.0"
 
   # Set Terraform Module Variables using Terraform Variables at runtime
 
@@ -148,7 +148,7 @@ module "run_ansible_sap_nwas_abap_hana_install" {
 
   depends_on = [module.run_host_provision_module]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap.git//all/ansible_sap_nwas_abap_hana_install?ref=dev"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap.git//all/ansible_sap_nwas_abap_hana_install?ref=0.7.0"
 
 
   # Terraform Module Variables using the prior Terraform Module Variables (from bootstrap module)
