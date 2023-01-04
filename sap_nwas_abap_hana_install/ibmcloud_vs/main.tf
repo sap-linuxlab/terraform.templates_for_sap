@@ -1,7 +1,7 @@
 
 module "run_ansible_dry_run" {
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap.git//all/ansible_sap_nwas_abap_hana_install?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_nwas_abap_hana_install?ref=main"
 
   module_var_dry_run_test = "x86_64" // x86_64 or ppc64le
 
@@ -271,7 +271,7 @@ module "run_ansible_sap_nwas_abap_hana_install" {
 
   depends_on = [module.run_host_provision_module]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap.git//all/ansible_sap_nwas_abap_hana_install?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_nwas_abap_hana_install?ref=main"
 
 
   # Terraform Module Variables using the prior Terraform Module Variables (from bootstrap module)
