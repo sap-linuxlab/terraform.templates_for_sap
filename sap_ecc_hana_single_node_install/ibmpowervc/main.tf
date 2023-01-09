@@ -153,22 +153,21 @@ module "run_ansible_sap_ecc_hana_install" {
   source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_ecc_hana_install?ref=main"
 
   # Terraform Module Variables using the prior Terraform Module Variables (from bootstrap module)
-  module_var_bastion_boolean         = true // required as true boolean for any Cloud Service Provider (CSP)
-  module_var_bastion_user            = var.bastion_user
-  module_var_bastion_ssh_port        = var.bastion_ssh_port
-  module_var_bastion_private_ssh_key = module.run_account_bootstrap_module.output_bastion_private_ssh_key
+  module_var_bastion_boolean         = var.bastion_boolean
+  module_var_bastion_user            = var.bastion_boolean ? var.bastion_user : ""
+  module_var_bastion_ssh_port        = var.bastion_boolean ? var.bastion_ssh_port : 0
+  module_var_bastion_private_ssh_key = var.bastion_boolean ? var.bastion_private_ssh_key : 0
+  module_var_bastion_floating_ip     = var.bastion_boolean ? var.bastion_ip : 0
 
-  module_var_bastion_floating_ip = module.run_bastion_inject_module.output_bastion_ip
-
-  module_var_host_private_ssh_key = module.run_account_bootstrap_module.output_host_private_ssh_key
+  module_var_host_private_ssh_key    = module.run_host_bootstrap_module.output_host_private_ssh_key
 
 
   # Set Terraform Module Variables using for_each loop on a map Terraform Variable at runtime
 
-  for_each                        = module.run_host_provision_module
-  module_var_host_private_ip      = join(", ", each.value.*.output_host_private_ip)
-  module_var_hostname             = join(", ", each.value.*.output_host_name)
-  module_var_dns_root_domain_name = var.dns_root_domain
+  for_each                           = module.run_host_provision_module
+  module_var_host_private_ip         = join(", ", each.value.*.output_host_private_ip)
+  module_var_hostname                = join(", ", each.value.*.output_host_name)
+  module_var_dns_root_domain_name    = var.dns_root_domain
 
   module_var_sap_id_user          = var.sap_id_user
   module_var_sap_id_user_password = var.sap_id_user_password

@@ -45,20 +45,21 @@ bastion_host="${module.run_bastion_inject_module.output_bastion_ip}"
 bastion_port="${var.bastion_ssh_port}"
 target_host_array=(${join(" ", flatten([for key, value in module.run_host_provision_module : value.*.output_host_private_ip]))} "Quit")
 
+sap_hana_instance_no="${var.sap_hana_install_instance_number}"
 sap_nwas_abap_pas_instance_no="${var.sap_nwas_abap_pas_instance_no}"
 
 
 function sshjump() {
 
     ssh_options=(
-        "SAPGUI, via SSH port forward binding proxy"
+        "SAP HANA Studio or SAPGUI, via SSH port forward binding proxy"
         "OS root access, via SSH stdin/stdout forwarding proxy"
         "Quit"
     )
 
     select opt in "$${ssh_options[@]}"; do
         case $opt in
-        "SAPGUI, via SSH port forward binding proxy")
+        "SAP HANA Studio or SAPGUI, via SSH port forward binding proxy")
             echo ">>> Chosen option $REPLY: $opt"
             select opt_ip in "$${target_host_array[@]}"; do
                 if [ $opt_ip = "Quit" ]; then break 2; fi
@@ -66,6 +67,9 @@ function sshjump() {
                 echo "---- Selected option $REPLY, tunneling into $target_ip ----"
                 break
             done
+            echo ""
+            echo "#### For SAP HANA Studio, use Add System with host name as localhost; do not add port numbers."
+            echo "#### If selecting 'Connect using SSL' on Connection Properties, then on Additional Properties (final) screen deselect 'Validate the SSL certificate'"
             echo ""
             echo "#### For SAPGUI, use expert mode SAP Logon String as: ####"
             echo "conn=/H/localhost/S/32$sap_nwas_abap_pas_instance_no&expert=true"
@@ -76,7 +80,13 @@ function sshjump() {
                 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
                 -L localhost:32$sap_nwas_abap_pas_instance_no:$target_ip:32$sap_nwas_abap_pas_instance_no \
                 -L localhost:33$sap_nwas_abap_pas_instance_no:$target_ip:33$sap_nwas_abap_pas_instance_no \
-                -L localhost:443$sap_nwas_abap_pas_instance_no:$target_ip:443$sap_nwas_abap_pas_instance_no
+                -L localhost:3$${sap_hana_instance_no}13:$target_ip:3$${sap_hana_instance_no}13 \
+                -L localhost:3$${sap_hana_instance_no}15:$target_ip:3$${sap_hana_instance_no}15 \
+                -L localhost:3$${sap_hana_instance_no}41:$target_ip:3$${sap_hana_instance_no}41 \
+                -L localhost:443$sap_hana_instance_no:$target_ip:443$sap_hana_instance_no \
+                -L localhost:443$sap_nwas_abap_pas_instance_no:$target_ip:443$sap_nwas_abap_pas_instance_no \
+                -L localhost:5$${sap_hana_instance_no}13:$target_ip:5$${sap_hana_instance_no}13 \
+                -L localhost:5$${sap_hana_instance_no}14:$target_ip:5$${sap_hana_instance_no}14
             break
             ;;
         "OS root access, via SSH stdin/stdout forwarding proxy")
@@ -143,12 +153,13 @@ $bastion_port = "${var.bastion_ssh_port}"
 $target_host_string = "${join("','",flatten([for key, value in module.run_host_provision_module : value.*.output_host_private_ip]))}"
 $target_host_array = @($target_host_string.Split(","),"Quit")
 
+$sap_hana_instance_no = "${var.sap_hana_install_instance_number}"
 $sap_nwas_abap_pas_instance_no = "${var.sap_nwas_abap_pas_instance_no}"
 
 
 function sshjump {
 
-    echo '1) SAPGUI, via SSH port forward binding proxy'
+    echo '1) SAP HANA Studio or SAPGUI, via SSH port forward binding proxy'
     echo '2) OS root access, via SSH stdin/stdout forwarding proxy'
     echo '3) Quit'
 
@@ -176,6 +187,9 @@ function sshjump {
                 $target_ip = $target_host_array[$target_host_selection]
                 #echo ">>> Chosen option $(PSItem)"
                 echo ""
+                echo "#### For SAP HANA Studio, use Add System with host name as localhost; do not add port numbers."
+                echo "#### If selecting 'Connect using SSL' on Connection Properties, then on Additional Properties (final) screen deselect 'Validate the SSL certificate'"
+                echo ""
                 echo "#### For SAPGUI, use expert mode SAP Logon String as: ####"
                 echo "conn=/H/localhost/S/32$sap_nwas_abap_pas_instance_no&expert=true"
                 echo ""
@@ -185,7 +199,13 @@ function sshjump {
                 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null `
                 -L localhost:32$${sap_nwas_abap_pas_instance_no}:$${target_ip}:32$${sap_nwas_abap_pas_instance_no} `
                 -L localhost:33$${sap_nwas_abap_pas_instance_no}:$${target_ip}:33$${sap_nwas_abap_pas_instance_no} `
-                -L localhost:443$${sap_nwas_abap_pas_instance_no}:$${target_ip}:443$${sap_nwas_abap_pas_instance_no}
+                -L localhost:3$${sap_hana_instance_no}13:$${target_ip}:3$${sap_hana_instance_no}13 `
+                -L localhost:3$${sap_hana_instance_no}15:$${target_ip}:3$${sap_hana_instance_no}15 `
+                -L localhost:3$${sap_hana_instance_no}41:$${target_ip}:3$${sap_hana_instance_no}41 `
+                -L localhost:443$${sap_hana_instance_no}:$${target_ip}:443$${sap_hana_instance_no} `
+                -L localhost:443$${sap_nwas_abap_pas_instance_no}:$${target_ip}:443$${sap_nwas_abap_pas_instance_no} `
+                -L localhost:5$${sap_hana_instance_no}13:$${target_ip}:5$${sap_hana_instance_no}13 `
+                -L localhost:5$${sap_hana_instance_no}14:$${target_ip}:5$${sap_hana_instance_no}14
             }
         }
         2 {
