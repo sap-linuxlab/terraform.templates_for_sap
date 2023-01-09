@@ -59,7 +59,6 @@ module "run_account_bootstrap_module" {
   module_var_resource_prefix   = var.resource_prefix
 
   module_var_ibmcloud_vpc_subnet_name           = local.ibmcloud_vpc_subnet_create_boolean ? module.run_account_init_module.output_vpc_subnet_name : var.ibmcloud_vpc_subnet_name
-  module_var_ibmcloud_vpc_subnet_create_boolean = local.ibmcloud_vpc_subnet_create_boolean
   module_var_ibmcloud_vpc_availability_zone     = var.ibmcloud_vpc_availability_zone
 
   module_var_dns_root_domain_name = var.dns_root_domain
