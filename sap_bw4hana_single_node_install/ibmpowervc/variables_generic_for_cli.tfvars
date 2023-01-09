@@ -10,7 +10,7 @@ sap_hana_install_master_password = "NewPass$321"
 
 sap_hana_install_sid = "H01"
 
-sap_hana_install_instance_number = "10"
+sap_hana_install_instance_number = "90"
 
 sap_nwas_abap_ascs_instance_no = "01"
 

@@ -87,7 +87,7 @@ variable "sap_hana_install_sid" {
 }
 
 variable "sap_hana_install_instance_number" {
-  description = "Ansible - SAP HANA install: Instance Number (e.g. 10)"
+  description = "Ansible - SAP HANA install: Instance Number (e.g. 90)"
 
   validation {
     error_message = "Cannot use Instance Number 43 (HA port number) or 89 (Windows Remote Desktop Services)."
