@@ -8,18 +8,27 @@ The following document contains information relevant to and minimum authorizatio
 Each Terraform Template for SAP anticipates that an end user has a basic level of knowledge for the target infrastructure platform, and has requested the necessary access from their Administrator/s.
 
 The below document contains guidance for:
-- AWS hyperscaler, Cloud Service Provider
-- IBM Cloud hyperscaler, Cloud Service Provider
-- IBM PowerVC hypervisor
-- Microsoft Azure hyperscaler, Cloud Service Provider
+- [AWS hyperscaler](#aws-hyperscaler), Cloud Service Provider
+- [IBM Cloud hyperscaler](#ibm-cloud-hyperscaler), Cloud Service Provider
+- [IBM PowerVC hypervisor](#ibm-powervc-hypervisor)
+- [Microsoft Azure hyperscaler](#microsoft-azure-hyperscaler), Cloud Service Provider
+- [VMware vSphere hypervisor](#vmware-vsphere-hypervisor)
 
 <br/>
 
 ## AWS hyperscaler
 
+The Terraform Templates for SAP on Amazon Web Services are designed to be executed by an Administrator or a user with limited delegated administration privileges.
+
 There are options within the Terraform Templates to:
 - Create VPC, or re-use existing VPC Subnet
 - Create Resource Group, or re-use existing Resource Group
+
+### Terraform execution permissions
+
+The AWS User and associated key/secret will need to be assigned, by the Cloud Account Administrator, with the minimum AWS IAM privileges to perform these activities automatically with Terraform.
+
+**Create the AWS IAM with the minimum user permissions, using the AWS CLI:**
 
 ```
 # Login
@@ -34,6 +43,10 @@ aws iam attach-group-policy --group-name 'ag-terraform-exec' --policy-arn arn:aw
 
 
 ## IBM Cloud hyperscaler
+
+The Terraform Templates for SAP on IBM Cloud are designed to be executed by an Administrator or a user with limited delegated administration privileges.
+
+The same privileges are needed for any IaaS Type available from the IBM Cloud for SAP portfolio which has been automated; the IaaS Types include Intel Virtual Servers and IBM Power Virtual Servers, but does not include Bare Metal or various options from IBM Cloud for VMware (single vSphere, cluster vSphere, cluster vSphere with networking overlay).
 
 There are options within the Terraform Templates to:
 - Create VPC, or re-use existing VPC Subnet
@@ -89,7 +102,7 @@ ibmcloud iam access-group-service-id-add 'ag-terraform-exec' <<<SERVICE_ID_UUID>
 
 ## IBM PowerVC hypervisor
 
-The Terraform Templates for IBM Power hardware are designed to be executed by an Administrator or a user with limited delegated administration privileges.
+The Terraform Templates for SAP on IBM Power hardware are designed to be executed by an Administrator or a user with limited delegated administration privileges.
 
 IBM Power Virtualization Center (IBM PowerVC) is the centralized management component for IBM Power hardware running with the IBM PowerVM Type 1 hypervisor (PHYP firmware) or KVM on IBM Power Type 2 hypervisor (OPAL firmware).
 
@@ -114,9 +127,10 @@ Summary of hypervisor technologies for IBM Power hardware:
 For more information on IBM PowerVM (PHYP firmware) and KVM (OPAL firmware) for SAP workloads, please read:
 [Red Book March 2020 - IBM Power Systems Virtualization Operation Management for SAP Applications](http://www.redbooks.ibm.com/redpapers/pdfs/redp5579.pdf)
 
+
 ## Microsoft Azure hyperscaler
 
-The Terraform Templates for Microsoft Azure are designed to be executed by an Administrator or a user with limited delegated administration privileges.
+The Terraform Templates for SAP on Microsoft Azure are designed to be executed by an Administrator or a user with limited delegated administration privileges.
 
 There are options within the Terraform Templates to:
 - Create VNet, or re-use existing VNet Subnet
@@ -126,7 +140,7 @@ There are options within the Terraform Templates to:
 
 The Azure Application Service Principal will need to be assigned, by the Cloud Account Administrator, with the minimum Azure AD Role to perform these activities automatically with Terraform.
 
-**Create the Azure Application credentials with the minimum user permissions, using Azure CLI:**
+**Create the Azure Application credentials with the minimum user permissions, using the Azure CLI:**
 ```
 # Login
 az login
@@ -167,3 +181,61 @@ az account list-locations --output json | jq '[(.[] | select(.metadata.regionCat
 
 Documentation of Azure Regions with Availability Zones is available on the following URL:
 https://docs.microsoft.com/en-us/azure/availability-zones/az-region#azure-regions-with-availability-zones
+
+
+## VMware vSphere hypervisor
+
+The Terraform Templates for SAP on VMware vSphere are designed to be executed by an Administrator or a user with limited delegated administration privileges.
+
+## Requirements
+
+- VMware vCenter and VMware vSphere (7.x and above)
+- Network access setup for successful VMware Virtual Machine provisioning and subsequent SSH access from Terraform/Ansible, see below for more details
+
+
+## VMware VM Template setup
+
+The following are required setup items for provisioning VMware Virtual Machines:
+
+- **OS Image with cloud-init installed**
+  - Edit the default cloud-init configuration file, found at `/etc/cloud`. It must contain the data source for VMware (and not OVF), and force use of cloud-init metadata and userdata files.
+  ```
+  disable_vmware_customization: true
+  datasource:
+    VMware:
+      allow_raw_data: true
+      vmware_cust_file_max_wait: 10 # seconds
+  ```
+  - Prior to VM shutdown and marking as a VMware VM Template, run command `vmware-toolbox-cmd config set deployPkg enable-custom-scripts true`
+  - Prior to VM shutdown and marking as a VMware VM Template, run command `sudo cloud-init clean --seed --logs --machine-id` to remove cloud-init logs, remove cloud-init seed directory /var/lib/cloud/seed , and remove /etc/machine-id. If using cloud-init versions prior to 22.3.0 then do not use `--machine-id` parameter
+  - Once VM is shutdown, then run 'Convert to VM Template'
+  - Debug by checking `grep userdata /var/log/vmware-imc/toolsDeployPkg.log` and `/var/log/cloud-init.log`
+  - See documentation for further information:
+    - VMware KB 59557 - How to switch vSphere Guest OS Customization engine for Linux virtual machine (https://kb.vmware.com/s/article/59557)
+    - VMware KB 74880 - Setting the customization script for virtual machines in vSphere 7.x and 8.x (https://kb.vmware.com/s/article/74880)
+    - cloud-init documentation - Reference - Datasources - VMware (https://cloudinit.readthedocs.io/en/latest/reference/datasources/vmware.html)
+
+
+## VMware networking setup
+
+The following are required setup items for provisioning VMware Virtual Machines.
+
+### VMware vCenter and vSphere clusters with VMware NSX virtualized network overlays
+
+For VMware vCenter and vSphere clusters with VMware NSX virtualized network overlays using Segments (e.g. 192.168.0.0/16) connected to Tier-0/Tier-1 Gateways (which are bound to the backbone network subnet, e.g. 10.0.0.0/8), the following are required:
+
+- **CRITICAL: Routable access from host executing Terraform Template for SAP (and thereby Ansible subsequently triggered by the Terraform Template)**. For example, if the Terraform Template for SAP is executed on a macOS laptop running a VPN with connectivity to the VMware vCenter - then the VPN must also have access to the provisioned Subnet, otherwise initialised SSH connections to the VMware VM from Terraform and Ansible will not be successful.
+  - It is recommended to investigate proper DNAT configuration for any VMware NSX Segments (this could be automated using Terraform Provider for VMware NSX-T, i.e. https://registry.terraform.io/providers/vmware/nsxt/latest/docs/resources/policy_nat_rule).
+- **DHCP Server** must be created (e.g. NSX > Networking > Networking Profiles > DHCP Profile), set in the Gateway (e.g. NSX > Networking > Gateway > Edit > DHCP Config > ), then set for the Subnet (e.g. NSX > Networking > Segment > <<selected subnet>> > Set DHCP Config) which the VMware VM Template is attached to; this allows subsequent cloned VMs to obtain an IPv4 Address
+- **Internet Access**: Option 1 - Configured SNAT (e.g. rule added on NSX Gateway) set for the Subnet which the VMware VM Template is attached to; this allows Public Internet access. Option 2 - Web Proxy.
+- **DNS Server (Private)** is recommended to assist custom/private root domain resolution (e.g. poc.cloud)
+
+
+### VMware vCenter and vSphere clusters with direct network subnet IP allocation
+
+For VMware vCenter and vSphere clusters with direct network subnet IP allocations to the VMXNet network adapter (no VMware NSX network overlays), the following are required:
+
+- **CRITICAL: Routable access from host executing Terraform Template for SAP (and thereby Ansible subsequently triggered by the Terraform Template)**. For example, if the Terraform Template for SAP is executed on a macOS laptop running a VPN with connectivity to the VMware vCenter - then the VPN must also have access to the provisioned Subnet, otherwise initialised SSH connections to the VMware VM from Terraform and Ansible will not be successful.
+- **DHCP Server** must be created (e.g. NSX > Networking > Networking Profiles > DHCP Profile), set in the Gateway (e.g. NSX > Networking > Gateway > Edit > DHCP Config > ), then set for the Subnet (e.g. NSX > Networking > Segment > <<selected subnet>> > Set DHCP Config) which the VMware VM Template is attached to; this allows subsequent cloned VMs to obtain an IPv4 Address
+- **Internet Access**: Option 1 - Configured SNAT (e.g. rule added on NSX Gateway) set for the Subnet which the VMware VM Template is attached to; this allows Public Internet access. Option 2 - Web Proxy.
+- **DNS Server (Private)** is recommended to assist custom/private root domain resolution (e.g. poc.cloud)

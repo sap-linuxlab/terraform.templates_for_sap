@@ -46,7 +46,7 @@ variable "map_host_specifications" {
         #disk_swapfile_size_gb  = 2 // not required if disk volume set
         disk_volume_count_swap = 1 // max of 1
         disk_volume_type_swap = "E10"
-        disk_volume_capacity_swap = 128 // minimum 128GB swap for IBM DB2 LUW
+        disk_volume_capacity_swap = 128
         filesystem_swap = "xfs"
       }
 

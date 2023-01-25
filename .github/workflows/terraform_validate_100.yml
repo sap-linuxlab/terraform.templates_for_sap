@@ -19,7 +19,7 @@ jobs:
       matrix:
         terraform_ver: [~1.0.0] # Job matrix can generate a maximum of 256 jobs per workflow run
         sap_solution_scenario: [sap_bw4hana_single_node_install, sap_ecc_hana_single_node_install, sap_ecc_hana_single_node_system_copy_homogeneous_hdb, sap_ecc_ibmdb2_single_node_install, sap_ecc_oracledb_single_node_install, sap_ecc_sapase_single_node_install, sap_ecc_sapmaxdb_single_node_install, sap_hana_single_node_install, sap_nwas_abap_hana_install, sap_nwas_abap_ibmdb2_install, sap_nwas_abap_oracledb_install, sap_nwas_abap_sapase_install, sap_nwas_abap_sapmaxdb_install, sap_nwas_java_ibmdb2_install, sap_nwas_java_sapase_install, sap_s4hana_single_node_install, sap_s4hana_single_node_install_maintenance_plan, sap_s4hana_single_node_system_copy_homogeneous_hdb]
-        infrastructure_platform: [aws_ec2_instance, ibmcloud_vs, ibmcloud_powervs, ibmpowervc, msazure_vm]
+        infrastructure_platform: [aws_ec2_instance, ibmcloud_vs, ibmcloud_powervs, ibmpowervc, msazure_vm, vmware_vm]
     steps:
       - name: Checkout
         uses: actions/checkout@v3.1.0
