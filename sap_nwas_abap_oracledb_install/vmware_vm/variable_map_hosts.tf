@@ -1,7 +1,7 @@
 
 variable "map_host_specifications" {
 
-  description = "Map of host specficiations for SAP ECC on SAP MaxDB single node install"
+  description = "Map of host specficiations for SAP NetWeaver (ABAP) with Oracle DB single node install"
 
   type = map(any)
 

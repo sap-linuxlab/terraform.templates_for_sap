@@ -1,7 +1,7 @@
 
 variable "map_host_specifications" {
 
-  description = "Map of host specficiations for SAP S/4HANA single node install"
+  description = "Map of host specficiations for SAP NetWeaver AS (ABAP) with SAP HANA single node install"
 
   type = map(any)
 
