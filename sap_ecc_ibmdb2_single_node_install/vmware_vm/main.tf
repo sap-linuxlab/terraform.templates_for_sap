@@ -32,14 +32,14 @@ module "run_host_bootstrap_module" {
     module.run_ansible_dry_run
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//vmware_vm/host_bootstrap?ref=dev"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//vmware_vm/host_bootstrap?ref=main"
 
 }
 
 
 module "run_host_provision_module" {
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//vmware_vm/host_provision?ref=dev"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//vmware_vm/host_provision?ref=main"
 
   # Set Terraform Module Variables using Terraform Variables at runtime
 
