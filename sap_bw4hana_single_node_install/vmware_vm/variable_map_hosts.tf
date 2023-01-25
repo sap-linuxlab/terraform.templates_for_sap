@@ -9,9 +9,9 @@ variable "map_host_specifications" {
 
     small_256gb = {
 
-      nw01 = {  // Hostname
-        ibmpowervc_compute_cpu_threads = 32
-        ibmpowervc_compute_ram_gb      = 256
+      hana01 = { // Hostname
+        vmware_vm_compute_cpu_threads = 32
+        vmware_vm_compute_ram_gb      = 256
 
         // N.B. all capacities must be different from each other, due to Shell loop searching based on capacity GB
 
@@ -57,11 +57,13 @@ variable "map_host_specifications" {
         disk_volume_capacity_sapmnt = 50
         filesystem_sapmnt           = "xfs"
 
-        disk_swapfile_size_gb  = 2 // not required if disk volume set
-        disk_volume_count_swap = 0 // max of 1
+        //disk_swapfile_size_gb  = 2 // not required if disk volume set
+        disk_volume_count_swap = 1 // max of 1
         disk_volume_type_swap  = ""
-        #disk_volume_capacity_swap = 10
-        #filesystem_swap = "xfs"
+        disk_volume_capacity_swap = 32
+        filesystem_swap = "xfs"
+
+        disk_volume_capacity_software = 200
       }
 
     }
