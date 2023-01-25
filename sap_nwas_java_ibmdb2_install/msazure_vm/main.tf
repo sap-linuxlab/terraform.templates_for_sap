@@ -286,11 +286,11 @@ module "run_host_provision_module" {
 }
 
 
-module "run_ansible_sap_nwas_java_sapase_install" {
+module "run_ansible_sap_nwas_java_ibmdb2_install" {
 
   depends_on = [module.run_host_provision_module]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_nwas_java_sapase_install?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_nwas_java_ibmdb2_install?ref=main"
 
 
   # Terraform Module Variables using the prior Terraform Module Variables (from bootstrap module)
