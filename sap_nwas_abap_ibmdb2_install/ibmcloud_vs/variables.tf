@@ -20,7 +20,7 @@ variable "ibmcloud_vpc_availability_zone" {
   description = "Target IBM Cloud Availability Zone (the IBM Cloud Region will be calculated from this value)"
 
   validation {
-    error_message = "Please enter an IBM Cloud Availability Zone, such as us-south-1"
+    error_message = "Please enter an IBM Cloud Availability Zone (e.g. us-south-1)."
     condition = can(regex("^([a-zA-Z0-9]*-[a-zA-Z0-9]*){2}$", var.ibmcloud_vpc_availability_zone))
   }
 
