@@ -53,6 +53,8 @@ There are options within the Terraform Templates to:
 - Create Resource Group, or re-use existing Resource Group
 - Create IAM `(WIP)`
 
+If re-using an existing VPC Subnet, it must be attached to a Public Gateway (PGW). This is due to Terraform design limitations which cannot detect if the PGW is missing and subsequently provision/attach.
+
 ### Terraform execution permissions
 
 The API Key of either a User Account or Service ID will need to be assigned, by the Cloud Account Administrator, to an IAM Access Group with a minimum set of user permissons to perform these activities automatically with Terraform.
