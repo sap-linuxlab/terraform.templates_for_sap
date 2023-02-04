@@ -64,6 +64,7 @@ function sap_solution_scenario_choice()
         "SAP S/4HANA - Install single node (use Maintenance Planner download)"
         "SAP S/4HANA - System Copy single node (Homogeneous with SAP HANA Backup / Recovery)"
         "SAP BW/4HANA - Install single node"
+        "SAP ECC on HANA - Install single node"
         "SAP ECC on HANA - System Copy single node (Homogeneous with SAP HANA Backup / Recovery)"
         "SAP ECC on IBM DB2 - Install single node"
         "SAP ECC on Oracle DB - Install single node"
@@ -105,6 +106,11 @@ function sap_solution_scenario_choice()
             "SAP BW/4HANA - Install single node")
                 echo ">>> Chosen option $REPLY: $opt_scenario"
                 sap_solution_scenario="sap_bw4hana_single_node_install"
+                break
+                ;;
+            "SAP ECC on HANA - Install single node")
+                echo ">>> Chosen option $REPLY: $opt_scenario"
+                sap_solution_scenario="sap_ecc_hana_single_node_install"
                 break
                 ;;
             "SAP ECC on HANA - System Copy single node (Homogeneous with SAP HANA Backup / Recovery)")
@@ -188,7 +194,7 @@ function infrastructure_platform_choice()
         "IBM PowerVC - PHYP LPAR"
         "MS Azure - Virtual Machine"
 #        "oVirt - Red Hat Virtualization (RHV)"
-#        "VMware vSphere - Virtual Machine"
+        "VMware vSphere - Virtual Machine"
         "Quit"
     )
 
@@ -230,11 +236,11 @@ function infrastructure_platform_choice()
 #                infrastructure_platform="ovirt_rhv"
 #                break
 #                ;;
-#            "VMware vSphere - Virtual Machine")
-#                echo ">>> Chosen option $REPLY: $opt_infrastructure"
-#                infrastructure_platform="vmware"
-#                break
-#                ;;
+            "VMware vSphere - Virtual Machine")
+                echo ">>> Chosen option $REPLY: $opt_infrastructure"
+                infrastructure_platform="vmware_vm"
+                break
+                ;;
             "Quit")
                 break
                 ;;
