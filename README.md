@@ -10,9 +10,16 @@ These Terraform Templates for SAP are designed to be:
 - use Terraform as Infrastructure-as-Code (IaC),
 - and Ansible as Configuration-as-Code (CaC) for configuraton of OS and installation of SAP Software.
 
-**Please read the [full documentation](/docs#readme) for how-to guidance, requirements, and all other details**
+**Please read the [full documentation](/docs#readme) for how-to guidance, requirements, and all other details. Summary documentation is below:**
+- [Terraform Templates for SAP - summary diagram](#terraform-templates-for-sap---summary-diagram)
+- [Terraform Templates for SAP - available scenarios](#terraform-templates-for-sap---available-scenarios)
+- [Terraform Templates for SAP - infrastructure provisioning](#terraform-templates-for-sap---infrastructure-provisioning)
+- [Disclaimer](#disclaimer)
 
-**Summary diagram:**
+
+---
+
+# Terraform Templates for SAP - summary diagram
 
 ![Terraform execution flow](./docs/terraform_sap_summary.svg)
 
@@ -50,7 +57,7 @@ These Terraform Templates for SAP are designed to be:
 
 ---
 
-## Terraform Templates for SAP - infrastructure provisioning
+# Terraform Templates for SAP - infrastructure provisioning
 
 The following is an overview of the Infrastructure-as-Code (IaC) provisioning, for full details please see the underlying [Terraform Modules for SAP documentation](https://github.com/sap-linuxlab/terraform.modules_for_sap#terraform-modules-for-sap).
 
@@ -77,7 +84,7 @@ The following is an overview of the Infrastructure-as-Code (IaC) provisioning, f
 
 ---
 
-## Disclaimer
+# Disclaimer
 
 These are common SAP solution scenarios which are codified using Infrastructure Automation for SAP (Terraform) and Build Automation for SAP (Ansible). These can be extended as needed for bespoke requirements.
 
