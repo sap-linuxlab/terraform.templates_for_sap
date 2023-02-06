@@ -58,21 +58,21 @@ The following is an overview of the Infrastructure-as-Code (IaC) provisioning, f
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|
 | &emsp;&emsp;*Product* | EC2 Virtual Server | VM | Virtual Server | IBM Power Virtual Server | LPAR | VM |
 | <br/><br/>***Account Init*** |   |   |   |   |   |   |
-| Create Resource Group. Or re-use existing Resource Group | :x: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
-| Create Networks (VPC/VNet), Subnets, and Internet Access. Or re-use existing VPC/VNet | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
+| <sub>Create Resource Group. Or re-use existing Resource Group</sub> | :x: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
+| <sub>Create Networks (VPC/VNet), Subnets, and Internet Access. Or re-use existing VPC/VNet</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
 | <br/>***Account Bootstrap<br/>(aka. minimal landing zone)*** |   |   |   |   |   |   |
-| Create Private DNS, Network Security | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
-| Create Network Interconnectivity hub | :white_check_mark: | :x: | :white_check_mark: | :white_check_mark: | N/A | N/A |
-| Create TLS key pair for SSH and Import to Cloud Platform | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| <sub>Create Private DNS, Network Security</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
+| <sub>Create Network Interconnectivity hub</sub> | :white_check_mark: | :x: | :white_check_mark: | :white_check_mark: | N/A | N/A |
+| <sub>Create TLS key pair for SSH and Import to Cloud Platform</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | <br/>***Bastion Injection*** |   |   |   |   |   |   |
-| Create Subnet and Network Security for Bastion | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
-| Create Bastion host and Public IP address | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
+| <sub>Create Subnet and Network Security for Bastion</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
+| <sub>Create Bastion host and Public IP address</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
 | <br/>***Host Network Access for SAP*** |   |   |   |   |   |   |
-| Append Network Security rules for SAP | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
+| <sub>Append Network Security rules for SAP</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
 | <br/>***Host Provision*** |   |   |   |   |   |   |
-| Create DNS Records (i.e. A, CNAME, PTR) | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
-| Create Storage Volumes (Profile or Custom IOPS) | :white_check_mark: | :white_check_mark: | :white_check_mark: | :warning:<br/><sub>no custom IOPS</sub> | :white_check_mark: | :white_check_mark: |
-| Create Host/s | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| <sub>Create DNS Records (i.e. A, CNAME, PTR)</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
+| <sub>Create Storage Volumes (Profile or Custom IOPS)</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :warning:<br/><sub>no custom IOPS</sub> | :white_check_mark: | :white_check_mark: |
+| <sub>Create Host/s</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
 
 ---
