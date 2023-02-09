@@ -187,15 +187,15 @@ The following is a list of Infrastructure Platforms and Operating System vendors
 
 **Hyperscaler Cloud Service Providers, provisioned via Terraform:**
 - Amazon Web Services (AWS), EC2 instance (Intel Virtual Machine)
-- ~~Google Cloud Platform (GCP), Compute Engine Intel Virtual Machine~~ `[after initial release]`
+- Google Cloud Platform (GCP), Compute Engine Intel Virtual Machine
 - IBM Cloud, Intel Virtual Server
 - IBM Cloud, IBM Power Virtual Server
 - Microsoft Azure, Intel Virtual Machine
 
 **Hypervisors, provisioned via Terraform:**
 - IBM PowerVM LPAR
-- ~~OVirt / Red Hat Virtualization Virtual Machine~~ `[after initial release]`
-- ~~VMware vSphere Virtual Machine~~ `[after initial release]`
+- ~~OVirt / Red Hat Virtualization Virtual Machine~~ `[planned]`
+- VMware vSphere Virtual Machine
 
 **Operating Systems:**
 - Red Hat Enterprise Linux for SAP Solutions (RHEL4SAP)
