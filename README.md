@@ -61,25 +61,25 @@ These Terraform Templates for SAP are designed to be:
 
 The following is an overview of the Infrastructure-as-Code (IaC) provisioning, for full details please see the underlying [Terraform Modules for SAP documentation](https://github.com/sap-linuxlab/terraform.modules_for_sap#terraform-modules-for-sap).
 
-| Infrastructure Platform | **Amazon Web Services (AWS)** | **Microsoft Azure** | **IBM Cloud** | **IBM Cloud** | **IBM PowerVC** | **VMware vSphere** |
-|:---|:---:|:---:|:---:|:---:|:---:|:---:|
-| &emsp;&emsp;*Product* | EC2 Virtual Server | VM | Virtual Server | IBM Power Virtual Server | LPAR | VM |
-| <br/><br/>***Account Init*** |   |   |   |   |   |   |
-| <sub>Create Resource Group. Or re-use existing Resource Group</sub> | :x: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
-| <sub>Create Networks (VPC/VNet), Subnets, and Internet Access. Or re-use existing VPC/VNet</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
-| <br/>***Account Bootstrap<br/>(aka. minimal landing zone)*** |   |   |   |   |   |   |
-| <sub>Create Private DNS, Network Security</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
-| <sub>Create Network Interconnectivity hub</sub> | :white_check_mark: | :x: | :white_check_mark: | :white_check_mark: | N/A | N/A |
-| <sub>Create TLS key pair for SSH and Import to Cloud Platform</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| <br/>***Bastion Injection*** |   |   |   |   |   |   |
-| <sub>Create Subnet and Network Security for Bastion</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
-| <sub>Create Bastion host and Public IP address</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
-| <br/>***Host Network Access for SAP*** |   |   |   |   |   |   |
-| <sub>Append Network Security rules for SAP</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
-| <br/>***Host Provision*** |   |   |   |   |   |   |
-| <sub>Create DNS Records (i.e. A, CNAME, PTR)</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
-| <sub>Create Storage Volumes (Profile or Custom IOPS)</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :warning:<br/><sub>no custom IOPS</sub> | :white_check_mark: | :white_check_mark: |
-| <sub>Create Host/s</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| Infrastructure Platform | **Amazon Web Services (AWS)** | **Google Cloud** | **Microsoft Azure** | **IBM Cloud** | **IBM Cloud** | **IBM PowerVC** | **VMware vSphere** |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| &emsp;&emsp;*Product* | EC2 Virtual Server | VM | VM | Virtual Server | IBM Power Virtual Server | LPAR | VM |
+| <br/><br/>***Account Init*** |   |   |   |   |   |   |   |
+| <sub>Create Resource Group. Or re-use existing Resource Group</sub> | :x: | :x: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
+| <sub>Create Networks (VPC/VNet), Subnets, and Internet Access. Or re-use existing VPC/VNet</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
+| <br/>***Account Bootstrap<br/>(aka. minimal landing zone)*** |   |   |   |   |   |   |   |
+| <sub>Create Private DNS, Network Security</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
+| <sub>Create Network Interconnectivity hub</sub> | :white_check_mark: | :x: | :x: | :white_check_mark: | :white_check_mark: | N/A | N/A |
+| <sub>Create TLS key pair for SSH and Import to Cloud Platform</sub> | :white_check_mark: | :x: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| <br/>***Bastion Injection*** |   |   |   |   |   |   |   |
+| <sub>Create Subnet and Network Security for Bastion</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
+| <sub>Create Bastion host and Public IP address</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
+| <br/>***Host Network Access for SAP*** |   |   |   |   |   |   |   |
+| <sub>Append Network Security rules for SAP</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
+| <br/>***Host Provision*** |   |   |   |   |   |   |   |
+| <sub>Create DNS Records (i.e. A, CNAME, PTR)</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
+| <sub>Create Storage Volumes (Profile or Custom IOPS)</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :warning:<br/><sub>no custom IOPS</sub> | :white_check_mark: | :white_check_mark: |
+| <sub>Create Host/s</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
 
 ---

@@ -188,7 +188,7 @@ function infrastructure_platform_choice()
 
     infrastructure_options=(
         "AWS - EC2 instance"
-#        "GCP - Compute Engine Virtual Machine"
+        "GCP - Compute Engine Virtual Machine"
         "IBM Cloud - Intel Virtual Server"
         "IBM Cloud - IBM Power Virtual Server"
         "IBM PowerVC - PHYP LPAR"
@@ -206,11 +206,11 @@ function infrastructure_platform_choice()
                 infrastructure_platform="aws_ec2_instance"
                 break
                 ;;
-#            "GCP - Compute Engine Virtual Machine")
-#                echo ">>> Chosen option $REPLY: $opt_infrastructure"
-#                infrastructure_platform="gcp_ce_vm"
-#                break
-#                ;;
+            "GCP - Compute Engine Virtual Machine")
+                echo ">>> Chosen option $REPLY: $opt_infrastructure"
+                infrastructure_platform="gcp_ce_vm"
+                break
+                ;;
             "IBM Cloud - Intel Virtual Server")
                 echo ">>> Chosen option $REPLY: $opt_infrastructure"
                 infrastructure_platform="ibmcloud_vs"
