@@ -9,7 +9,7 @@ variable "map_host_specifications" {
 
     small_256gb = {
 
-      nw01 = {  // Hostname
+      ecc01 = {  // Hostname
         ibmpowervc_compute_cpu_threads = 32
         ibmpowervc_compute_ram_gb      = 256
 

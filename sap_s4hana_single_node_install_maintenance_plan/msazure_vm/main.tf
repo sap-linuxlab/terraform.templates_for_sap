@@ -135,6 +135,9 @@ module "run_host_network_access_sap_module" {
 
   module_var_host_security_group_name = module.run_account_bootstrap_module.output_host_security_group_name
 
+  module_var_sap_nwas_abap_pas_instance_no = var.sap_nwas_abap_pas_instance_no
+  module_var_sap_hana_instance_no     = var.sap_hana_install_instance_number
+
 }
 
 
@@ -269,6 +272,8 @@ module "run_host_provision_module" {
   module_var_disk_volume_type_sapmnt     = var.map_host_specifications[var.host_specification_plan][each.key].disk_volume_type_sapmnt
   module_var_disk_volume_capacity_sapmnt = var.map_host_specifications[var.host_specification_plan][each.key].disk_volume_capacity_sapmnt
   module_var_filesystem_sapmnt           = var.map_host_specifications[var.host_specification_plan][each.key].filesystem_sapmnt
+  module_var_nfs_boolean_sapmnt          = false // always false, single node installation
+  module_var_nfs_fqdn_sapmnt             = "" // always false, single node installation
 
   module_var_disk_swapfile_size_gb     = var.map_host_specifications[var.host_specification_plan][each.key].disk_volume_count_swap > 0 ? 0 : var.map_host_specifications[var.host_specification_plan][each.key].disk_swapfile_size_gb
   module_var_disk_volume_count_swap    = var.map_host_specifications[var.host_specification_plan][each.key].disk_volume_count_swap

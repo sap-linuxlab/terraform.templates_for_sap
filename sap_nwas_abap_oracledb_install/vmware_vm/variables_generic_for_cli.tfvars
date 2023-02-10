@@ -4,7 +4,7 @@ dns_root_domain = "poc.cloud"
 
 bastion_user = false
 
-host_specification_plan = "small_256gb"
+host_specification_plan = "small_32vcpu"
 
 sap_anydb_install_master_password = "NewPass#321"
 

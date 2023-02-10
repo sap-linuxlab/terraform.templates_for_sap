@@ -239,6 +239,8 @@ module "run_host_provision_module" {
   module_var_disk_volume_type_swap     = var.map_host_specifications[var.host_specification_plan][each.key].disk_volume_count_swap > 0 ? var.map_host_specifications[var.host_specification_plan][each.key].disk_volume_type_swap : 0
   module_var_disk_volume_capacity_swap = var.map_host_specifications[var.host_specification_plan][each.key].disk_volume_count_swap > 0 ? var.map_host_specifications[var.host_specification_plan][each.key].disk_volume_capacity_swap : 0
   module_var_filesystem_swap           = var.map_host_specifications[var.host_specification_plan][each.key].disk_volume_count_swap > 0 ? var.map_host_specifications[var.host_specification_plan][each.key].filesystem_swap : 0
+  module_var_nfs_boolean_sapmnt          = false // always false, single node installation
+  module_var_nfs_fqdn_sapmnt             = "" // always false, single node installation
 
   module_var_disk_volume_type_software       = var.disk_volume_type_software
   module_var_disk_volume_capacity_software   = var.disk_volume_capacity_software

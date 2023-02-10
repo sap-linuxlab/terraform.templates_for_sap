@@ -1,7 +1,7 @@
 
 variable "map_host_specifications" {
 
-  description = "Map of host specficiations for SAP ECC on SAP HANA single node install"
+  description = "Map of host specficiations for SAP BW/4HANA single node install"
 
   type = map(any)
 
@@ -9,7 +9,7 @@ variable "map_host_specifications" {
 
     small_256gb = {
 
-      hana01 = { // Hostname
+      bwh01 = {  // Hostname
         vmware_vm_compute_cpu_threads = 32
         vmware_vm_compute_ram_gb      = 256
 

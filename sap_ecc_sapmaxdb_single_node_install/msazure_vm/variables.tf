@@ -55,14 +55,14 @@ variable "bastion_ssh_port" {
   type        = number
   description = "Bastion host SSH Port from IANA Dynamic Ports range (49152 to 65535)"
 
-  #validation {
-  #  condition     = var.bastion_ssh_port > 49152 && var.bastion_ssh_port < 65535
-  #  error_message = "Bastion host SSH Port must fall within IANA Dynamic Ports range (49152 to 65535)."
-  #}
+  validation {
+    condition     = var.bastion_ssh_port > 49152 && var.bastion_ssh_port < 65535
+    error_message = "Bastion host SSH Port must fall within IANA Dynamic Ports range (49152 to 65535)."
+  }
 }
 
 variable "host_specification_plan" {
-  description = "Host specification plans are small_256gb. This variable uses the locals mapping with a nested list of host specifications, and will alter host provisioning."
+  description = "Host specification plans are small_32vcpu. This variable uses the locals mapping with a nested list of host specifications, and will alter host provisioning."
 }
 
 variable "host_os_image" {

@@ -7,9 +7,9 @@ variable "map_host_specifications" {
 
   default = {
 
-    small_256gb = {
+    small_32vcpu = {
 
-      hana01 = { // Hostname
+      ecc01 = { // Hostname
         vmware_vm_compute_cpu_threads = 32
         vmware_vm_compute_ram_gb      = 128
 

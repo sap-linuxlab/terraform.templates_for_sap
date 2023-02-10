@@ -16,7 +16,7 @@ The below document contains guidance for:
 
 <br/>
 
-## AWS hyperscaler
+## Amazon Web Services hyperscaler
 
 The Terraform Templates for SAP on Amazon Web Services are designed to be executed by an Administrator or a user with limited delegated administration privileges.
 
@@ -41,6 +41,33 @@ aws iam attach-group-policy --group-name 'ag-terraform-exec' --policy-arn arn:aw
 aws iam attach-group-policy --group-name 'ag-terraform-exec' --policy-arn arn:aws:iam::aws:policy/AmazonRoute53FullAccess
 ```
 
+# Google Cloud hyperscaler
+
+The Terraform Templates for SAP on Google Cloud Platform are designed to be executed by an Administrator or a user with limited delegated administration privileges.
+
+There are options within the Terraform Templates to:
+- Create VPC, or re-use existing VPC Subnet
+
+
+
+### Prior to Terraform execution
+
+There are a number of actions required within the Google Account prior to execution of Terraform.
+
+1. Google Cloud Platform places upper limit quotas for different resources, provisioning the Terraform Templates for SAP will immediately trigger these limits for `'CPUS_ALL_REGIONS'` and `'SSD_TOTAL_GB'` if using a new GCP Account and a new target GCP Region. Please check `gcloud compute regions describe us-central1 --format="table(quotas:format='table(metric,limit,usage)')"` before provisioning to a GCP Region, and manually request quota increases for these limits in the target GCP Region using instructions on https://cloud.google.com/docs/quota#requesting_higher_quota (from GCP Console or contact with GCP Support Team).
+    - *Please note, if using a Trial of GCP it is recommended to avoid the live chat and instead use the [Google Cloud sales specialist contact form](https://cloud.google.com/contact?direct=true) to request the quota increase for your 'individual project' GCP Trial. Otherwise you may open a discussion with the Google Sales Team chat or the Google Billing Team chat and be re-directed towards the Google Support Team chat, which requires a small payment but requires setup of a GCP Organization (and this requires a Google Cloud Identity or Google Workspace).*
+2.  Enable various APIs for the GCP Project, to avoid HTTP 403 errors during Terraform execution:
+    - Enable the Compute Engine API, using https://console.cloud.google.com/apis/api/compute.googleapis.com/overview
+    - Enable the Cloud DNS API, using https://console.cloud.google.com/apis/api/dns.googleapis.com/overview
+    - Enable the Network Connectivity API, using https://console.cloud.google.com/apis/library/networkconnectivity.googleapis.com
+    - Enable the Cloud Filestore API, using https://console.cloud.google.com/apis/library/file.googleapis.com
+    - Enable the Service Networking API (Private Services Connection to Filestore), using https://console.cloud.google.com/apis/library/servicenetworking.googleapis.com
+3. Generate your GCP credentials (Client ID and Client Secret) JSON file
+
+### Other GCP notes
+
+- The provisioned host requires access to Compute Engine Red Hat Update Infrastructure (RHUI) servers on rhui.googlecloud.com (35.190.247.88) and additional Google Cloud package repositories on packages.cloud.google.com (172.217.169.78). To avoid errors with RHEL YUM, use `yum clean all && yum list all` and use `--disablerepo=*source* --disablerepo=*debug* --disablerepo=*google*` when executing.
+  - Some information on OS Public Images preparation can be seen here > https://github.com/GoogleCloudPlatform/compute-image-tools/tree/master/daisy_workflows/image_build/enterprise_linux
 
 ## IBM Cloud hyperscaler
 
@@ -52,6 +79,8 @@ There are options within the Terraform Templates to:
 - Create VPC, or re-use existing VPC Subnet
 - Create Resource Group, or re-use existing Resource Group
 - Create IAM `(WIP)`
+
+If re-using an existing VPC Subnet, it must be attached to a Public Gateway (PGW). This is due to Terraform design limitations which cannot detect if the PGW is missing and subsequently provision/attach.
 
 ### Terraform execution permissions
 
