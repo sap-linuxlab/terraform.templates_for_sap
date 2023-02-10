@@ -9,7 +9,7 @@ variable "map_host_specifications" {
 
     small_256gb = {
 
-      nw01 = {  // Hostname
+      ecc01 = {  // Hostname
         ec2_instance_type = "r5.8xlarge"
 
         // N.B. all capacities must be different from each other, due to Shell loop searching based on capacity GB

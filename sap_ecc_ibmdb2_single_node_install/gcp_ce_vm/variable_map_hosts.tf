@@ -9,7 +9,7 @@ variable "map_host_specifications" {
 
     small_32vcpu = {
 
-      nw01 = {  // Hostname
+      ecc01 = {  // Hostname
         virtual_machine_profile       = "n2-standard-32" // 32 vCPU, 128GB Memory
 
         // N.B. all capacities must be different from each other, due to Shell loop searching based on capacity GB

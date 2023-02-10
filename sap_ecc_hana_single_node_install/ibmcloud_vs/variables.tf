@@ -57,7 +57,7 @@ variable "bastion_ssh_port" {
 }
 
 variable "host_specification_plan" {
-  description = "Host specification plans are small_32vcpu. This variable uses the locals mapping with a nested list of host specifications, and will alter host provisioning."
+  description = "Host specification plans are small_256gb. This variable uses the locals mapping with a nested list of host specifications, and will alter host provisioning."
 }
 
 variable "host_os_image" {

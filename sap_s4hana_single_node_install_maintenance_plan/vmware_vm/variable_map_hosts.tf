@@ -9,7 +9,7 @@ variable "map_host_specifications" {
 
     small_256gb = {
 
-      hana01 = { // Hostname
+      s4h01 = {  // Hostname
         vmware_vm_compute_cpu_threads = 32
         vmware_vm_compute_ram_gb      = 256
 

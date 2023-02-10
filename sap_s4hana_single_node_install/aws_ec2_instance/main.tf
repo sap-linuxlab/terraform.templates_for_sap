@@ -107,7 +107,8 @@ module "run_host_network_access_sap_module" {
   module_var_aws_vpc_subnet_id = local.aws_vpc_subnet_create_boolean ? module.run_account_init_module.output_aws_vpc_subnet_id : var.aws_vpc_subnet_id
   module_var_host_security_group_id = module.run_account_bootstrap_module.output_host_security_group_id
 
-  module_var_sap_hana_instance_no = var.sap_hana_install_instance_number
+  module_var_sap_nwas_abap_pas_instance_no = var.sap_nwas_abap_pas_instance_no
+  module_var_sap_hana_instance_no     = var.sap_hana_install_instance_number
 
 }
 
@@ -127,7 +128,8 @@ module "run_host_network_access_sap_public_via_proxy_module" {
   module_var_bastion_sg_id = module.run_bastion_inject_module.output_bastion_security_group_id
   module_var_bastion_connection_sg_id = module.run_bastion_inject_module.output_bastion_connection_security_group_id
 
-  module_var_sap_hana_instance_no = var.sap_hana_install_instance_number
+  module_var_sap_nwas_abap_pas_instance_no = var.sap_nwas_abap_pas_instance_no
+  module_var_sap_hana_instance_no     = var.sap_hana_install_instance_number
 
 }
 

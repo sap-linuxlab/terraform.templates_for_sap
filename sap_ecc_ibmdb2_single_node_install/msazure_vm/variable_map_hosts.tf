@@ -9,7 +9,7 @@ variable "map_host_specifications" {
 
     small_32vcpu = {
 
-      nw01 = {  // Hostname
+      ecc01 = {  // Hostname
         vm_instance = "Standard_D32s_v5"
 
         // N.B. all capacities must be different from each other, due to Shell loop searching based on capacity GB
