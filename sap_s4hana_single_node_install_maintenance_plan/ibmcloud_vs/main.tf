@@ -66,20 +66,20 @@ module "run_account_bootstrap_module" {
 }
 
 
-module "run_account_iam_module" {
-
-  depends_on = [
-    module.run_account_bootstrap_module
-  ]
-
-  count = var.ibmcloud_iam_yesno == "yes" ? 1 : 0
-
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/account_iam?ref=main"
-
-  module_var_resource_group_id = module.run_account_init_module.output_resource_group_id
-  module_var_resource_prefix   = var.resource_prefix
-
-}
+#module "run_account_iam_module" {
+#
+#  depends_on = [
+#    module.run_account_bootstrap_module
+#  ]
+#
+#  count = var.ibmcloud_iam_yesno == "yes" ? 1 : 0
+#
+#  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/account_iam?ref=main"
+#
+#  module_var_resource_group_id = module.run_account_init_module.output_resource_group_id
+#  module_var_resource_prefix   = var.resource_prefix
+#
+#}
 
 
 module "run_bastion_inject_module" {
