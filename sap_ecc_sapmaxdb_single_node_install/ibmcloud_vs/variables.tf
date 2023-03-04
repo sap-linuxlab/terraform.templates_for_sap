@@ -17,7 +17,7 @@ variable "ibmcloud_resource_group" {
 }
 
 variable "ibmcloud_vpc_availability_zone" {
-  description = "Target IBM Cloud Availability Zone (the IBM Cloud Region will be calculated from this value)"
+  description = "Target IBM Cloud Availability Zone (e.g. us-south-1). The IBM Cloud Region will be calculated from this value"
 
   validation {
     error_message = "Please enter an IBM Cloud Availability Zone (e.g. us-south-1)."
