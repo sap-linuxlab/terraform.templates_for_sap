@@ -65,12 +65,12 @@ The following is an overview of the Infrastructure-as-Code (IaC) provisioning, f
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | &emsp;&emsp;*Product* | EC2 Virtual Server | VM | VM | Virtual Server | IBM Power Virtual Server | LPAR | VM |
 | <br/><br/>***Account Init*** |   |   |   |   |   |   |   |
-| <sub>Create Resource Group. Or re-use existing Resource Group</sub> | :x: | :x: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
+| <sub>Create Resource Group. Or re-use existing Resource Group</sub> | :no_entry_sign: | :no_entry_sign: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
 | <sub>Create Networks (VPC/VNet), Subnets, and Internet Access. Or re-use existing VPC/VNet</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
 | <br/>***Account Bootstrap<br/>(aka. minimal landing zone)*** |   |   |   |   |   |   |   |
 | <sub>Create Private DNS, Network Security</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
-| <sub>Create Network Interconnectivity hub</sub> | :white_check_mark: | :x: | :x: | :white_check_mark: | :white_check_mark: | N/A | N/A |
-| <sub>Create TLS key pair for SSH and Import to Cloud Platform</sub> | :white_check_mark: | :x: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| <sub>Create Network Interconnectivity hub</sub> | :white_check_mark: | :no_entry_sign: | :no_entry_sign: | :white_check_mark: | :white_check_mark: | N/A | N/A |
+| <sub>Create TLS key pair for SSH and Import to Cloud Platform</sub> | :white_check_mark: | :no_entry_sign: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | <br/>***Bastion Injection*** |   |   |   |   |   |   |   |
 | <sub>Create Subnet and Network Security for Bastion</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
 | <sub>Create Bastion host and Public IP address</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
@@ -81,6 +81,12 @@ The following is an overview of the Infrastructure-as-Code (IaC) provisioning, f
 | <sub>Create Storage Volumes (Profile or Custom IOPS)</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :warning:<br/><sub>no custom IOPS</sub> | :white_check_mark: | :white_check_mark: |
 | <sub>Create Host/s</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
+
+<sub>**Key:**</sub>
+- :white_check_mark: <sub>Ready and Tested</sub>
+- :warning: <sub>Pending work</sub>
+- :x: <sub>Not available yet</sub>
+- :no_entry_sign: <sub>Capability not provided by vendor (or construct concept does not exist)</sub>
 
 ---
 
