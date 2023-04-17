@@ -54,7 +54,7 @@ variable "map_host_specifications" {
 
         disk_volume_count_usr_sap    = 1 // max of 1
         disk_volume_type_usr_sap     = "E20"
-        disk_volume_capacity_usr_sap = 512
+        disk_volume_capacity_usr_sap = 512 // bad sizing, but use this so each drive size is unique
         filesystem_usr_sap           = "xfs"
 
         disk_volume_count_sapmnt    = 1 // max of 1

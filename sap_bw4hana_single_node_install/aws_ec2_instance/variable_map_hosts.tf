@@ -62,11 +62,11 @@ variable "map_host_specifications" {
         disk_volume_capacity_sapmnt = 50
         filesystem_sapmnt           = "xfs"
 
-        disk_swapfile_size_gb  = 2 // not required if disk volume set
-        disk_volume_count_swap = 0 // max of 1
-        #disk_volume_type_swap = "gp3"
-        #disk_volume_capacity_swap = 10
-        #filesystem_swap = "xfs"
+        #disk_swapfile_size_gb  = 2 // not required if disk volume set
+        disk_volume_count_swap = 1 // max of 1
+        disk_volume_type_swap = "gp3"
+        disk_volume_capacity_swap = 32
+        filesystem_swap = "xfs"
       }
 
     }

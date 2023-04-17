@@ -65,7 +65,7 @@ variable "map_host_specifications" {
         #disk_swapfile_size_gb  = 2 // not required if disk volume set
         disk_volume_count_swap = 1 // max of 1
         disk_volume_type_swap = "gp3"
-        disk_volume_capacity_swap = 64
+        disk_volume_capacity_swap = 32
         filesystem_swap = "xfs"
       }
 
