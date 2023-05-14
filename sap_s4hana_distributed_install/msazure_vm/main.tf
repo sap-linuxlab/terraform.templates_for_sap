@@ -61,7 +61,7 @@ module "run_account_bootstrap_module" {
     module.run_account_init_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/account_bootstrap?ref=dev"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/account_bootstrap?ref=main"
 
   module_var_az_resource_group_name = module.run_account_init_module.output_resource_group_name
   module_var_resource_prefix        = var.resource_prefix
@@ -129,7 +129,7 @@ module "run_host_network_access_sap_module" {
     module.run_bastion_inject_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/host_network_access_sap?ref=dev"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/host_network_access_sap?ref=main"
 
   module_var_az_resource_group_name = module.run_account_init_module.output_resource_group_name
 

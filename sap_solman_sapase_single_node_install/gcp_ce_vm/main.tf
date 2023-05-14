@@ -241,7 +241,7 @@ module "run_ansible_sap_solman_java_sapase_install" {
 
   depends_on = [module.run_host_provision_module]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_solman_sapase_install?ref=dev"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_solman_sapase_install?ref=main"
 
 
   # Terraform Module Variables using the prior Terraform Module Variables (from bootstrap module)
