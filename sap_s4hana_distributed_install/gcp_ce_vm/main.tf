@@ -12,8 +12,6 @@ module "run_ansible_dry_run" {
   module_var_bastion_private_ssh_key          = ""
   module_var_bastion_floating_ip              = ""
   module_var_host_private_ssh_key             = ""
-  module_var_host_private_ip                  = ""
-  module_var_hostname                         = "software_media_dry_run"
   module_var_dns_root_domain_name             = ""
   module_var_sap_id_user                      = var.sap_id_user
   module_var_sap_id_user_password             = var.sap_id_user_password
@@ -23,6 +21,11 @@ module "run_ansible_dry_run" {
   module_var_sap_swpm_ddic_000_password       = ""
   module_var_sap_swpm_template_selected       = var.sap_swpm_template_selected
   module_var_sap_maintenance_planner_transaction_name = var.sap_maintenance_planner_transaction_name
+
+  module_var_inventory_hana_primary           = "software_media_dry_run"
+  module_var_inventory_nwas_ascs              = "software_media_dry_run"
+  module_var_inventory_nwas_pas               = "software_media_dry_run"
+  module_var_inventory_nwas_aas               = "software_media_dry_run"
 
 }
 
