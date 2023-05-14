@@ -9,6 +9,7 @@ Each Terraform Template for SAP anticipates that an end user has a basic level o
 
 The below document contains guidance for:
 - [AWS hyperscaler](#aws-hyperscaler), Cloud Service Provider
+- [Google Cloud hyperscaler](#google-cloud-hyperscaler), Cloud Service Provider
 - [IBM Cloud hyperscaler](#ibm-cloud-hyperscaler), Cloud Service Provider
 - [IBM PowerVC hypervisor](#ibm-powervc-hypervisor)
 - [Microsoft Azure hyperscaler](#microsoft-azure-hyperscaler), Cloud Service Provider
@@ -268,3 +269,34 @@ For VMware vCenter and vSphere clusters with direct network subnet IP allocation
 - **DHCP Server** must be created (e.g. NSX > Networking > Networking Profiles > DHCP Profile), set in the Gateway (e.g. NSX > Networking > Gateway > Edit > DHCP Config > ), then set for the Subnet (e.g. NSX > Networking > Segment > <<selected subnet>> > Set DHCP Config) which the VMware VM Template is attached to; this allows subsequent cloned VMs to obtain an IPv4 Address
 - **Internet Access**: Option 1 - Configured SNAT (e.g. rule added on NSX Gateway) set for the Subnet which the VMware VM Template is attached to; this allows Public Internet access. Option 2 - Web Proxy.
 - **DNS Server (Private)** is recommended to assist custom/private root domain resolution (e.g. poc.cloud)
+
+<br/>
+
+## Cloud service versions for hyperscaler Cloud Service Providers
+
+For distinction, it is important to note that each hyperscaler Cloud Service Provider has some previous generation of Cloud Services and Networking environments.
+
+Below is a list of previous generation Cloud Services and Networking environments which are `NOT` used within the Terraform Templates for SAP:
+
+### AWS hyperscaler, Cloud Service Provider
+
+- AWS EC2-Classic Networking environment (replaced by VPC networks environment). Deprecated in Aug-2022. See [AWS EC2-Classic documentation](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-classic-platform.html).
+- Amazon EC2 Previous Generation Instances. See [AWS EC2 Previous Generation Instances documentation](https://aws.amazon.com/ec2/previous-generation/).
+
+### Google Cloud hyperscaler, Cloud Service Provider
+
+- Google Cloud Legacy Networks (replaced by VPC Networks). Not available to provision, no deprecation (aka. Discontinuation of Service) date announced. See [Google Cloud Legacy Networks documentation](https://cloud.google.com/vpc/docs/legacy).
+
+### IBM Cloud hyperscaler, Cloud Service Provider
+
+- IBM Cloud Classic Infrastructure environment, replaced by IBM Cloud VPC Infrastructure environment. See [IBM Cloud Classic Infrastructure compared with IBM Cloud VPC Infrastructure environments documentation](https://cloud.ibm.com/docs/cloud-infrastructure?topic=cloud-infrastructure-compare-infrastructure).
+  - IBM Cloud Virtual Servers (Classic) based on Xen hypervisor; replaced by IBM Cloud Virtual Servers (with hardware generations) based on KVM hypervisor. See [IBM Cloud Virtual Servers (for Classic) documentation](https://cloud.ibm.com/docs/virtual-servers).
+  - IBM Cloud VLAN (Classic) and VLAN Subnets (Classic); replaced by IBM Cloud VPC Networks and IBM Cloud VPC Subnets. See [IBM Cloud Classic VLANs documentation](https://cloud.ibm.com/docs/vlans?topic=vlans-about-vlans).
+
+### Microsoft Azure hyperscaler, Cloud Service Provider
+
+- Azure Service Manager (ASM) control plane (aka. environment), replaced by Azure Resource Manager (ARM) control plane.
+  - Azure IaaS VM (Classic), managed by Azure Service Manager (ASM) control plane. Deprecation due Sept-2023. See [Azure Classic VM deprecation documentation](https://learn.microsoft.com/en-us/azure//virtual-machines/classic-vm-deprecation) and [Azure Resource Manager vs. Classic deployment models documentation](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/deployment-models).
+    - Azure IaaS VM using Hyper-V Generation 1 format; replaced by Hyper-V Generation 2 format. See [Azure Classic VM API reference without Generation 2 support](https://learn.microsoft.com/en-us/previous-versions/azure/reference/jj157194(v=azure.100)) compared with [Azure VM API reference with Generation 2 support](https://learn.microsoft.com/en-us/rest/api/compute/virtual-machines/create-or-update?tabs=HTTP).
+  - Azure VNet (Classic), part of the Azure Cloud Services (Classic). Deprecation due Aug-2024. See [Azure Classic VNet documentation](https://learn.microsoft.com/en-us/previous-versions/azure/virtual-network/create-virtual-network-classic) and [Azure Cloud Services (Classic) documentation](https://learn.microsoft.com/en-us/azure/cloud-services/).
+  - Azure Storage Accounts (Classic), part of the Azure Cloud Services (Classic). Deprecation due Aug-2024. See [Azure Classic Storage Account migration documentation](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-migrate-classic) and [Azure Cloud Services (Classic) documentation](https://learn.microsoft.com/en-us/azure/cloud-services/).

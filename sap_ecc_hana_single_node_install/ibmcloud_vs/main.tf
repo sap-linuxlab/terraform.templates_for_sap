@@ -65,20 +65,20 @@ module "run_account_bootstrap_module" {
 }
 
 
-module "run_account_iam_module" {
-
-  depends_on = [
-    module.run_account_bootstrap_module
-  ]
-
-  count = var.ibmcloud_iam_yesno == "yes" ? 1 : 0
-
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/account_iam?ref=main"
-
-  module_var_resource_group_id = module.run_account_init_module.output_resource_group_id
-  module_var_resource_prefix   = var.resource_prefix
-
-}
+#module "run_account_iam_module" {
+#
+#  depends_on = [
+#    module.run_account_bootstrap_module
+#  ]
+#
+#  count = var.ibmcloud_iam_yesno == "yes" ? 1 : 0
+#
+#  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/account_iam?ref=main"
+#
+#  module_var_resource_group_id = module.run_account_init_module.output_resource_group_id
+#  module_var_resource_prefix   = var.resource_prefix
+#
+#}
 
 
 module "run_bastion_inject_module" {
@@ -251,6 +251,8 @@ module "run_host_provision_module" {
   module_var_disk_volume_type_sapmnt         = var.map_host_specifications[var.host_specification_plan][each.key].disk_volume_type_sapmnt
   module_var_disk_volume_capacity_sapmnt     = var.map_host_specifications[var.host_specification_plan][each.key].disk_volume_capacity_sapmnt
   module_var_filesystem_sapmnt               = var.map_host_specifications[var.host_specification_plan][each.key].filesystem_sapmnt
+  module_var_nfs_boolean_sapmnt              = false // always false, single node installation
+  module_var_nfs_fqdn_sapmnt                 = "" // always false, single node installation
 
   module_var_disk_swapfile_size_gb           = var.map_host_specifications[var.host_specification_plan][each.key].disk_volume_count_swap > 0 ? 0 : var.map_host_specifications[var.host_specification_plan][each.key].disk_swapfile_size_gb
   module_var_disk_volume_count_swap          = var.map_host_specifications[var.host_specification_plan][each.key].disk_volume_count_swap

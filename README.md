@@ -32,6 +32,7 @@ These Terraform Templates for SAP are designed to be:
 | **SAP HANA 2.0 (any version)**<br/>single-node installation | <sub><ul><li>:white_check_mark: AWS EC2 instance</li><li>:white_check_mark: Google Cloud CE VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:white_check_mark: Microsoft Azure VM</li><li>:white_check_mark: IBM PowerVM LPAR</li><li>:white_check_mark: VMware vSphere VM</li></ul>*Coming Soon: OVirt VM*</sub> |
 | **SAP S/4HANA (2021, 2022)**<br/>single-node installation | <sub><ul><li>:white_check_mark: AWS EC2 instance</li><li>:white_check_mark: Google Cloud CE VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:white_check_mark: Microsoft Azure VM</li><li>:white_check_mark: IBM PowerVM LPAR</li><li>:white_check_mark: VMware vSphere VM</li></ul>*Coming Soon: OVirt VM*</sub> |
 | **SAP S/4HANA (2020, 2021, 2022)**<br/>single-node installation,<br/>using SAP Maintenance Planner Stack XML<br/>(to run SUM and SPAM / SAINT) | <sub><ul><li>:white_check_mark: AWS EC2 instance</li><li>:white_check_mark: Google Cloud CE VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:white_check_mark: Microsoft Azure VM</li><li>:white_check_mark: IBM PowerVM LPAR</li><li>:white_check_mark: VMware vSphere VM</li></ul>*Coming Soon: OVirt VM*</sub> |
+| **SAP S/4HANA (2020, 2021, 2022)**<br/>Distributed installation<br/>(HDB, NWAS ASCS, NWAS PAS, NWAS AAS),<br/>using SAP Maintenance Planner Stack XML<br/>(to run SUM and SPAM / SAINT) | <sub><ul><li>:white_check_mark: AWS EC2 instance</li><li>:white_check_mark: Google Cloud CE VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:warning: IBM Cloud, Power VS</li><li>:white_check_mark: Microsoft Azure VM</li><li>:x: IBM PowerVM LPAR</li><li>:x: VMware vSphere VM</li></ul>*Coming Soon: OVirt VM*</sub> |
 | **SAP S/4HANA (1909, 2020, 2021, 2022)**<br/>single-node System Copy installation</br>(Homogeneous with SAP HANA Backup / Recovery) | <sub><ul><li>:warning: AWS EC2 instance</li><li>:warning: Google Cloud CE VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:warning: Microsoft Azure VM</li><li>:warning: IBM PowerVM LPAR</li><li>:warning: VMware vSphere VM</li></ul>*Coming Soon: OVirt VM*</sub> |
 | **SAP BW/4HANA (2021)**<br/>single-node installation | <sub><ul><li>:white_check_mark: AWS EC2 instance</li><li>:white_check_mark: Google Cloud CE VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:white_check_mark: Microsoft Azure VM</li><li>:white_check_mark: IBM PowerVM LPAR</li><li>:white_check_mark: VMware vSphere VM</li></ul>*Coming Soon: OVirt VM*</sub> |
 | **SAP ECC on SAP HANA (EHP7, EHP8)**<br/>single-node installation | <sub><ul><li>:white_check_mark: AWS EC2 instance</li><li>:white_check_mark: Google Cloud CE VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:white_check_mark: IBM Cloud, Power VS</li><li>:white_check_mark: Microsoft Azure VM</li><li>:white_check_mark: IBM PowerVM LPAR</li><li>:white_check_mark: VMware vSphere VM</li></ul>*Coming Soon: OVirt VM*</sub> |
@@ -47,6 +48,8 @@ These Terraform Templates for SAP are designed to be:
 | **SAP NetWeaver AS (ABAP) with SAP MaxDB (7.50, 7.52)**<br/>single-node installation | <sub><ul><li>:white_check_mark: AWS EC2 instance</li><li>:white_check_mark: Google Cloud CE VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:no_entry_sign: IBM Cloud, Power VS</li><li>:white_check_mark: Microsoft Azure VM</li><li>:no_entry_sign: IBM PowerVM LPAR</li><li>:white_check_mark: VMware vSphere VM</li></ul>*Coming Soon: OVirt VM*</sub> |
 | **SAP NetWeaver AS (`JAVA`) with IBM Db2 (7.50)**<br/>single-node installation | <sub><ul><li>:white_check_mark: AWS EC2 instance</li><li>:white_check_mark: Google Cloud CE VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:no_entry_sign: IBM Cloud, Power VS</li><li>:white_check_mark: Microsoft Azure VM</li><li>:no_entry_sign: IBM PowerVM LPAR</li><li>:white_check_mark: VMware vSphere VM</li></ul>*Coming Soon: OVirt VM*</sub> |
 | **SAP NetWeaver AS (`JAVA`) with SAP ASE (7.50)**<br/>single-node installation | <sub><ul><li>:white_check_mark: AWS EC2 instance</li><li>:white_check_mark: Google Cloud CE VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:no_entry_sign: IBM Cloud, Power VS</li><li>:white_check_mark: Microsoft Azure VM</li><li>:no_entry_sign: IBM PowerVM LPAR</li><li>:white_check_mark: VMware vSphere VM</li></ul>*Coming Soon: OVirt VM*</sub> |
+| **SAP Solution Manager 7.2 SP2 (`ABAP/JAVA`)<br/>with SAP ASE**<br/>single-node installation | <sub><ul><li>:white_check_mark: AWS EC2 instance</li><li>:white_check_mark: Google Cloud CE VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:no_entry_sign: IBM Cloud, Power VS</li><li>:white_check_mark: Microsoft Azure VM</li><li>:no_entry_sign: IBM PowerVM LPAR</li><li>:x: VMware vSphere VM</li></ul>*Coming Soon: OVirt VM*</sub> |
+| **SAP Solution Manager 7.2 SP2 (`ABAP/JAVA`)<br/>with SAP HANA**<br/>single-node installation | <sub><ul><li>:white_check_mark: AWS EC2 instance</li><li>:white_check_mark: Google Cloud CE VM</li><li>:white_check_mark: IBM Cloud, Intel VS</li><li>:no_entry_sign: IBM Cloud, Power VS</li><li>:white_check_mark: Microsoft Azure VM</li><li>:no_entry_sign: IBM PowerVM LPAR</li><li>:x: VMware vSphere VM</li></ul>*Coming Soon: OVirt VM*</sub> |
 
 
 <sub>**Key:**</sub>
@@ -65,22 +68,30 @@ The following is an overview of the Infrastructure-as-Code (IaC) provisioning, f
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | &emsp;&emsp;*Product* | EC2 Virtual Server | VM | VM | Virtual Server | IBM Power Virtual Server | LPAR | VM |
 | <br/><br/>***Account Init*** |   |   |   |   |   |   |   |
-| <sub>Create Resource Group. Or re-use existing Resource Group</sub> | :x: | :x: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
+| <sub>Create Resource Group. Or re-use existing Resource Group</sub> | :no_entry_sign: | :no_entry_sign: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
 | <sub>Create Networks (VPC/VNet), Subnets, and Internet Access. Or re-use existing VPC/VNet</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
 | <br/>***Account Bootstrap<br/>(aka. minimal landing zone)*** |   |   |   |   |   |   |   |
 | <sub>Create Private DNS, Network Security</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
-| <sub>Create Network Interconnectivity hub</sub> | :white_check_mark: | :x: | :x: | :white_check_mark: | :white_check_mark: | N/A | N/A |
-| <sub>Create TLS key pair for SSH and Import to Cloud Platform</sub> | :white_check_mark: | :x: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| <sub>Create Network Interconnectivity hub</sub> | :white_check_mark: | :no_entry_sign: | :no_entry_sign: | :white_check_mark: | :white_check_mark: | N/A | N/A |
+| <sub>Create TLS key pair for SSH and Import to Cloud Platform</sub> | :white_check_mark: | :no_entry_sign: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | <br/>***Bastion Injection*** |   |   |   |   |   |   |   |
 | <sub>Create Subnet and Network Security for Bastion</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
 | <sub>Create Bastion host and Public IP address</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
 | <br/>***Host Network Access for SAP*** |   |   |   |   |   |   |   |
 | <sub>Append Network Security rules for SAP</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
+| <br/>***Host NFS*** |   |   |   |   |   |   |   |
+| <sub>Create NFS Share</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :warning: | N/A | N/A |
 | <br/>***Host Provision*** |   |   |   |   |   |   |   |
 | <sub>Create DNS Records (i.e. A, CNAME, PTR)</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | N/A | N/A |
 | <sub>Create Storage Volumes (Profile or Custom IOPS)</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :warning:<br/><sub>no custom IOPS</sub> | :white_check_mark: | :white_check_mark: |
 | <sub>Create Host/s</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
+
+<sub>**Key:**</sub>
+- :white_check_mark: <sub>Ready and Tested</sub>
+- :warning: <sub>Pending work</sub>
+- :x: <sub>Not available yet</sub>
+- :no_entry_sign: <sub>Capability not provided by vendor (or construct concept does not exist)</sub>
 
 ---
 

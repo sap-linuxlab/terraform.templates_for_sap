@@ -17,12 +17,12 @@ variable "ibmcloud_resource_group" {
 }
 
 variable "ibmcloud_powervs_location" {
-  description = "Target IBM Power VS location (colocated at a IBM Cloud VPC Infrastructure Availability Zone)"
+  description = "Target IBM Power VS location (e.g. WDC06). Each location is colocated at a IBM Cloud VPC Infrastructure Availability Zone (e.g. us-east-2)"
 }
 
-variable "ibmcloud_iam_yesno" {
-  description = "Please choose 'yes' or 'no' for setup of default IBM Cloud Identity and Access Management (IAM) controls, for use by technicians to view and edit resources of SAP Systems run on IBM Cloud (NOTE: Requires admin privileges on API Key)"
-}
+#variable "ibmcloud_iam_yesno" {
+#  description = "Please choose 'yes' or 'no' for setup of default IBM Cloud Identity and Access Management (IAM) controls, for use by technicians to view and edit resources of SAP Systems run on IBM Cloud (NOTE: Requires admin privileges on API Key)"
+#}
 
 variable "ibmcloud_vpc_subnet_name" {
   description = "Enter existing/target VPC Subnet name , or enter 'new' to create a VPC with a default VPC Address Prefix Range. If using an existing VPC Subnet, it must be attached to a Public Gateway (i.e. SNAT)"
