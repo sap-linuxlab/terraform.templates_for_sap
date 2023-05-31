@@ -25,10 +25,10 @@ terraform {
 # Terraform Provider declaration
 
 provider "google" {
-  project     = var.google_cloud_project
-  region      = local.google_cloud_region
-  zone        = var.google_cloud_region_zone
+  project     = var.gcp_project
+  region      = local.gcp_region
+  zone        = var.gcp_region_zone
 
-  credentials = var.google_cloud_credentials_json
+  credentials = var.gcp_credentials_json
 
 }

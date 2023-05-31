@@ -1,8 +1,8 @@
 locals {
 
-  google_cloud_vpc_subnet_create_boolean = var.google_cloud_vpc_subnet_name == "new" ? true : false
+  gcp_vpc_subnet_create_boolean = var.gcp_vpc_subnet_name == "new" ? true : false
 
-  google_cloud_region = replace(var.google_cloud_region_zone, "/-[^-]*$/", "")
+  gcp_region = replace(var.gcp_region_zone, "/-[^-]*$/", "")
 
   # Directories start with "C:..." on Windows; All other OSs use "/" for root.
   detect_windows = substr(pathexpand("~"), 0, 1) == "/" ? false : true

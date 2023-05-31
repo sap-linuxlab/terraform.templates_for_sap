@@ -35,9 +35,9 @@ module "run_account_init_module" {
 
   module_var_resource_prefix                = var.resource_prefix
 
-  module_var_gcp_region                     = local.google_cloud_region
-  module_var_gcp_vpc_subnet_create_boolean  = local.google_cloud_vpc_subnet_create_boolean
-  module_var_gcp_vpc_subnet_name            = local.google_cloud_vpc_subnet_create_boolean ? 0 : var.google_cloud_vpc_subnet_name
+  module_var_gcp_region                     = local.gcp_region
+  module_var_gcp_vpc_subnet_create_boolean  = local.gcp_vpc_subnet_create_boolean
+  module_var_gcp_vpc_subnet_name            = local.gcp_vpc_subnet_create_boolean ? 0 : var.gcp_vpc_subnet_name
 
 }
 
@@ -69,8 +69,8 @@ module "run_bastion_inject_module" {
 
   module_var_resource_prefix                = var.resource_prefix
 
-  module_var_gcp_region                     = local.google_cloud_region
-  module_var_gcp_region_zone                = var.google_cloud_region_zone
+  module_var_gcp_region                     = local.gcp_region
+  module_var_gcp_region_zone                = var.gcp_region_zone
   module_var_gcp_vpc_subnet_name            = module.run_account_init_module.output_vpc_subnet_name
 
   module_var_bastion_user                   = var.bastion_user
@@ -132,7 +132,7 @@ module "run_host_provision_module" {
 
   module_var_resource_prefix                = var.resource_prefix
 
-  module_var_gcp_region_zone                = var.google_cloud_region_zone
+  module_var_gcp_region_zone                = var.gcp_region_zone
   module_var_gcp_vpc_subnet_name            = module.run_account_init_module.output_vpc_subnet_name
 
   module_var_dns_root_domain_name           = var.dns_root_domain

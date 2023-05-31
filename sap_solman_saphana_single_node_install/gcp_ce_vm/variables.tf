@@ -1,17 +1,17 @@
 
-variable "google_cloud_project" {
+variable "gcp_project" {
   description = "Target GCP Project ID"
 }
 
-variable "google_cloud_region_zone" {
+variable "gcp_region_zone" {
   description = "Target GCP Zone, the GCP Region will be calculated from this value (e.g. europe-west9-a)"
 }
 
-variable "google_cloud_credentials_json" {
+variable "gcp_credentials_json" {
   description = "Enter path to GCP Key File for Service Account (or Google Application Default Credentials JSON file for GCloud CLI)"
 }
 
-variable "google_cloud_vpc_subnet_name" {
+variable "gcp_vpc_subnet_name" {
   description = "Enter existing/target VPC Subnet name, or enter 'new' to create a VPC"
 }
 
