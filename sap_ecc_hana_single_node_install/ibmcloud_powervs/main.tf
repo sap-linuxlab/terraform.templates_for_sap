@@ -179,7 +179,7 @@ module "run_powervs_interconnect_sg_update_module" {
 
   depends_on = [
     module.run_bastion_inject_module,
-    module.run_powervs_account_bootstrap_module
+    module.run_account_bootstrap_powervs_networks_module
   ]
 
   source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/powervs_interconnect_sg_update?ref=main"
@@ -189,7 +189,7 @@ module "run_powervs_interconnect_sg_update_module" {
   module_var_bastion_security_group_id = module.run_bastion_inject_module.output_bastion_security_group_id
   module_var_host_security_group_id    = module.run_account_bootstrap_module.output_host_security_group_id
 
-  module_var_power_group_network_private_subnet = module.run_powervs_account_bootstrap_module.output_power_group_network_private_subnet
+  module_var_power_group_network_private_subnet = module.run_account_bootstrap_powervs_networks_module.output_power_group_network_private_subnet
 
 }
 
