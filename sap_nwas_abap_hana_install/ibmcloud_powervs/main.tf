@@ -3,7 +3,7 @@ module "run_ansible_dry_run" {
 
   source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_nwas_abap_hana_install?ref=main"
 
-  module_var_dry_run_test = "x86_64" // x86_64 or ppc64le
+  module_var_dry_run_test = "ppc64le" // x86_64 or ppc64le
 
   # Terraform Module Variables which are mandatory, all with an empty string
   module_var_bastion_boolean                  = false
@@ -34,6 +34,8 @@ module "run_account_init_module" {
 
   source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/account_init?ref=main"
 
+  providers = { ibm = ibm.standard }
+
   module_var_resource_group_name           = local.resource_group_create_boolean ? 0 : var.ibmcloud_resource_group
   module_var_resource_group_create_boolean = local.resource_group_create_boolean
 
@@ -41,7 +43,7 @@ module "run_account_init_module" {
 
   module_var_ibmcloud_vpc_subnet_name           = local.ibmcloud_vpc_subnet_create_boolean ? 0 : var.ibmcloud_vpc_subnet_name
   module_var_ibmcloud_vpc_subnet_create_boolean = local.ibmcloud_vpc_subnet_create_boolean
-  module_var_ibmcloud_vpc_availability_zone     = var.map_ibm_powervs_to_vpc_az[var.ibmcloud_powervs_location]
+  module_var_ibmcloud_vpc_availability_zone     = var.map_ibm_powervs_to_vpc_az[lower(var.ibmcloud_powervs_location)]
 
 }
 
@@ -54,11 +56,13 @@ module "run_account_bootstrap_module" {
 
   source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/account_bootstrap?ref=main"
 
+  providers = { ibm = ibm.standard }
+
   module_var_resource_group_id = module.run_account_init_module.output_resource_group_id
   module_var_resource_prefix   = var.resource_prefix
 
   module_var_ibmcloud_vpc_subnet_name           = local.ibmcloud_vpc_subnet_create_boolean ? module.run_account_init_module.output_vpc_subnet_name : var.ibmcloud_vpc_subnet_name
-  module_var_ibmcloud_vpc_availability_zone     = var.map_ibm_powervs_to_vpc_az[var.ibmcloud_powervs_location]
+  module_var_ibmcloud_vpc_availability_zone     = var.map_ibm_powervs_to_vpc_az[lower(var.ibmcloud_powervs_location)]
 
   module_var_dns_root_domain_name = var.dns_root_domain
 
@@ -90,6 +94,8 @@ module "run_bastion_inject_module" {
 
   source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/bastion_inject?ref=main"
 
+  providers = { ibm = ibm.standard }
+
   module_var_resource_group_id = module.run_account_init_module.output_resource_group_id
   module_var_resource_prefix   = var.resource_prefix
   module_var_resource_tags     = var.resource_tags
@@ -117,6 +123,8 @@ module "run_host_network_access_sap_public_via_proxy_module" {
 
   source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/host_network_access_sap_public_via_proxy?ref=main"
 
+  providers = { ibm = ibm.standard }
+
   module_var_ibmcloud_vpc_subnet_name = local.ibmcloud_vpc_subnet_create_boolean ? module.run_account_init_module.output_vpc_subnet_name : var.ibmcloud_vpc_subnet_name
 
   module_var_bastion_security_group_id = module.run_bastion_inject_module.output_bastion_security_group_id
@@ -129,13 +137,15 @@ module "run_host_network_access_sap_public_via_proxy_module" {
 }
 
 
-module "run_powervs_account_bootstrap_module" {
+module "run_account_bootstrap_powervs_workspace_module" {
 
   depends_on = [
     module.run_account_bootstrap_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_powervs/account_bootstrap_addon?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_powervs/account_bootstrap_powervs_workspace?ref=alpha"
+
+  providers = { ibm = ibm.standard }
 
   module_var_resource_group_id        = module.run_account_init_module.output_resource_group_id
   module_var_resource_prefix          = var.resource_prefix
@@ -145,19 +155,41 @@ module "run_powervs_account_bootstrap_module" {
 }
 
 
+module "run_account_bootstrap_powervs_networks_module" {
+
+  depends_on = [
+    module.run_account_bootstrap_module,
+    module.run_account_bootstrap_powervs_workspace_module
+  ]
+
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_powervs/account_bootstrap_powervs_networks?ref=alpha"
+
+  providers = { ibm = ibm.powervs_secure }
+
+  module_var_resource_group_id        = module.run_account_init_module.output_resource_group_id
+  module_var_resource_prefix          = var.resource_prefix
+  module_var_ibmcloud_power_zone      = lower(var.ibmcloud_powervs_location)
+  module_var_ibmcloud_powervs_workspace_guid = module.run_account_bootstrap_powervs_workspace_module.output_power_group_guid
+  module_var_ibmcloud_vpc_crn         = module.run_account_bootstrap_powervs_workspace_module.output_power_target_vpc_crn
+
+}
+
+
 module "run_powervs_interconnect_sg_update_module" {
 
   depends_on = [
     module.run_bastion_inject_module,
-    module.run_powervs_account_bootstrap_module
+    module.run_account_bootstrap_powervs_networks_module
   ]
 
   source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/powervs_interconnect_sg_update?ref=main"
 
+  providers = { ibm = ibm.standard }
+
   module_var_bastion_security_group_id = module.run_bastion_inject_module.output_bastion_security_group_id
   module_var_host_security_group_id    = module.run_account_bootstrap_module.output_host_security_group_id
 
-  module_var_power_group_network_private_subnet = module.run_powervs_account_bootstrap_module.output_power_group_network_private_subnet
+  module_var_power_group_network_private_subnet = module.run_account_bootstrap_powervs_networks_module.output_power_group_network_private_subnet
 
 }
 
@@ -172,6 +204,8 @@ module "run_powervs_interconnect_proxy_provision_module" {
   ]
 
   source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/powervs_interconnect_proxy_provision?ref=main"
+
+  providers = { ibm = ibm.standard }
 
   # Set Terraform Module Variables using Terraform Variables at runtime
 
@@ -217,12 +251,14 @@ module "run_host_provision_module" {
 
   source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_powervs/host_provision?ref=main"
 
+  providers = { ibm = ibm.powervs_secure }
+
   module_var_resource_group_id = module.run_account_init_module.output_resource_group_id
   module_var_resource_prefix   = var.resource_prefix
   module_var_resource_tags     = var.resource_tags
 
-  module_var_ibm_power_group_guid = module.run_powervs_account_bootstrap_module.output_power_group_guid
-  module_var_power_group_networks = module.run_powervs_account_bootstrap_module.output_power_group_networks
+  module_var_ibm_power_group_guid = module.run_account_bootstrap_powervs_workspace_module.output_power_group_guid
+  module_var_power_group_networks = module.run_account_bootstrap_powervs_networks_module.output_power_group_networks
 
   module_var_ibmcloud_vpc_subnet_name = local.ibmcloud_vpc_subnet_create_boolean ? module.run_account_init_module.output_vpc_subnet_name : var.ibmcloud_vpc_subnet_name
 
