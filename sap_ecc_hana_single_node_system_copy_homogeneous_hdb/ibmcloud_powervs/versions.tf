@@ -16,6 +16,8 @@ terraform {
 
 provider "ibm" {
 
+  alias = "standard"
+
   # Define Provider inputs manually
   #  ibmcloud_api_key = "xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 
@@ -29,6 +31,19 @@ provider "ibm" {
 
   region = local.ibmcloud_region
 
-  zone = var.ibmcloud_powervs_location // Required for IBM Power VS only
+  zone = lower(var.ibmcloud_powervs_location) // Required for IBM Power VS only
+
+}
+
+
+provider "ibm" {
+
+  alias = "powervs_secure"
+
+  ibmcloud_api_key = var.ibmcloud_api_key
+
+  region = local.ibmcloud_powervs_region
+
+  zone = lower(var.ibmcloud_powervs_location) // Required for IBM Power VS only
 
 }
