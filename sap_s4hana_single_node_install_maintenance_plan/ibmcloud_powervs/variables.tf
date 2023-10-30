@@ -17,7 +17,7 @@ variable "ibmcloud_resource_group" {
 }
 
 variable "ibmcloud_powervs_location" {
-  description = "Target IBM Power VS location (e.g. WDC06). Each location is colocated at a IBM Cloud VPC Infrastructure Availability Zone (e.g. us-east-2)"
+  description = "Target IBM Power VS location (e.g. lon06). Each location is colocated at a IBM Cloud VPC Infrastructure Availability Zone (e.g. eu-gb-3)"
 }
 
 #variable "ibmcloud_iam_yesno" {
