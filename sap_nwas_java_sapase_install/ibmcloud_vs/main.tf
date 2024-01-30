@@ -199,7 +199,10 @@ module "run_host_provision_module" {
 
   module_var_disable_ip_anti_spoofing = false
 
-}run_ansible_sap_nwas_java_sapase_install" {
+}
+
+
+module "run_ansible_sap_nwas_java_sapase_install" {
 
   depends_on = [module.run_host_provision_module]
 

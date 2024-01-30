@@ -89,7 +89,10 @@ module "run_host_provision_module" {
 
   module_var_disable_ip_anti_spoofing = false
 
-}run_ansible_sap_s4hana_install_maintplan" {
+}
+
+
+module "run_ansible_sap_s4hana_install_maintplan" {
 
   depends_on = [module.run_host_provision_module]
 

@@ -299,7 +299,39 @@ module "run_host_provision_module" {
 
   module_var_disable_ip_anti_spoofing = false
 
-}run_ansible_sap_s4hana_system_copy_hdb" {
+}
+
+
+module "run_shell_download_obj_store_ibmcos" {
+
+  depends_on = [module.run_host_provision_module]
+
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/shell_download_obj_store_ibmcos?ref=main"
+
+  # Terraform Module Variables using the prior Terraform Module Variables (from bootstrap module)
+  module_var_bastion_user            = var.bastion_user
+  module_var_bastion_ssh_port        = var.bastion_ssh_port
+  module_var_bastion_private_ssh_key = module.run_account_bootstrap_module.output_bastion_private_ssh_key
+
+  module_var_bastion_floating_ip = module.run_bastion_inject_module.output_bastion_ip
+
+  module_var_host_ssh_key_id      = module.run_account_bootstrap_module.output_host_ssh_key_id
+  module_var_host_private_ssh_key = module.run_account_bootstrap_module.output_host_private_ssh_key
+
+
+  # Set Terraform Module Variables using for_each loop on a map Terraform Variable at runtime
+
+  for_each                   = module.run_host_provision_module
+  module_var_host_private_ip = join(", ", each.value.*.output_host_private_ip)
+
+  module_var_ibmcloud_api_key          = var.ibmcloud_api_key
+  module_var_ibmcos_bucket             = var.ibmcos_bucket
+  module_var_ibmcos_download_directory = var.sap_hana_backup_directory
+
+}
+
+
+module "run_ansible_sap_s4hana_system_copy_hdb" {
 
   depends_on = [
     module.run_host_provision_module,
