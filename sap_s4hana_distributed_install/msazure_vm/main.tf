@@ -1,7 +1,7 @@
 
 module "run_ansible_dry_run" {
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_s4hana_distributed_install_maintplan?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_s4hana_distributed_install_maintplan?ref=alpha"
 
   module_var_dry_run_test = "x86_64" // x86_64 or ppc64le
 
@@ -36,7 +36,7 @@ module "run_account_init_module" {
     module.run_ansible_dry_run
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/account_init?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/account_init?ref=alpha"
 
   module_var_az_resource_group_name           = local.resource_group_create_boolean ? 0 : var.az_resource_group_name
   module_var_az_resource_group_create_boolean = local.resource_group_create_boolean
@@ -61,7 +61,7 @@ module "run_account_bootstrap_module" {
     module.run_account_init_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/account_bootstrap?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/account_bootstrap?ref=alpha"
 
   module_var_az_resource_group_name = module.run_account_init_module.output_resource_group_name
   module_var_resource_prefix        = var.resource_prefix
@@ -84,7 +84,7 @@ module "run_account_bootstrap_module" {
 #
 #  count = var.az_iam_yesno == "yes" ? 1 : 0
 #
-#  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/account_iam?ref=main"
+#  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/account_iam?ref=alpha"
 #
 #  module_var_az_resource_group_name = module.run_account_init_module.output_resource_group_name
 #  module_var_resource_prefix = var.resource_prefix
@@ -99,7 +99,7 @@ module "run_bastion_inject_module" {
     module.run_account_bootstrap_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/bastion_inject?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/bastion_inject?ref=alpha"
 
   module_var_az_resource_group_name = module.run_account_init_module.output_resource_group_name
   module_var_resource_prefix        = var.resource_prefix
@@ -129,7 +129,7 @@ module "run_host_network_access_sap_module" {
     module.run_bastion_inject_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/host_network_access_sap?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/host_network_access_sap?ref=alpha"
 
   module_var_az_resource_group_name = module.run_account_init_module.output_resource_group_name
 
@@ -153,7 +153,7 @@ module "run_host_network_access_sap_public_via_proxy_module" {
     module.run_bastion_inject_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/host_network_access_sap_public_via_proxy?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/host_network_access_sap_public_via_proxy?ref=alpha"
 
   module_var_az_resource_group_name = module.run_account_init_module.output_resource_group_name
 
@@ -179,8 +179,8 @@ module "run_host_nfs_module" {
     module.run_bastion_inject_module
   ]
 
-#  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/host_provision?ref=main"
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/host_nfs?ref=main"
+#  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/host_provision?ref=alpha"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/host_nfs?ref=alpha"
 
   module_var_az_resource_group_name           = module.run_account_init_module.output_resource_group_name
   module_var_resource_prefix                  = var.resource_prefix
@@ -207,8 +207,8 @@ module "run_host_provision_module" {
     module.run_bastion_inject_module
   ]
 
-#  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/host_provision?ref=main"
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/host_provision?ref=main"
+#  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/host_provision?ref=alpha"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/host_provision?ref=alpha"
 
 
   module_var_az_resource_group_name = module.run_account_init_module.output_resource_group_name
@@ -258,7 +258,7 @@ module "run_ansible_sap_s4hana_distributed_install_maintplan" {
 
   depends_on = [module.run_host_provision_module]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_s4hana_distributed_install_maintplan?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_s4hana_distributed_install_maintplan?ref=alpha"
 
   # Terraform Module Variables using the prior Terraform Module Variables (from bootstrap module)
   module_var_bastion_boolean          = true // required as true boolean for any Cloud Service Provider (CSP)
