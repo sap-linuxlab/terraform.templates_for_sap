@@ -121,4 +121,6 @@ module "run_ansible_sap_hana_install" {
   module_var_sap_hana_install_sid             = var.sap_hana_install_sid
   module_var_sap_hana_install_instance_number = var.sap_hana_install_instance_number
 
+  module_var_terraform_host_specification_storage_definition = var.map_host_specifications[var.host_specification_plan][join(", ", each.value.*.output_host_name)]["storage_definition"]
+
 }

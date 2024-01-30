@@ -141,4 +141,6 @@ module "run_ansible_sap_nwas_abap_ibmdb2_install" {
 
   module_var_sap_software_download_directory  = var.sap_software_download_directory
 
+  module_var_terraform_host_specification_storage_definition = var.map_host_specifications[var.host_specification_plan][join(", ", each.value.*.output_host_name)]["storage_definition"]
+
 }
