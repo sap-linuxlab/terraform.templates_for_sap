@@ -294,7 +294,6 @@ module "run_host_provision_module" {
 
   module_var_storage_definition = [ for storage_item in var.map_host_specifications[var.host_specification_plan][each.key]["storage_definition"] : storage_item if contains(keys(storage_item),"disk_size") && try(storage_item.swap_path,"") == "" ]
 
-  module_var_disable_ip_anti_spoofing = false
 
 }
 
