@@ -9,172 +9,182 @@ variable "map_host_specifications" {
 
     small_256gb = {
 
-      hana-p = {  // Hostname
+      hana-p = { // Hostname
         vm_instance = "Standard_M32ls"
-
-        // N.B. all capacities must be different from each other, due to Shell loop searching based on capacity GB
-
-        disk_volume_count_hana_data    = 4
-        disk_volume_type_hana_data     = "P6"
-        disk_volume_capacity_hana_data = 64
-        #disk_volume_iops_hana_data = 
-        lvm_enable_hana_data                  = true  // if false, then disk volume count should be 1
-        lvm_pv_data_alignment_hana_data       = "1M"  //default 1MiB offset from disk start before first LVM PV Physical Extent.
-        lvm_vg_data_alignment_hana_data       = "1M"  //default 1MiB offset from disk start before first LVM VG Physical Extent.
-        lvm_vg_physical_extent_size_hana_data = "4M"  //default 4MiB, difficult to change once set. Akin to Physical Block Size.
-        lvm_lv_stripe_size_hana_data          = "64K" //default 64KiB. Akin to Virtualized Block Size.
-        filesystem_hana_data                  = "xfs"
-        #physical_partition_filesystem_block_size_hana_data = "4k" // only if LVM is set to false; if XFS then only 4k value allowed otherwise will be overridden (see README about XFS and Page Size)
-
-        disk_volume_count_hana_log    = 3
-        disk_volume_type_hana_log     = "P10"
-        disk_volume_capacity_hana_log = 128
-        #disk_volume_iops_hana_log = 
-        lvm_enable_hana_log                  = true  // if false, then disk volume count should be 1
-        lvm_pv_data_alignment_hana_log       = "1M"  //default 1MiB offset from disk start before first LVM PV Physical Extent.
-        lvm_vg_data_alignment_hana_log       = "1M"  //default 1MiB offset from disk start before first LVM VG Physical Extent.
-        lvm_vg_physical_extent_size_hana_log = "4M"  //default 4MiB, difficult to change once set. Akin to Physical Block Size.
-        lvm_lv_stripe_size_hana_log          = "64K" //default 64KiB. Akin to Virtualized Block Size.
-        filesystem_hana_log                  = "xfs"
-        #physical_partition_filesystem_block_size_hana_log = "4k" // only if LVM is set to false; if XFS then only 4k value allowed otherwise will be overridden (see README about XFS and Page Size)
-
-        disk_volume_count_hana_shared    = 1
-        disk_volume_type_hana_shared     = "P15" // Uses Burst IOPS for storage. May increase costs if there is consistent heavy usage (e.g. longer than 30mins burst, such as 200GB+ DB Backup Restore)
-        disk_volume_capacity_hana_shared = 256
-        #disk_volume_iops_hana_shared = 
-        lvm_enable_hana_shared = false // if false, then disk volume count should be 1
-        #lvm_pv_data_alignment_hana_shared = "1M" //default 1MiB offset from disk start before first LVM PV Physical Extent.
-        #lvm_vg_data_alignment_hana_shared = "1M" //default 1MiB offset from disk start before first LVM VG Physical Extent.
-        #lvm_vg_physical_extent_size_hana_shared = "4M" //default 4MiB, difficult to change once set. Akin to Physical Block Size.
-        #lvm_lv_stripe_size_hana_shared = "64K" //default 64KiB. Akin to Virtualized Block Size.
-        filesystem_hana_shared                               = "xfs"
-        physical_partition_filesystem_block_size_hana_shared = "4k" // only if LVM is set to false; if XFS then only 4k value allowed otherwise will be overridden (see README about XFS and Page Size)
-
-        disk_volume_count_anydb      = 0
-
-        disk_volume_count_usr_sap    = 0 // max of 1
-        disk_volume_type_usr_sap     = "E20"
-        disk_volume_capacity_usr_sap = 512
-        filesystem_usr_sap           = "xfs"
-
-        disk_volume_count_sapmnt    = 0 // max of 1
-        disk_volume_type_sapmnt     = "E4"
-        disk_volume_capacity_sapmnt = 32 // bad sizing, but use this so each drive size is unique
-        filesystem_sapmnt           = "xfs"
-        nfs_boolean_sapmnt = false
-
-        disk_swapfile_size_gb  = 2 // not required if disk volume set
-        disk_volume_count_swap = 0 // max of 1
-        #disk_volume_type_swap = "E3"
-        #disk_volume_capacity_swap = 16 // bad sizing, but use this so each drive size is unique
-        #filesystem_swap = "xfs"
-
-        disk_volume_capacity_software = 304
+        storage_definition = [
+          {
+            name = "hana_data"
+            mountpoint = "/hana/data"
+            disk_count = 4
+            disk_size = 64
+            disk_type = "P6"
+            #disk_iops =
+            filesystem_type = "xfs"
+            #lvm_lv_name =
+            #lvm_lv_stripes =
+            #lvm_lv_stripe_size =
+            #lvm_vg_name =
+            #lvm_vg_options =
+            #lvm_vg_physical_extent_size =
+            #lvm_pv_device =
+            #lvm_pv_options =
+            #nfs_path =
+            #nfs_server =
+            #nfs_filesystem_type =
+            #nfs_mount_options =
+          },
+          {
+            name = "hana_log"
+            mountpoint = "/hana/log"
+            disk_count = 3
+            disk_size = 128
+            disk_type = "P10"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "hana_shared"
+            mountpoint = "/hana/shared"
+            disk_size = 256
+            disk_type = "P15"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "usr_sap"
+            mountpoint = "/usr/sap"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "sapmnt"
+            mountpoint = "/sapmnt"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "swap"
+            mountpoint = "/swap"
+            disk_size = 32
+            disk_type = "E4"
+            filesystem_type = "swap"
+          },
+          {
+            name = "software"
+            mountpoint = "/software"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          }
+        ]
       },
 
 
 
-      nw-ascs = {  // Hostname
+      nw-ascs = { // Hostname
         vm_instance = "Standard_D32s_v5"
-
-        // N.B. all capacities must be different from each other, due to Shell loop searching based on capacity GB
-
-        disk_volume_count_hana_data   = 0
-
-        disk_volume_count_hana_log    = 0
-
-        disk_volume_count_hana_shared = 0
-
-        disk_volume_count_anydb       = 0
-
-        disk_volume_count_usr_sap    = 1 // max of 1
-        disk_volume_type_usr_sap     = "E15"
-        disk_volume_capacity_usr_sap = 256
-        filesystem_usr_sap           = "xfs"
-
-        disk_volume_count_sapmnt    = 1 // max of 1
-        disk_volume_type_sapmnt     = "E6"
-        disk_volume_capacity_sapmnt = 64 // bad sizing, but use this so each drive size is unique
-        filesystem_sapmnt           = "xfs"
-        nfs_boolean_sapmnt = true
-
-        #disk_swapfile_size_gb  = 2 // not required if disk volume set
-        disk_volume_count_swap = 1 // max of 1
-        disk_volume_type_swap = "E10"
-        disk_volume_capacity_swap = 128
-        filesystem_swap = "xfs"
-
-        disk_volume_capacity_software = 100
+        storage_definition = [
+          {
+            name = "usr_sap"
+            mountpoint = "/usr/sap"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "sapmnt"
+            mountpoint = "/sapmnt"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "swap"
+            mountpoint = "/swap"
+            disk_size = 32
+            disk_type = "E4"
+            filesystem_type = "swap"
+          },
+          {
+            name = "software"
+            mountpoint = "/software"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          }
+        ]
       },
 
 
 
-      nw-pas = {  // Hostname
+      nw-pas = { // Hostname
         vm_instance = "Standard_D32s_v5"
-
-        // N.B. all capacities must be different from each other, due to Shell loop searching based on capacity GB
-
-        disk_volume_count_hana_data   = 0
-
-        disk_volume_count_hana_log    = 0
-
-        disk_volume_count_hana_shared = 0
-
-        disk_volume_count_anydb       = 0
-
-        disk_volume_count_usr_sap    = 1 // max of 1
-        disk_volume_type_usr_sap     = "E15"
-        disk_volume_capacity_usr_sap = 256
-        filesystem_usr_sap           = "xfs"
-
-        disk_volume_count_sapmnt    = 1 // max of 1
-        disk_volume_type_sapmnt     = "E6"
-        disk_volume_capacity_sapmnt = 64 // bad sizing, but use this so each drive size is unique
-        filesystem_sapmnt           = "xfs"
-        nfs_boolean_sapmnt = true
-
-        #disk_swapfile_size_gb  = 2 // not required if disk volume set
-        disk_volume_count_swap = 1 // max of 1
-        disk_volume_type_swap = "E10"
-        disk_volume_capacity_swap = 128
-        filesystem_swap = "xfs"
-
-        disk_volume_capacity_software = 100
+        storage_definition = [
+          {
+            name = "usr_sap"
+            mountpoint = "/usr/sap"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "sapmnt"
+            mountpoint = "/sapmnt"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "swap"
+            mountpoint = "/swap"
+            disk_size = 32
+            disk_type = "E4"
+            filesystem_type = "swap"
+          },
+          {
+            name = "software"
+            mountpoint = "/software"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          }
+        ]
       },
 
 
 
-      nw-aas = {  // Hostname
+      nw-aas = { // Hostname
         vm_instance = "Standard_D32s_v5"
-
-        // N.B. all capacities must be different from each other, due to Shell loop searching based on capacity GB
-
-        disk_volume_count_hana_data   = 0
-
-        disk_volume_count_hana_log    = 0
-
-        disk_volume_count_hana_shared = 0
-
-        disk_volume_count_anydb       = 0
-
-        disk_volume_count_usr_sap    = 1 // max of 1
-        disk_volume_type_usr_sap     = "E15"
-        disk_volume_capacity_usr_sap = 256
-        filesystem_usr_sap           = "xfs"
-
-        disk_volume_count_sapmnt    = 1 // max of 1
-        disk_volume_type_sapmnt     = "E6"
-        disk_volume_capacity_sapmnt = 64 // bad sizing, but use this so each drive size is unique
-        filesystem_sapmnt           = "xfs"
-        nfs_boolean_sapmnt = true
-
-        #disk_swapfile_size_gb  = 2 // not required if disk volume set
-        disk_volume_count_swap = 1 // max of 1
-        disk_volume_type_swap = "E10"
-        disk_volume_capacity_swap = 128
-        filesystem_swap = "xfs"
-
-        disk_volume_capacity_software = 100
+        storage_definition = [
+          {
+            name = "usr_sap"
+            mountpoint = "/usr/sap"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "sapmnt"
+            mountpoint = "/sapmnt"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "swap"
+            mountpoint = "/swap"
+            disk_size = 32
+            disk_type = "E4"
+            filesystem_type = "swap"
+          },
+          {
+            name = "software"
+            mountpoint = "/software"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          }
+        ]
       }
 
     }

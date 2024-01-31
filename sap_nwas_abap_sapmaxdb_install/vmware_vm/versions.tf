@@ -1,7 +1,7 @@
 
 # Terraform declaration
 terraform {
-  required_version = ">= 1.0"
+  required_version = ">= 1.0, <= 1.5.5"
   required_providers {
     vsphere = {
 #      source  = "localdomain/provider/vsphere" // Local, on macOS path to place files would be $HOME/.terraform.d/plugins/localdomain/provider/vsphere/1.xx.xx/darwin_amd6

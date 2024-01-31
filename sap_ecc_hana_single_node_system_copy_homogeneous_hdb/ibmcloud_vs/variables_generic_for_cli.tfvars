@@ -14,10 +14,6 @@ host_specification_plan = "small_256gb"
 
 host_os_image = "rhel-8-4-sap-ha"
 
-disk_volume_capacity_software = 368
-
-disk_volume_type_software = "10iops-tier"
-
 sap_hana_install_master_password = "NewPass$321"
 
 sap_hana_install_sid = "H01"

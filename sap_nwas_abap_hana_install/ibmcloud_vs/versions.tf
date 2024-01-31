@@ -1,7 +1,7 @@
 # Terraform declaration
 
 terraform {
-  required_version = ">= 1.0"
+  required_version = ">= 1.0, <= 1.5.5"
   required_providers {
     ibm = {
       #source  = "localdomain/provider/ibm" // Local, on macOS path to place files would be $HOME/.terraform.d/plugins/localdomain/provider/ibm/1.xx.xx/darwin_amd6

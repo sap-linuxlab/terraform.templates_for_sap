@@ -17,13 +17,6 @@
 #  ]
 #}
 
-# Show value for specific variable within each Storage Test Template object
-#output "DEBUG_show_template_value_single_all_items" {
-#  value = [
-#    for key, value in var.storage_test_templates_map : value.*.disk_volume_count_hana_data
-#  ]
-#}
-
 # Show value for specific variable within each Storage Test Template, and de-duplicate e.g. unique Virtual Server Profiles used in the Storage Test Templates
 #output "DEBUG_show_storage_test_template_profiles_condense" {
 #  value = toset([

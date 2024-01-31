@@ -17,7 +17,7 @@ variable "ibmcloud_resource_group" {
 }
 
 variable "ibmcloud_powervs_location" {
-  description = "Target IBM Power VS location (e.g. WDC06). Each location is colocated at a IBM Cloud VPC Infrastructure Availability Zone (e.g. us-east-2)"
+  description = "Target IBM Power VS location (e.g. lon06). Each location is colocated at a IBM Cloud VPC Infrastructure Availability Zone (e.g. eu-gb-3)"
 }
 
 #variable "ibmcloud_iam_yesno" {
@@ -64,15 +64,6 @@ variable "os_vendor_account_user" {
 
 variable "os_vendor_account_user_passcode" {
   description = "OS Vendor passcode (password for Red Hat, activation code for SUSE)"
-}
-
-variable "disk_volume_capacity_software" {
-  type        = number
-  description = "Disk volume capacity for downloads of SAP Software and any backup files"
-}
-
-variable "disk_volume_type_software" {
-  description = "Disk volume type for downloads of SAP Software and any backup files"
 }
 
 variable "sap_software_download_directory" {

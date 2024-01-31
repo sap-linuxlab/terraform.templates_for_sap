@@ -1,7 +1,7 @@
 # Terraform declaration
 
 terraform {
-  required_version = ">= 1.0"
+  required_version = ">= 1.0, <= 1.5.5"
   required_providers {
     google = {
       #source  = "localdomain/provider/google" // Local, on macOS path to place files would be $HOME/.terraform.d/plugins/localdomain/provider/google/1.xx.xx/darwin_amd6
@@ -25,10 +25,10 @@ terraform {
 # Terraform Provider declaration
 
 provider "google" {
-  project     = var.google_cloud_project
-  region      = local.google_cloud_region
-  zone        = var.google_cloud_region_zone
+  project     = var.gcp_project
+  region      = local.gcp_region
+  zone        = var.gcp_region_zone
 
-  credentials = var.google_cloud_credentials_json
+  credentials = var.gcp_credentials_json
 
 }

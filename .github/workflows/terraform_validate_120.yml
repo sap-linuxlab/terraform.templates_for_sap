@@ -22,9 +22,9 @@ jobs:
         infrastructure_platform: [aws_ec2_instance, gcp_ce_vm, ibmcloud_vs, ibmcloud_powervs, ibmpowervc, msazure_vm, vmware_vm]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.1.0
+        uses: actions/checkout@v4
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2.0.3
+        uses: hashicorp/setup-terraform@v3.0.0
         with:
           terraform_version: ${{ matrix.terraform_ver }}
       - name: Check if directory empty
