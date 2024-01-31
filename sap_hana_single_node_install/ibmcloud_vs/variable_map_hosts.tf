@@ -42,20 +42,6 @@ variable "map_host_specifications" {
             filesystem_type = "xfs"
           },
           {
-            name = "usr_sap"
-            mountpoint = "/usr/sap"
-            disk_size = 96
-            disk_type = "general-purpose"
-            filesystem_type = "xfs"
-          },
-          {
-            name = "sapmnt"
-            mountpoint = "/sapmnt"
-            disk_size = 96
-            disk_type = "general-purpose"
-            filesystem_type = "xfs"
-          },
-          {
             name = "hana_shared"
             mountpoint = "/hana/shared"
             disk_size = 320
