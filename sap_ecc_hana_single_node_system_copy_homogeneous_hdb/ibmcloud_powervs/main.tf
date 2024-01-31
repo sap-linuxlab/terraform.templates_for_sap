@@ -1,7 +1,7 @@
 
 module "run_ansible_dry_run" {
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_ecc_hana_system_copy_hdb?ref=alpha"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_ecc_hana_system_copy_hdb?ref=main"
 
   module_var_dry_run_test = "ppc64le" // x86_64 or ppc64le
 
@@ -35,7 +35,7 @@ module "run_account_init_module" {
     module.run_ansible_dry_run
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/account_init?ref=alpha"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/account_init?ref=main"
 
   providers = { ibm = ibm.standard }
 
@@ -57,7 +57,7 @@ module "run_account_bootstrap_module" {
     module.run_account_init_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/account_bootstrap?ref=alpha"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/account_bootstrap?ref=main"
 
   providers = { ibm = ibm.standard }
 
@@ -80,7 +80,7 @@ module "run_account_bootstrap_module" {
 #
 #  count = var.ibmcloud_iam_yesno == "yes" ? 1 : 0
 #
-#  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/account_iam?ref=alpha"
+#  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/account_iam?ref=main"
 #
 #  module_var_resource_group_id = module.run_account_init_module.output_resource_group_id
 #  module_var_resource_prefix   = var.resource_prefix
@@ -95,7 +95,7 @@ module "run_bastion_inject_module" {
     module.run_account_bootstrap_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/bastion_inject?ref=alpha"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/bastion_inject?ref=main"
 
   providers = { ibm = ibm.standard }
 
@@ -124,7 +124,7 @@ module "run_host_network_access_sap_public_via_proxy_module" {
     module.run_bastion_inject_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/host_network_access_sap_public_via_proxy?ref=alpha"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/host_network_access_sap_public_via_proxy?ref=main"
 
   providers = { ibm = ibm.standard }
 
@@ -146,7 +146,7 @@ module "run_account_bootstrap_powervs_workspace_module" {
     module.run_account_bootstrap_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_powervs/account_bootstrap_powervs_workspace?ref=alpha"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_powervs/account_bootstrap_powervs_workspace?ref=main"
 
   providers = { ibm = ibm.standard }
 
@@ -165,7 +165,7 @@ module "run_account_bootstrap_powervs_networks_module" {
     module.run_account_bootstrap_powervs_workspace_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_powervs/account_bootstrap_powervs_networks?ref=alpha"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_powervs/account_bootstrap_powervs_networks?ref=main"
 
   providers = { ibm = ibm.powervs_secure }
 
@@ -185,7 +185,7 @@ module "run_powervs_interconnect_sg_update_module" {
     module.run_account_bootstrap_powervs_networks_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/powervs_interconnect_sg_update?ref=alpha"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/powervs_interconnect_sg_update?ref=main"
 
   providers = { ibm = ibm.standard }
 
@@ -206,7 +206,7 @@ module "run_powervs_interconnect_proxy_provision_module" {
     module.run_powervs_interconnect_sg_update_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/powervs_interconnect_proxy_provision?ref=alpha"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/powervs_interconnect_proxy_provision?ref=main"
 
   providers = { ibm = ibm.standard }
 
@@ -252,7 +252,7 @@ module "run_host_provision_module" {
     module.run_powervs_interconnect_proxy_provision_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_powervs/host_provision?ref=alpha"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_powervs/host_provision?ref=main"
 
   providers = { ibm = ibm.powervs_secure }
 
@@ -305,7 +305,7 @@ module "run_shell_download_obj_store_ibmcos" {
 
   depends_on = [module.run_host_provision_module]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/shell_download_obj_store_ibmcos?ref=alpha"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/shell_download_obj_store_ibmcos?ref=main"
 
   # Terraform Module Variables using the prior Terraform Module Variables (from bootstrap module)
   module_var_bastion_user            = var.bastion_user
@@ -337,7 +337,7 @@ module "run_ansible_sap_ecc_hana_system_copy_hdb" {
     module.run_shell_download_obj_store_ibmcos
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_ecc_hana_system_copy_hdb?ref=alpha"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_ecc_hana_system_copy_hdb?ref=main"
 
   # Terraform Module Variables using the prior Terraform Module Variables (from bootstrap module)
   module_var_bastion_boolean         = true // required as true boolean for any Cloud Service Provider (CSP)

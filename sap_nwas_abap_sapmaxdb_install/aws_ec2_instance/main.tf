@@ -1,7 +1,7 @@
 
 module "run_ansible_dry_run" {
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_nwas_abap_sapmaxdb_install?ref=alpha"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_nwas_abap_sapmaxdb_install?ref=main"
 
   module_var_dry_run_test = "x86_64" // x86_64 or ppc64le
 
@@ -32,7 +32,7 @@ module "run_account_init_module" {
     module.run_ansible_dry_run
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//aws_ec2_instance/account_init?ref=alpha"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//aws_ec2_instance/account_init?ref=main"
 
   module_var_resource_prefix = var.resource_prefix
 
@@ -51,7 +51,7 @@ module "run_account_bootstrap_module" {
     module.run_account_init_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//aws_ec2_instance/account_bootstrap?ref=alpha"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//aws_ec2_instance/account_bootstrap?ref=main"
 
   module_var_resource_prefix = var.resource_prefix
 
@@ -75,7 +75,7 @@ module "run_bastion_inject_module" {
     module.run_account_bootstrap_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//aws_ec2_instance/bastion_inject?ref=alpha"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//aws_ec2_instance/bastion_inject?ref=main"
 
   module_var_resource_prefix = var.resource_prefix
 
@@ -100,7 +100,7 @@ module "run_host_network_access_sap_module" {
     module.run_bastion_inject_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//aws_ec2_instance/host_network_access_sap?ref=alpha"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//aws_ec2_instance/host_network_access_sap?ref=main"
 
   module_var_resource_prefix = var.resource_prefix
 
@@ -119,7 +119,7 @@ module "run_host_network_access_sap_public_via_proxy_module" {
     module.run_bastion_inject_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//aws_ec2_instance/host_network_access_sap_public_via_proxy?ref=alpha"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//aws_ec2_instance/host_network_access_sap_public_via_proxy?ref=main"
 
   module_var_resource_prefix = var.resource_prefix
 
@@ -142,7 +142,7 @@ module "run_host_provision_module" {
     module.run_bastion_inject_module
   ]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//aws_ec2_instance/host_provision?ref=alpha"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//aws_ec2_instance/host_provision?ref=main"
 
   # Set Terraform Module Variables using Terraform Variables at runtime
 
@@ -186,7 +186,7 @@ module "run_ansible_sap_nwas_abap_sapmaxdb_install" {
 
   depends_on = [module.run_host_provision_module]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_nwas_abap_sapmaxdb_install?ref=alpha"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_nwas_abap_sapmaxdb_install?ref=main"
 
 
   # Terraform Module Variables using the prior Terraform Module Variables (from bootstrap module)
