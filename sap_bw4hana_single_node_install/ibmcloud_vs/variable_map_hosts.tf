@@ -7,7 +7,6 @@ variable "map_host_specifications" {
 
   default = {
 
-
     small_256gb = {
 
       bw4h01 = { // Hostname

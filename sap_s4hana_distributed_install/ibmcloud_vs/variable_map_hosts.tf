@@ -183,7 +183,7 @@ variable "map_host_specifications" {
         ]
       }
 
-    }
 
+    }
   }
 }
