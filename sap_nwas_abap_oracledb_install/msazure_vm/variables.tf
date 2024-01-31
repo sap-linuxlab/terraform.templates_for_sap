@@ -69,11 +69,6 @@ variable "host_os_image" {
   description = "Host OS Image. This variable uses the locals mapping with regex of OS Images, and will alter host provisioning."
 }
 
-variable "disk_volume_capacity_software" {
-  type        = number
-  description = "Disk volume capacity for downloads of SAP Software"
-}
-
 variable "sap_software_download_directory" {
   description = "Mount point for downloads of SAP Software"
 

@@ -98,11 +98,6 @@ variable "os_systems_mgmt_host" {
   description = "OS Systems Management host for licensing (i.e. Red Hat Satellite). **Leave blank if using Red Hat Customer Portal (RHCP) or SUSE Customer Center (SCC)**"
 }
 
-variable "disk_volume_capacity_software" {
-  type        = number
-  description = "Disk volume capacity for downloads of SAP Software"
-}
-
 variable "sap_software_download_directory" {
   description = "Mount point for downloads of SAP Software"
 

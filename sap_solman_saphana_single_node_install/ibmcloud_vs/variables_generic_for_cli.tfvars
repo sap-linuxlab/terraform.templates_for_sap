@@ -14,10 +14,6 @@ host_specification_plan = "small_256gb"
 
 host_os_image = "rhel-8-4-sap-ha"
 
-disk_volume_capacity_software = 304
-
-disk_volume_type_software = "10iops-tier"
-
 sap_nwas_abap_ascs_instance_no = "01"
 
 sap_nwas_abap_pas_instance_no = "00"

@@ -12,10 +12,6 @@ host_specification_plan = "small_32vcpu"
 
 host_os_image = "rhel-8-4-sap-ha"
 
-disk_volume_capacity_software = 304
-
-disk_volume_type_software = "gp3"
-
 sap_anydb_install_master_password = "NewPass@321"
 
 sap_anydb_install_sid = "MX1"

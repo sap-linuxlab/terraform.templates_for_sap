@@ -256,8 +256,6 @@ module "run_ansible_sap_solman_java_sapase_install" {
 
   module_var_sap_swpm_template_selected       = "sap_solman_72_sr2_sapase_onehost"
 
-  module_var_filesystem_mount_path_anydb      = var.map_host_specifications[var.host_specification_plan][each.key].disk_volume_count_anydb == 0 ? 0 : var.map_host_specifications[var.host_specification_plan][each.key].filesystem_mount_path_anydb
-
   module_var_sap_software_download_directory  = var.sap_software_download_directory
 
   module_var_terraform_host_specification_storage_definition = var.map_host_specifications[var.host_specification_plan][join(", ", each.value.*.output_host_name)]["storage_definition"]

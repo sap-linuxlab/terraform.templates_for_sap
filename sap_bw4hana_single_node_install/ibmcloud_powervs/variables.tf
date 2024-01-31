@@ -66,15 +66,6 @@ variable "os_vendor_account_user_passcode" {
   description = "OS Vendor passcode (password for Red Hat, activation code for SUSE)"
 }
 
-variable "disk_volume_capacity_software" {
-  type        = number
-  description = "Disk volume capacity for downloads of SAP Software"
-}
-
-variable "disk_volume_type_software" {
-  description = "Disk volume type for downloads of SAP Software"
-}
-
 variable "sap_software_download_directory" {
   description = "Mount point for downloads of SAP Software"
 
