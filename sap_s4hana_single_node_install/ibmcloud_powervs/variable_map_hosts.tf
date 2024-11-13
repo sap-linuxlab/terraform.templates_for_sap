@@ -10,6 +10,7 @@ variable "map_host_specifications" {
     small_256gb = {
 
       s4h01 = { // Hostname
+        hardware_machine_type  = "e1080"
         virtual_server_profile = "ush1-4x256"
         // An IBM PowerVS host will be set to Tier 1 or Tier 3 storage type, and cannot use block storage volumes from both storage types
         // Therefore all block storage volumes are provisioned with Tier 1 (this cannot be changed once provisioned)
