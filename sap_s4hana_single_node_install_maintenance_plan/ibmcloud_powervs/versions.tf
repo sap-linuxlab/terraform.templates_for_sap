@@ -36,14 +36,11 @@ provider "ibm" {
 }
 
 
+
+# Terraform Provider (with Alias) declaration - for IBM Power Infrastructure environment via IBM Cloud
 provider "ibm" {
-
-  alias = "powervs_secure"
-
+  alias = "powervs_secure_enclave"
   ibmcloud_api_key = var.ibmcloud_api_key
-
-  region = local.ibmcloud_powervs_region
-
-  zone = lower(var.ibmcloud_powervs_location) // Required for IBM Power VS only
-
+  region = local.ibmcloud_powervs_region // IBM Power VS Region
+  zone = lower(var.ibmcloud_powervs_location) // IBM Power VS Location
 }
