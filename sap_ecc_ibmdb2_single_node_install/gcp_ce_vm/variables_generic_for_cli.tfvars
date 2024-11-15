@@ -3,7 +3,7 @@ resource_prefix = "sap"
 
 dns_root_domain = "poc.cloud"
 
-bastion_os_image = "rhel-8-latest"
+bastion_os_image = "rhel-9-latest"
 
 bastion_user = "bastionuser"
 
@@ -11,7 +11,7 @@ bastion_ssh_port = 50222
 
 host_specification_plan = "small_32vcpu"
 
-host_os_image = "rhel-8-4-sap-ha"
+host_os_image = "rhel-8-6-sap-ha"
 
 sap_anydb_install_master_password = "NewPass>321" // Do not use password with $ for IBM DB2 installations
 

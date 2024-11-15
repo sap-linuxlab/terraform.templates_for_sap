@@ -10,7 +10,7 @@ bastion_ssh_port = 50222
 
 host_specification_plan = "small_256gb"
 
-host_os_image = "rhel-8-4-sap-ha"
+host_os_image = "rhel-9-2-sap-ha"
 
 sap_hana_install_master_password = "NewPass$321"
 
