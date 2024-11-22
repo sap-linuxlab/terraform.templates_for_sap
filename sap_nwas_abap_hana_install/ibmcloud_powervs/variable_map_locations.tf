@@ -43,8 +43,8 @@ variable "map_ibm_powervs_location_to_powervs_region" {
     dal12    = "us-south"
     us-south = "us-south"
     us-east  = "us-east"
-    wdc06    = "us-east" // no Cloud Connection available at this location
-    wdc07    = "us-east" // no Cloud Connection available at this location
+    wdc06    = "us-east"
+    wdc07    = "us-east"
     sao01    = "sao"
     sao02    = "sao"
     tor01    = "tor"
