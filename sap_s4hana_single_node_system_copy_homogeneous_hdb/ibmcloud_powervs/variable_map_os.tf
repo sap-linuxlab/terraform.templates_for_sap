@@ -12,6 +12,8 @@ variable "map_os_image_regex" {
     rhel-8-10 = ".*redhat.*8-10.*minimal.*amd64.*"
     rhel-9-2 = ".*redhat.*9-2.*minimal.*amd64.*"
     rhel-9-4 = ".*redhat.*9-4.*minimal.*amd64.*"
+    sles-15-5 = ".*sles.*15-5.*amd64-[0-9]"
+    sles-15-6 = ".*sles.*15-6.*amd64-[0-9]"
 
     # OS Image keys for IBM Power Virtual Server
     rhel-8-4-sap-ha = "RHEL8-SP4-SAP"
