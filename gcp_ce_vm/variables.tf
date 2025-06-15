@@ -19,23 +19,6 @@ variable "resource_prefix" {
   description = "Prefix to resource names"
 }
 
-variable "dns_root_domain" {
-  description = "Root Domain for Private DNS used with the Virtual Machine"
-}
-
-variable "bastion_user" {
-  description = "OS User to create on Bastion host to avoid pass-through root user (e.g. bastionuser)"
-}
-
-variable "bastion_ssh_port" {
-  type        = number
-  description = "Bastion host SSH Port from IANA Dynamic Ports range (49152 to 65535)"
-
-  validation {
-    condition     = var.bastion_ssh_port > 49152 && var.bastion_ssh_port < 65535
-    error_message = "Bastion host SSH Port must fall within IANA Dynamic Ports range (49152 to 65535)."
-  }
-}
 
 variable "sap_software_download_directory" {
   description = "Mount point for downloads of SAP Software"

@@ -3,41 +3,6 @@ variable "resource_prefix" {
   description = "Prefix to resource names"
 }
 
-variable "dns_root_domain" {
-  description = "Root Domain to be used with the host"
-}
-
-variable "bastion_boolean" {
-  description = "Bastion connection required? (boolean default: false)"
-  default     = false
-}
-
-variable "bastion_user" {
-  description = "OS User to create on Bastion host to avoid pass-through root user (e.g. bastionuser)"
-  default     = ""
-}
-
-variable "bastion_ip" {
-  description = "Bastion IP address (IPv4)"
-  default     = ""
-}
-
-variable "bastion_private_ssh_key" {
-  description = "Private SSH Key string"
-  default     = ""
-}
-
-variable "bastion_ssh_port" {
-  type        = number
-  description = "Bastion host SSH Port from IANA Dynamic Ports range (49152 to 65535)"
-  default     = null
-
-  #validation {
-  #  condition     = var.bastion_ssh_port > 49152 && var.bastion_ssh_port < 65535
-  #  error_message = "Bastion host SSH Port must fall within IANA Dynamic Ports range (49152 to 65535)."
-  #}
-}
-
 variable "os_vendor_account_user" {
   description = "OS Vendor account email/username for Red Hat Customer Portal (RHCP) or SUSE Customer Center (SCC). ALT: if using os_systems_mgmt_host for Red Hat Satellite, this acts as Red Hat Org ID"
 }
