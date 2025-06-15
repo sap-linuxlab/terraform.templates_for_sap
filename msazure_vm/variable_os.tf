@@ -1,4 +1,12 @@
 
+variable "bastion_os_image" {
+  description = "Bastion OS Image. This variable uses the locals mapping with regex of OS Images, and will alter bastion provisioning."
+}
+
+variable "host_os_image" {
+  description = "Host OS Image. This variable uses the locals mapping with regex of OS Images, and will alter host provisioning."
+}
+
 # Find latest OS Image for RHEL
 # az account list-locations | jq .[].displayName
 # az vm image list --all --publisher redhat --offer RHEL-SAP-APPS --sku 8 --query "[?starts_with(version,'8.4')]" | jq .[].version --raw-output | sort -r | head -1

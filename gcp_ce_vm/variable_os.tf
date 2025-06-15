@@ -1,4 +1,12 @@
 
+variable "bastion_os_image" {
+  description = "Bastion OS Image. This variable uses the locals mapping with regex of OS Images, and will alter bastion provisioning."
+}
+
+variable "host_os_image" {
+  description = "Host OS Image. This variable uses the locals mapping with regex of OS Images, and will alter host provisioning."
+}
+
 # There is no Terraform Resource for data lookup of all GCP OS Images, therefore the input does not use wildcard
 
 variable "map_os_image_regex" {

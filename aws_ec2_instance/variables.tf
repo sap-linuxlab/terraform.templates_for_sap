@@ -23,10 +23,6 @@ variable "dns_root_domain" {
   description = "Root Domain for Private DNS used with the Virtual Server"
 }
 
-variable "bastion_os_image" {
-  description = "Bastion OS Image. This variable uses the locals mapping with regex of OS Images, and will alter bastion provisioning."
-}
-
 variable "bastion_user" {
   description = "OS User to create on Bastion host to avoid pass-through root user (e.g. bastionuser)"
 }
@@ -43,10 +39,6 @@ variable "bastion_ssh_port" {
 
 variable "host_specification_plan" {
   description = "Host specification plans are small_256gb. This variable uses the locals mapping with a nested list of host specifications, and will alter host provisioning."
-}
-
-variable "host_os_image" {
-  description = "Host OS Image. This variable uses the locals mapping with regex of OS Images, and will alter host provisioning."
 }
 
 variable "sap_software_download_directory" {
