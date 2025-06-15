@@ -72,14 +72,14 @@ module "run_ansible" {
   module_var_bastion_private_ssh_key = var.bastion_boolean ? var.bastion_private_ssh_key : 0
   module_var_bastion_floating_ip     = var.bastion_boolean ? var.bastion_ip : 0
 
-  module_var_host_private_ssh_key = module.run_account_bootstrap_module.output_host_private_ssh_key
+  module_var_host_private_ssh_key = module.run_host_bootstrap_module.output_host_private_ssh_key
 
   module_var_host_specifications     = (length(var.map_host_specifications) != 0 ? var.map_host_specifications : local.map_host_specifications_defaults[var.ansible_sap_scenario_selection] )
   module_var_host_specification_plan = var.host_specification_plan
   module_var_host_provision_outputs  = module.run_host_provision_module
 
-  module_var_nfs_fqdn_sapmnt    = try(module.run_host_nfs_module[0].output_nfs_fqdn_sapmnt,"")
-  module_var_nfs_fqdn_transport = try(module.run_host_nfs_module[0].output_nfs_fqdn_transport,"")
+  module_var_nfs_fqdn_sapmnt    = var.nfs_fqdn_sapmnt != "" ? var.nfs_fqdn_sapmnt : ""
+  module_var_nfs_fqdn_transport = var.nfs_fqdn_transport != "" ? var.nfs_fqdn_transport : ""
 
   module_var_dns_root_domain = var.dns_root_domain
 
