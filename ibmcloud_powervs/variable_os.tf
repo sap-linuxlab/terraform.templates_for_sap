@@ -1,4 +1,12 @@
 
+variable "bastion_os_image" {
+  description = "Bastion OS Image. This variable uses the locals mapping with regex of OS Images, and will alter bastion provisioning."
+}
+
+variable "host_os_image" {
+  description = "Host OS Image. This variable uses the locals mapping with regex of OS Images, and will alter host provisioning."
+}
+
 variable "map_os_image_regex" {
 
   description = "Map of operating systems OS Image regex, to identify latest OS Image for the OS major.minor version"
