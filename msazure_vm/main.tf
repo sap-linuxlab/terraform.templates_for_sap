@@ -166,12 +166,41 @@ module "run_host_network_access_sap_public_via_proxy_module" {
 }
 
 
-module "run_host_provision_module" {
+module "run_host_nfs_module" {
 
   depends_on = [
     module.run_account_init_module,
     module.run_account_bootstrap_module,
     module.run_bastion_inject_module
+  ]
+
+#  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/host_provision?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/host_nfs?ref=main"
+
+  module_var_az_resource_group_name           = module.run_account_init_module.output_resource_group_name
+  module_var_resource_prefix                  = var.resource_prefix
+
+  module_var_az_location_region               = var.az_location_region
+  module_var_az_location_availability_zone_no = var.az_location_availability_zone_no
+
+  module_var_az_vnet_name                     = module.run_account_init_module.output_vnet_name
+  module_var_az_vnet_subnet_name              = module.run_account_init_module.output_vnet_subnet_name
+
+  module_var_host_security_group_name         = module.run_account_bootstrap_module.output_host_security_group_name
+
+  module_var_nfs_boolean_sapmnt               = contains([for host in var.map_host_specifications[var.host_specification_plan] : host.nfs_boolean_sapmnt],true)
+
+  module_var_dns_zone_name                    = module.run_account_bootstrap_module.output_dns_zone_name
+}
+
+
+module "run_host_provision_module" {
+
+  depends_on = [
+    module.run_account_init_module,
+    module.run_account_bootstrap_module,
+    module.run_bastion_inject_module,
+    module.run_host_nfs_module
   ]
 
   source = "github.com/sap-linuxlab/terraform.modules_for_sap//msazure_vm/host_provision?ref=main"

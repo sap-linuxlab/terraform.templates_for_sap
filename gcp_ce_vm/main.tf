@@ -122,10 +122,31 @@ module "run_host_network_access_sap_public_via_proxy_module" {
 }
 
 
-module "run_host_provision_module" {
+module "run_host_nfs_module" {
 
   depends_on = [
     module.run_bastion_inject_module
+  ]
+
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//gcp_ce_vm/host_nfs?ref=main"
+
+  module_var_resource_prefix                = var.resource_prefix
+
+  module_var_gcp_region_zone                = var.gcp_region_zone
+  module_var_gcp_vpc_subnet_name            = module.run_account_init_module.output_vpc_subnet_name
+
+  module_var_nfs_boolean_sapmnt             = contains([for host in var.map_host_specifications[var.host_specification_plan] : host.nfs_boolean_sapmnt],true)
+
+}
+
+
+module "run_host_provision_module" {
+
+  depends_on = [
+    module.run_account_init_module,
+    module.run_account_bootstrap_module,
+    module.run_bastion_inject_module,
+    module.run_host_nfs_module
   ]
 
   source = "github.com/sap-linuxlab/terraform.modules_for_sap//gcp_ce_vm/host_provision?ref=main"
