@@ -1,3 +1,4 @@
+
 locals {
 
   resource_group_create_boolean = var.ibmcloud_resource_group == "new" ? true : false
