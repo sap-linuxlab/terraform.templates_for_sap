@@ -58,3 +58,7 @@ variable "os_vendor_account_user_passcode" {
 variable "os_systems_mgmt_host" {
   description = "OS Systems Management host for licensing (i.e. Red Hat Satellite). **Leave blank if using Red Hat Customer Portal (RHCP) or SUSE Customer Center (SCC)**"
 }
+
+variable "web_proxy_url" {
+  description = "Web Proxy URL for hosts running on IBM Power (e.g. http://ip.v4.goes.here:port)"
+}
