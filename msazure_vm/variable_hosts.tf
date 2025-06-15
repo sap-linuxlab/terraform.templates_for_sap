@@ -9,18 +9,59 @@ variable "map_host_specifications" {
   default     = {}
 }
 
-variable "map_host_specifications" {
 
-  description = "Map of host specficiations for SAP S/4HANA single node install"
+# Terraform Map of default host specifications for each Ansible Playbook for SAP scenario
+## sap_hana
+## sap_bw4hana_sandbox
+## sap_ecc_hana_sandbox
+## sap_ides_ecc_hana_sandbox
+## sap_nwas_abap_hana_sandbox
+## sap_s4hana_foundation_sandbox
+## sap_s4hana_sandbox
+## sap_s4hana_sandbox_maintplan
+## sap_solman_saphana_sandbox
+##
+## sap_ecc_ibmdb2_sandbox
+## sap_ecc_oracledb_sandbox
+## sap_ecc_sapase_sandbox
+## sap_ecc_sapmaxdb_sandbox
+## sap_ides_ecc_ibmdb2_sandbox
+## sap_nwas_abap_ibmdb2_sandbox
+## sap_nwas_abap_oracledb_sandbox
+## sap_nwas_abap_sapase_sandbox
+## sap_nwas_abap_sapmaxdb_sandbox
+## sap_nwas_java_ibmdb2_sandbox
+## sap_nwas_java_sapase_sandbox
+## sap_solman_sapase_sandbox
+##
+## sap_ecc_ibmdb2_distributed
+## sap_s4hana_foundation_standard
+## sap_s4hana_standard
+## sap_s4hana_standard_maintplan
+## sap_s4hana_distributed
+## sap_s4hana_distributed_maintplan
 
-  type = map(any)
+# Ignored/Unavailable Ansible Playbook for SAP scenarios via Terraform Templates
+## sap_hana_ha
+## sap_hana_scaleout
+## sap_ecc_ibmdb2_distributed_ha
+## sap_bw4hana_standard_scaleout
+## sap_landscape_s4hana_standard
+## sap_landscape_s4hana_standard_maintplan
+## sap_s4hana_distributed_ha
+## sap_s4hana_distributed_ha_maintplan
 
-  default = {
 
-    small_256gb = {
+locals {
 
-      s4h01 = { // Hostname
+map_host_specifications_defaults_sandbox = {
+
+  sap_sandbox_hana = {  // SAP solution scenario from Ansible Playbooks for SAP
+    xsmall_256gb = {    // Host Specifications Plan
+      sap-hdb-sbx = {   // Hostname
         vm_instance = "Standard_M32ls"
+        sap_host_type = "hana_primary" # hana_primary, hana_secondary, nwas_ascs, nwas_ers, nwas_pas, nwas_aas
+        sap_storage_setup_host_type = [ "hana_primary", "nwas_abap_ascs", "nwas_abap_pas" ]
         storage_definition = [
           {
             name = "hana_data"
@@ -81,9 +122,631 @@ variable "map_host_specifications" {
           },
           {
             name = "software"
-            mountpoint = "/software"
+            mountpoint = "${var.sap_software_download_directory}"
             disk_size = 128
             disk_type = "E10"
+            filesystem_type = "xfs"
+          }
+        ]
+      }
+    }
+  }
+
+  sap_sandbox_anydb = {      // SAP solution scenario from Ansible Playbooks for SAP
+    xsmall_anydb_32vcpu = {  // Host Specifications Plan
+      sap-anydb-sbx = {      // Hostname
+        vm_instance = "Standard_D32s_v5"
+        sap_host_type = "nwas_pas" # hana_primary, hana_secondary, nwas_ascs, nwas_ers, nwas_pas, nwas_aas
+        sap_storage_setup_host_type = [ "nwas_abap_ascs", "nwas_abap_pas" ]
+        storage_definition = [
+          {
+            name = "anydb"
+            mountpoint = "/anydb" # should be /db2, /oracle, /sybase, /sapdb
+            disk_count = 1
+            disk_size = 512
+            disk_type = "P20"
+            #disk_iops =
+            filesystem_type = "xfs"
+            #lvm_lv_name =
+            #lvm_lv_stripes =
+            #lvm_lv_stripe_size =
+            #lvm_vg_name =
+            #lvm_vg_options =
+            #lvm_vg_physical_extent_size =
+            #lvm_pv_device =
+            #lvm_pv_options =
+            #nfs_path =
+            #nfs_server =
+            #nfs_filesystem_type =
+            #nfs_mount_options =
+          },
+          {
+            name = "usr_sap"
+            mountpoint = "/usr/sap"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "sapmnt"
+            mountpoint = "/sapmnt"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "swap"
+            mountpoint = "/swap"
+            disk_size = 136 // 64 default, use minimum of 128GB swap for IBM DB2 LUW
+            disk_type = "general-purpose"
+            filesystem_type = "swap"
+          },
+          {
+            name = "software"
+            mountpoint = "${var.sap_software_download_directory}"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          }
+        ]
+      }
+    }
+  }
+
+}
+
+
+map_host_specifications_defaults = {
+
+  sap_hana = local.map_host_specifications_defaults_sandbox["sap_sandbox_hana"]
+  sap_bw4hana_sandbox = local.map_host_specifications_defaults_sandbox["sap_sandbox_hana"]
+  sap_ecc_hana_sandbox = local.map_host_specifications_defaults_sandbox["sap_sandbox_hana"]
+  sap_ides_ecc_hana_sandbox = local.map_host_specifications_defaults_sandbox["sap_sandbox_hana"]
+  sap_nwas_abap_hana_sandbox = local.map_host_specifications_defaults_sandbox["sap_sandbox_hana"]
+  sap_s4hana_foundation_sandbox = local.map_host_specifications_defaults_sandbox["sap_sandbox_hana"]
+  sap_s4hana_sandbox = local.map_host_specifications_defaults_sandbox["sap_sandbox_hana"]
+  sap_s4hana_sandbox_maintplan = local.map_host_specifications_defaults_sandbox["sap_sandbox_hana"]
+  sap_solman_saphana_sandbox = local.map_host_specifications_defaults_sandbox["sap_sandbox_hana"]
+
+  sap_ecc_ibmdb2_sandbox = local.map_host_specifications_defaults_sandbox["sap_sandbox_anydb"]
+  sap_ecc_oracledb_sandbox = local.map_host_specifications_defaults_sandbox["sap_sandbox_anydb"]
+  sap_ecc_sapase_sandbox = local.map_host_specifications_defaults_sandbox["sap_sandbox_anydb"]
+  sap_ecc_sapmaxdb_sandbox = local.map_host_specifications_defaults_sandbox["sap_sandbox_anydb"]
+  sap_ides_ecc_ibmdb2_sandbox = local.map_host_specifications_defaults_sandbox["sap_sandbox_anydb"]
+  sap_nwas_abap_ibmdb2_sandbox = local.map_host_specifications_defaults_sandbox["sap_sandbox_anydb"]
+  sap_nwas_abap_oracledb_sandbox = local.map_host_specifications_defaults_sandbox["sap_sandbox_anydb"]
+  sap_nwas_abap_sapase_sandbox = local.map_host_specifications_defaults_sandbox["sap_sandbox_anydb"]
+  sap_nwas_abap_sapmaxdb_sandbox = local.map_host_specifications_defaults_sandbox["sap_sandbox_anydb"]
+  sap_nwas_java_ibmdb2_sandbox = local.map_host_specifications_defaults_sandbox["sap_sandbox_anydb"]
+  sap_nwas_java_sapase_sandbox = local.map_host_specifications_defaults_sandbox["sap_sandbox_anydb"]
+  sap_solman_sapase_sandbox = local.map_host_specifications_defaults_sandbox["sap_sandbox_anydb"]
+
+
+  sap_s4hana_foundation_standard = {  // SAP solution scenario from Ansible Playbooks for SAP
+
+    xsmall_256gb = {  // Host Specifications Plan
+
+      sap-hana = {  // Hostname
+        vm_instance = "Standard_M32ls"
+        sap_host_type = "hana_primary" # hana_primary, hana_secondary, nwas_ascs, nwas_ers, nwas_pas, nwas_aas
+        sap_storage_setup_sid = "${try(var.sap_system_hana_db_sid,"H01")}"
+        sap_storage_setup_host_type = [ "hana_primary" ]
+        storage_definition = [
+          {
+            name = "hana_data"
+            mountpoint = "/hana/data"
+            disk_count = 4
+            disk_size = 64
+            disk_type = "P6"
+            #disk_iops =
+            filesystem_type = "xfs"
+            #lvm_lv_name =
+            #lvm_lv_stripes =
+            #lvm_lv_stripe_size =
+            #lvm_vg_name =
+            #lvm_vg_options =
+            #lvm_vg_physical_extent_size =
+            #lvm_pv_device =
+            #lvm_pv_options =
+            #nfs_path =
+            #nfs_server =
+            #nfs_filesystem_type =
+            #nfs_mount_options =
+          },
+          {
+            name = "hana_log"
+            mountpoint = "/hana/log"
+            disk_count = 3
+            disk_size = 128
+            disk_type = "P10"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "hana_shared"
+            mountpoint = "/hana/shared"
+            disk_size = 256
+            disk_type = "P15"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "swap"
+            mountpoint = "/swap"
+            disk_size = 32
+            disk_type = "E4"
+            filesystem_type = "swap"
+          },
+          {
+            name = "software"
+            mountpoint = "${var.sap_software_download_directory}"
+            disk_size = 100
+            disk_type = "5iops-tier"
+            filesystem_type = "xfs"
+          }
+        ]
+      },
+
+      sap-nwas = {  // Hostname
+        vm_instance = "Standard_D16s_v5"
+        sap_host_type = "nwas_pas" # hana_primary, hana_secondary, nwas_ascs, nwas_ers, nwas_pas, nwas_aas
+        sap_storage_setup_sid = "${try(var.sap_system_sid,"S01")}"
+        sap_storage_setup_host_type = [ "nwas_abap_pas" ]
+        storage_definition = [
+          {
+            name = "usr_sap"
+            mountpoint = "/usr/sap"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "sapmnt"
+            mountpoint = "/sapmnt"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "swap"
+            mountpoint = "/swap"
+            disk_size = 136 // 64 default, use minimum of 128GB swap for IBM DB2 LUW
+            disk_type = "general-purpose"
+            filesystem_type = "swap"
+          },
+          {
+            name = "software"
+            mountpoint = "${var.sap_software_download_directory}"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          }
+        ]
+      }
+    }
+  }
+
+
+  sap_s4hana_standard = {  // SAP solution scenario from Ansible Playbooks for SAP
+
+    xsmall_256gb = {  // Host Specifications Plan
+
+      sap-hana = {  // Hostname
+        vm_instance = "Standard_M32ls"
+        sap_host_type = "hana_primary" # hana_primary, hana_secondary, nwas_ascs, nwas_ers, nwas_pas, nwas_aas
+        sap_storage_setup_sid = "${try(var.sap_system_hana_db_sid,"H01")}"
+        sap_storage_setup_host_type = [ "hana_primary" ]
+        storage_definition = [
+          {
+            name = "hana_data"
+            mountpoint = "/hana/data"
+            disk_count = 4
+            disk_size = 64
+            disk_type = "P6"
+            #disk_iops =
+            filesystem_type = "xfs"
+            #lvm_lv_name =
+            #lvm_lv_stripes =
+            #lvm_lv_stripe_size =
+            #lvm_vg_name =
+            #lvm_vg_options =
+            #lvm_vg_physical_extent_size =
+            #lvm_pv_device =
+            #lvm_pv_options =
+            #nfs_path =
+            #nfs_server =
+            #nfs_filesystem_type =
+            #nfs_mount_options =
+          },
+          {
+            name = "hana_log"
+            mountpoint = "/hana/log"
+            disk_count = 3
+            disk_size = 128
+            disk_type = "P10"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "hana_shared"
+            mountpoint = "/hana/shared"
+            disk_size = 256
+            disk_type = "P15"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "swap"
+            mountpoint = "/swap"
+            disk_size = 32
+            disk_type = "E4"
+            filesystem_type = "swap"
+          },
+          {
+            name = "software"
+            mountpoint = "${var.sap_software_download_directory}"
+            disk_size = 100
+            disk_type = "5iops-tier"
+            filesystem_type = "xfs"
+          }
+        ]
+      },
+
+      sap-nwas = {  // Hostname
+        vm_instance = "Standard_D16s_v5"
+        sap_host_type = "nwas_pas" # hana_primary, hana_secondary, nwas_ascs, nwas_ers, nwas_pas, nwas_aas
+        sap_storage_setup_sid = "${try(var.sap_system_sid,"S01")}"
+        sap_storage_setup_host_type = [ "nwas_abap_pas" ]
+        storage_definition = [
+          {
+            name = "usr_sap"
+            mountpoint = "/usr/sap"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "sapmnt"
+            mountpoint = "/sapmnt"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "swap"
+            mountpoint = "/swap"
+            disk_size = 136 // 64 default, use minimum of 128GB swap for IBM DB2 LUW
+            disk_type = "general-purpose"
+            filesystem_type = "swap"
+          },
+          {
+            name = "software"
+            mountpoint = "${var.sap_software_download_directory}"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          }
+        ]
+      }
+    }
+  }
+
+
+  sap_s4hana_standard_maintplan = {  // SAP solution scenario from Ansible Playbooks for SAP
+
+    xsmall_256gb = {  // Host Specifications Plan
+
+      sap-hana = {  // Hostname
+        vm_instance = "Standard_M32ls"
+        sap_host_type = "hana_primary" # hana_primary, hana_secondary, nwas_ascs, nwas_ers, nwas_pas, nwas_aas
+        sap_storage_setup_sid = "${try(var.sap_system_hana_db_sid,"H01")}"
+        sap_storage_setup_host_type = [ "hana_primary" ]
+        storage_definition = [
+          {
+            name = "hana_data"
+            mountpoint = "/hana/data"
+            disk_count = 4
+            disk_size = 64
+            disk_type = "P6"
+            #disk_iops =
+            filesystem_type = "xfs"
+            #lvm_lv_name =
+            #lvm_lv_stripes =
+            #lvm_lv_stripe_size =
+            #lvm_vg_name =
+            #lvm_vg_options =
+            #lvm_vg_physical_extent_size =
+            #lvm_pv_device =
+            #lvm_pv_options =
+            #nfs_path =
+            #nfs_server =
+            #nfs_filesystem_type =
+            #nfs_mount_options =
+          },
+          {
+            name = "hana_log"
+            mountpoint = "/hana/log"
+            disk_count = 3
+            disk_size = 128
+            disk_type = "P10"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "hana_shared"
+            mountpoint = "/hana/shared"
+            disk_size = 256
+            disk_type = "P15"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "swap"
+            mountpoint = "/swap"
+            disk_size = 32
+            disk_type = "E4"
+            filesystem_type = "swap"
+          },
+          {
+            name = "software"
+            mountpoint = "${var.sap_software_download_directory}"
+            disk_size = 100
+            disk_type = "5iops-tier"
+            filesystem_type = "xfs"
+          }
+        ]
+      },
+
+      sap-nwas = {  // Hostname
+        vm_instance = "Standard_D16s_v5"
+        sap_host_type = "nwas_pas" # hana_primary, hana_secondary, nwas_ascs, nwas_ers, nwas_pas, nwas_aas
+        sap_storage_setup_sid = "${try(var.sap_system_sid,"S01")}"
+        sap_storage_setup_host_type = [ "nwas_abap_pas" ]
+        storage_definition = [
+          {
+            name = "usr_sap"
+            mountpoint = "/usr/sap"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "sapmnt"
+            mountpoint = "/sapmnt"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "swap"
+            mountpoint = "/swap"
+            disk_size = 136 // 64 default, use minimum of 128GB swap for IBM DB2 LUW
+            disk_type = "general-purpose"
+            filesystem_type = "swap"
+          },
+          {
+            name = "software"
+            mountpoint = "${var.sap_software_download_directory}"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          }
+        ]
+      }
+    }
+  }
+
+
+  sap_s4hana_distributed = {  // SAP solution scenario from Ansible Playbooks for SAP
+
+    xsmall_256gb = {  // Host Specifications Plan
+
+      hana-p = {  // Hostname
+        vm_instance = "Standard_M32ls"
+        sap_host_type = "hana_primary" # hana_primary, hana_secondary, nwas_ascs, nwas_ers, nwas_pas, nwas_aas
+        sap_storage_setup_sid = "${try(var.sap_system_hana_db_sid,"H01")}"
+        sap_storage_setup_host_type = [ "hana_primary" ]
+        storage_definition = [
+          {
+            name = "hana_data"
+            mountpoint = "/hana/data"
+            disk_count = 4
+            disk_size = 64
+            disk_type = "P6"
+            #disk_iops =
+            filesystem_type = "xfs"
+            #lvm_lv_name =
+            #lvm_lv_stripes =
+            #lvm_lv_stripe_size =
+            #lvm_vg_name =
+            #lvm_vg_options =
+            #lvm_vg_physical_extent_size =
+            #lvm_pv_device =
+            #lvm_pv_options =
+            #nfs_path =
+            #nfs_server =
+            #nfs_filesystem_type =
+            #nfs_mount_options =
+          },
+          {
+            name = "hana_log"
+            mountpoint = "/hana/log"
+            disk_count = 3
+            disk_size = 128
+            disk_type = "P10"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "hana_shared"
+            mountpoint = "/hana/shared"
+            disk_size = 256
+            disk_type = "P15"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "usr_sap"
+            mountpoint = "/usr/sap"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "sapmnt"
+            mountpoint = "/sapmnt"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "swap"
+            mountpoint = "/swap"
+            disk_size = 32
+            disk_type = "E4"
+            filesystem_type = "swap"
+          },
+          {
+            name = "software"
+            mountpoint = "${var.sap_software_download_directory}"
+            disk_size = 200
+            disk_type = "5iops-tier"
+            filesystem_type = "xfs"
+          }
+        ]
+      },
+
+
+      nw-ascs = {  // Hostname
+        vm_instance = "Standard_D16s_v5"
+        sap_host_type = "nwas_ascs" # hana_primary, hana_secondary, nwas_ascs, nwas_ers, nwas_pas, nwas_aas
+        sap_storage_setup_sid = "${try(var.sap_system_sid,"S01")}"
+        sap_storage_setup_host_type = [ "nwas_abap_ascs" ]
+        storage_definition = [
+          {
+            name = "usr_sap"
+            mountpoint = "/usr/sap"
+            nfs_path = "/usr/sap"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "usr_sap_trans"
+            mountpoint = "/usr/sap/trans"
+            nfs_path = "/usr/sap/trans"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "sapmnt"
+            mountpoint = "/sapmnt"
+            nfs_path = "/sapmnt"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "swap"
+            mountpoint = "/swap"
+            disk_size = 96
+            disk_type = "general-purpose"
+            filesystem_type = "swap"
+          },
+          {
+            name = "software"
+            mountpoint = "${var.sap_software_download_directory}"
+            disk_size = 100
+            disk_type = "general-purpose"
+            filesystem_type = "xfs"
+          }
+        ]
+      },
+
+
+      nw-pas = {  // Hostname
+        vm_instance = "Standard_D16s_v5"
+        sap_host_type = "nwas_pas" # hana_primary, hana_secondary, nwas_ascs, nwas_ers, nwas_pas, nwas_aas
+        sap_storage_setup_sid = "${try(var.sap_system_sid,"S01")}"
+        sap_storage_setup_host_type = [ "nwas_abap_pas" ]
+        storage_definition = [
+          {
+            name = "usr_sap"
+            mountpoint = "/usr/sap"
+            nfs_path = "/usr/sap"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "usr_sap_trans"
+            mountpoint = "/usr/sap/trans"
+            nfs_path = "/usr/sap/trans"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "sapmnt"
+            mountpoint = "/sapmnt"
+            nfs_path = "/sapmnt"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "swap"
+            mountpoint = "/swap"
+            disk_size = 96
+            disk_type = "general-purpose"
+            filesystem_type = "swap"
+          },
+          {
+            name = "software"
+            mountpoint = "${var.sap_software_download_directory}"
+            disk_size = 200
+            disk_type = "10iops-tier"
+            filesystem_type = "xfs"
+          }
+        ]
+      },
+
+
+      nw-aas = {  // Hostname
+        vm_instance = "Standard_D16s_v5"
+        sap_host_type = "nwas_aas" # hana_primary, hana_secondary, nwas_ascs, nwas_ers, nwas_pas, nwas_aas
+        sap_storage_setup_sid = "${try(var.sap_system_sid,"S01")}"
+        sap_storage_setup_host_type = [ "nwas_abap_aas" ]
+        storage_definition = [
+          {
+            name = "usr_sap"
+            mountpoint = "/usr/sap"
+            nfs_path = "/usr/sap"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "usr_sap_trans"
+            mountpoint = "/usr/sap/trans"
+            nfs_path = "/usr/sap/trans"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "sapmnt"
+            mountpoint = "/sapmnt"
+            nfs_path = "/sapmnt"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "swap"
+            mountpoint = "/swap"
+            disk_size = 96
+            disk_type = "general-purpose"
+            filesystem_type = "swap"
+          },
+          {
+            name = "software"
+            mountpoint = "${var.sap_software_download_directory}"
+            disk_size = 100
+            disk_type = "general-purpose"
             filesystem_type = "xfs"
           }
         ]
@@ -92,4 +755,444 @@ variable "map_host_specifications" {
 
     }
   }
+
+
+  sap_s4hana_distributed_maintplan = {  // SAP solution scenario from Ansible Playbooks for SAP
+
+    xsmall_256gb = {  // Host Specifications Plan
+
+      hana-p = {  // Hostname
+        vm_instance = "Standard_M32ls"
+        sap_host_type = "hana_primary" # hana_primary, hana_secondary, nwas_ascs, nwas_ers, nwas_pas, nwas_aas
+        sap_storage_setup_sid = "${try(var.sap_system_hana_db_sid,"H01")}"
+        sap_storage_setup_host_type = [ "hana_primary" ]
+        storage_definition = [
+          {
+            name = "hana_data"
+            mountpoint = "/hana/data"
+            disk_count = 4
+            disk_size = 64
+            disk_type = "P6"
+            #disk_iops =
+            filesystem_type = "xfs"
+            #lvm_lv_name =
+            #lvm_lv_stripes =
+            #lvm_lv_stripe_size =
+            #lvm_vg_name =
+            #lvm_vg_options =
+            #lvm_vg_physical_extent_size =
+            #lvm_pv_device =
+            #lvm_pv_options =
+            #nfs_path =
+            #nfs_server =
+            #nfs_filesystem_type =
+            #nfs_mount_options =
+          },
+          {
+            name = "hana_log"
+            mountpoint = "/hana/log"
+            disk_count = 3
+            disk_size = 128
+            disk_type = "P10"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "hana_shared"
+            mountpoint = "/hana/shared"
+            disk_size = 256
+            disk_type = "P15"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "usr_sap"
+            mountpoint = "/usr/sap"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "sapmnt"
+            mountpoint = "/sapmnt"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          },
+          {
+            name = "swap"
+            mountpoint = "/swap"
+            disk_size = 32
+            disk_type = "E4"
+            filesystem_type = "swap"
+          },
+          {
+            name = "software"
+            mountpoint = "${var.sap_software_download_directory}"
+            disk_size = 200
+            disk_type = "5iops-tier"
+            filesystem_type = "xfs"
+          }
+        ]
+      },
+
+
+      nw-ascs = {  // Hostname
+        vm_instance = "Standard_D16s_v5"
+        sap_host_type = "nwas_ascs" # hana_primary, hana_secondary, nwas_ascs, nwas_ers, nwas_pas, nwas_aas
+        sap_storage_setup_sid = "${try(var.sap_system_sid,"S01")}"
+        sap_storage_setup_host_type = [ "nwas_abap_ascs" ]
+        storage_definition = [
+          {
+            name = "usr_sap"
+            mountpoint = "/usr/sap"
+            nfs_path = "/usr/sap"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "usr_sap_trans"
+            mountpoint = "/usr/sap/trans"
+            nfs_path = "/usr/sap/trans"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "sapmnt"
+            mountpoint = "/sapmnt"
+            nfs_path = "/sapmnt"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "swap"
+            mountpoint = "/swap"
+            disk_size = 96
+            disk_type = "general-purpose"
+            filesystem_type = "swap"
+          },
+          {
+            name = "software"
+            mountpoint = "${var.sap_software_download_directory}"
+            disk_size = 100
+            disk_type = "general-purpose"
+            filesystem_type = "xfs"
+          }
+        ]
+      },
+
+
+      nw-pas = {  // Hostname
+        vm_instance = "Standard_D16s_v5"
+        sap_host_type = "nwas_pas" # hana_primary, hana_secondary, nwas_ascs, nwas_ers, nwas_pas, nwas_aas
+        sap_storage_setup_sid = "${try(var.sap_system_sid,"S01")}"
+        sap_storage_setup_host_type = [ "nwas_abap_pas" ]
+        storage_definition = [
+          {
+            name = "usr_sap"
+            mountpoint = "/usr/sap"
+            nfs_path = "/usr/sap"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "usr_sap_trans"
+            mountpoint = "/usr/sap/trans"
+            nfs_path = "/usr/sap/trans"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "sapmnt"
+            mountpoint = "/sapmnt"
+            nfs_path = "/sapmnt"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "swap"
+            mountpoint = "/swap"
+            disk_size = 96
+            disk_type = "general-purpose"
+            filesystem_type = "swap"
+          },
+          {
+            name = "software"
+            mountpoint = "${var.sap_software_download_directory}"
+            disk_size = 200
+            disk_type = "10iops-tier"
+            filesystem_type = "xfs"
+          }
+        ]
+      },
+
+
+      nw-aas = {  // Hostname
+        vm_instance = "Standard_D16s_v5"
+        sap_host_type = "nwas_aas" # hana_primary, hana_secondary, nwas_ascs, nwas_ers, nwas_pas, nwas_aas
+        sap_storage_setup_sid = "${try(var.sap_system_sid,"S01")}"
+        sap_storage_setup_host_type = [ "nwas_abap_aas" ]
+        storage_definition = [
+          {
+            name = "usr_sap"
+            mountpoint = "/usr/sap"
+            nfs_path = "/usr/sap"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "usr_sap_trans"
+            mountpoint = "/usr/sap/trans"
+            nfs_path = "/usr/sap/trans"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "sapmnt"
+            mountpoint = "/sapmnt"
+            nfs_path = "/sapmnt"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "swap"
+            mountpoint = "/swap"
+            disk_size = 96
+            disk_type = "general-purpose"
+            filesystem_type = "swap"
+          },
+          {
+            name = "software"
+            mountpoint = "${var.sap_software_download_directory}"
+            disk_size = 100
+            disk_type = "general-purpose"
+            filesystem_type = "xfs"
+          }
+        ]
+      }
+
+
+    }
+  }
+
+
+  sap_ecc_ibmdb2_distributed = {  // SAP solution scenario from Ansible Playbooks for SAP
+
+    xsmall_anydb_32vcpu = {  // Host Specifications Plan
+
+      anydb-primary = {  // Hostname
+        vm_instance = "Standard_D32s_v5"
+        sap_host_type = "anydb_primary" # hana_primary, hana_secondary, nwas_ascs, nwas_ers, nwas_pas, nwas_aas
+        sap_storage_setup_host_type = [ "nwas_abap_ascs", "nwas_abap_pas" ]
+        storage_definition = [
+          {
+            name = "anydb"
+            mountpoint = "/anydb" # should be /db2, /oracle, /sybase, /sapdb
+            disk_count = 2
+            disk_size = 640
+            disk_type = "10iops-tier"
+            #disk_iops =
+            filesystem_type = "xfs"
+            #lvm_lv_name =
+            #lvm_lv_stripes =
+            #lvm_lv_stripe_size =
+            #lvm_vg_name =
+            #lvm_vg_options =
+            #lvm_vg_physical_extent_size =
+            #lvm_pv_device =
+            #lvm_pv_options =
+            #nfs_path =
+            #nfs_server =
+            #nfs_filesystem_type =
+            #nfs_mount_options =
+          },
+          {
+            name = "usr_sap"
+            mountpoint = "/usr/sap"
+            nfs_path = "/usr/sap"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "sapmnt"
+            mountpoint = "/sapmnt"
+            nfs_path = "/sapmnt"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "swap"
+            mountpoint = "/swap"
+            disk_size = 136 // 64 default, use minimum of 128GB swap for IBM DB2 LUW
+            disk_type = "5iops-tier"
+            filesystem_type = "swap"
+          },
+          {
+            name = "software"
+            mountpoint = "${var.sap_software_download_directory}"
+            disk_size = 128
+            disk_type = "E10"
+            filesystem_type = "xfs"
+          }
+        ]
+      },
+
+
+      nw-ascs = {  // Hostname
+        vm_instance = "Standard_D16s_v5"
+        sap_host_type = "nwas_ascs" # hana_primary, hana_secondary, nwas_ascs, nwas_ers, nwas_pas, nwas_aas
+        sap_storage_setup_sid = "${try(var.sap_system_sid,"S01")}"
+        sap_storage_setup_host_type = [ "nwas_abap_ascs" ]
+        storage_definition = [
+          {
+            name = "usr_sap"
+            mountpoint = "/usr/sap"
+            nfs_path = "/usr/sap"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "usr_sap_trans"
+            mountpoint = "/usr/sap/trans"
+            nfs_path = "/usr/sap/trans"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "sapmnt"
+            mountpoint = "/sapmnt"
+            nfs_path = "/sapmnt"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "swap"
+            mountpoint = "/swap"
+            disk_size = 96
+            disk_type = "general-purpose"
+            filesystem_type = "swap"
+          },
+          {
+            name = "software"
+            mountpoint = "${var.sap_software_download_directory}"
+            disk_size = 100
+            disk_type = "general-purpose"
+            filesystem_type = "xfs"
+          }
+        ]
+      },
+
+
+      nw-pas = {  // Hostname
+        vm_instance = "Standard_D16s_v5"
+        sap_host_type = "nwas_pas" # hana_primary, hana_secondary, nwas_ascs, nwas_ers, nwas_pas, nwas_aas
+        sap_storage_setup_sid = "${try(var.sap_system_sid,"S01")}"
+        sap_storage_setup_host_type = [ "nwas_abap_pas" ]
+        storage_definition = [
+          {
+            name = "usr_sap"
+            mountpoint = "/usr/sap"
+            nfs_path = "/usr/sap"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "usr_sap_trans"
+            mountpoint = "/usr/sap/trans"
+            nfs_path = "/usr/sap/trans"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "sapmnt"
+            mountpoint = "/sapmnt"
+            nfs_path = "/sapmnt"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "swap"
+            mountpoint = "/swap"
+            disk_size = 96
+            disk_type = "general-purpose"
+            filesystem_type = "swap"
+          },
+          {
+            name = "software"
+            mountpoint = "${var.sap_software_download_directory}"
+            disk_size = 200
+            disk_type = "10iops-tier"
+            filesystem_type = "xfs"
+          }
+        ]
+      },
+
+
+      nw-aas = {  // Hostname
+        vm_instance = "Standard_D16s_v5"
+        sap_host_type = "nwas_aas" # hana_primary, hana_secondary, nwas_ascs, nwas_ers, nwas_pas, nwas_aas
+        sap_storage_setup_sid = "${try(var.sap_system_sid,"S01")}"
+        sap_storage_setup_host_type = [ "nwas_abap_aas" ]
+        storage_definition = [
+          {
+            name = "usr_sap"
+            mountpoint = "/usr/sap"
+            nfs_path = "/usr/sap"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "usr_sap_trans"
+            mountpoint = "/usr/sap/trans"
+            nfs_path = "/usr/sap/trans"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "sapmnt"
+            mountpoint = "/sapmnt"
+            nfs_path = "/sapmnt"
+            nfs_server = ""
+            nfs_filesystem_type = "nfs4"
+            nfs_mount_options = "nfsvers=4.1,sec=sys,_netdev,hard,timeo=600,retrans=2,noresvport,acl"
+          },
+          {
+            name = "swap"
+            mountpoint = "/swap"
+            disk_size = 96
+            disk_type = "general-purpose"
+            filesystem_type = "swap"
+          },
+          {
+            name = "software"
+            mountpoint = "${var.sap_software_download_directory}"
+            disk_size = 100
+            disk_type = "general-purpose"
+            filesystem_type = "xfs"
+          }
+        ]
+      }
+    
+    }
+  }
+
+}
+
 }
