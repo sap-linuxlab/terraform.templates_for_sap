@@ -47,6 +47,7 @@ target_host_array=(${join(" ", flatten([for key, value in module.run_host_provis
 
 sap_hana_instance_no="${var.sap_hana_install_instance_number}"
 sap_nwas_abap_pas_instance_no="${var.sap_nwas_abap_pas_instance_no}"
+sap_nwas_java_ci_instance_no="${var.sap_nwas_java_ci_instance_no}"
 
 
 function sshjump() {
@@ -86,7 +87,10 @@ function sshjump() {
                 -L localhost:443$sap_hana_instance_no:$target_ip:443$sap_hana_instance_no \
                 -L localhost:443$sap_nwas_abap_pas_instance_no:$target_ip:443$sap_nwas_abap_pas_instance_no \
                 -L localhost:5$${sap_hana_instance_no}13:$target_ip:5$${sap_hana_instance_no}13 \
-                -L localhost:5$${sap_hana_instance_no}14:$target_ip:5$${sap_hana_instance_no}14
+                -L localhost:5$${sap_hana_instance_no}14:$target_ip:5$${sap_hana_instance_no}14 \
+                -L localhost:5$${sap_nwas_java_ci_instance_no}00:$target_ip:5$${sap_nwas_java_ci_instance_no}01 \
+                -L localhost:5$${sap_nwas_java_ci_instance_no}20:$target_ip:5$${sap_nwas_java_ci_instance_no}20 \
+                -L localhost:5$${sap_nwas_java_ci_instance_no}13:$target_ip:5$${sap_nwas_java_ci_instance_no}14
             break
             ;;
         "OS root access, via SSH stdin/stdout forwarding proxy")
@@ -154,6 +158,7 @@ $target_host_array = @($target_host_string.Split(","),"Quit")
 
 $sap_hana_instance_no = "${var.sap_hana_install_instance_number}"
 $sap_nwas_abap_pas_instance_no = "${var.sap_nwas_abap_pas_instance_no}"
+$sap_nwas_java_ci_instance_no = "${var.sap_nwas_java_ci_instance_no}"
 
 
 function sshjump {
@@ -204,7 +209,10 @@ function sshjump {
                 -L localhost:443$${sap_hana_instance_no}:$${target_ip}:443$${sap_hana_instance_no} `
                 -L localhost:443$${sap_nwas_abap_pas_instance_no}:$${target_ip}:443$${sap_nwas_abap_pas_instance_no} `
                 -L localhost:5$${sap_hana_instance_no}13:$${target_ip}:5$${sap_hana_instance_no}13 `
-                -L localhost:5$${sap_hana_instance_no}14:$${target_ip}:5$${sap_hana_instance_no}14
+                -L localhost:5$${sap_hana_instance_no}14:$${target_ip}:5$${sap_hana_instance_no}14 `
+                -L localhost:5$${sap_nwas_java_ci_instance_no}00:$${target_ip}:5$${sap_nwas_java_ci_instance_no}01 `
+                -L localhost:5$${sap_nwas_java_ci_instance_no}20:$${target_ip}:5$${sap_nwas_java_ci_instance_no}20 `
+                -L localhost:5$${sap_nwas_java_ci_instance_no}13:$${target_ip}:5$${sap_nwas_java_ci_instance_no}14
             }
         }
         2 {

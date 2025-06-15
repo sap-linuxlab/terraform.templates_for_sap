@@ -1,36 +1,5 @@
 
-module "run_ansible_dry_run" {
-
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_s4hana_install?ref=main"
-
-  module_var_dry_run_test = "x86_64" // x86_64 or ppc64le
-
-  # Terraform Module Variables which are mandatory, all with an empty string
-  module_var_bastion_boolean                  = false
-  module_var_bastion_user                     = ""
-  module_var_bastion_ssh_port                 = 0
-  module_var_bastion_private_ssh_key          = ""
-  module_var_bastion_floating_ip              = ""
-  module_var_host_private_ssh_key             = ""
-  module_var_host_private_ip                  = ""
-  module_var_hostname                         = "software_media_dry_run"
-  module_var_dns_root_domain_name             = ""
-  module_var_sap_id_user                      = var.sap_id_user
-  module_var_sap_id_user_password             = var.sap_id_user_password
-  module_var_sap_swpm_sid                     = ""
-  module_var_sap_swpm_db_schema_abap          = ""
-  module_var_sap_swpm_db_schema_abap_password = ""
-  module_var_sap_swpm_ddic_000_password       = ""
-  module_var_sap_swpm_template_selected       = var.sap_swpm_template_selected
-
-}
-
-
 module "run_host_bootstrap_module" {
-
-  depends_on = [
-    module.run_ansible_dry_run
-  ]
 
   source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmpowervc/host_bootstrap?ref=main"
 
