@@ -1,4 +1,14 @@
 
+variable "host_specification_plan" {
+  description = "Host specification plan - e.g. xsmall_256gb for SAP HANA based, or xsmall_anydb_32vcpu for SAP AnyDB based. This variable uses the locals mapping with a nested list of host specifications, and will alter host provisioning."
+}
+
+variable "map_host_specifications" {
+  description = "Map of host specficiations - will override defaults"
+  type        = map(any)
+  default     = {}
+}
+
 variable "map_host_specifications" {
 
   description = "Map of host specficiations for SAP S/4HANA single node install"

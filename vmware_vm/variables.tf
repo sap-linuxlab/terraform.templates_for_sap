@@ -38,10 +38,6 @@ variable "bastion_ssh_port" {
   #}
 }
 
-variable "host_specification_plan" {
-  description = "Host specification plans are small_256gb. This variable uses the locals mapping with a nested list of host specifications, and will alter host provisioning."
-}
-
 variable "os_vendor_account_user" {
   description = "OS Vendor account email/username for Red Hat Customer Portal (RHCP) or SUSE Customer Center (SCC). ALT: if using os_systems_mgmt_host for Red Hat Satellite, this acts as Red Hat Org ID"
 }
