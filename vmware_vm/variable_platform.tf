@@ -55,3 +55,13 @@ variable "os_systems_mgmt_host" {
 variable "web_proxy_url" {
   description = "Web Proxy URL for hosts running on VMware vSphere (e.g. http://ip.v4.goes.here:port)"
 }
+
+variable "nfs_fqdn_sapmnt" {
+  description = "NFS FQDN for /sapmnt when multiple hosts"
+  default = ""
+}
+
+variable "nfs_fqdn_transport" {
+  description = "NFS FQDN for /usr/sap/trans when multiple hosts"
+  default = ""
+}
