@@ -188,7 +188,7 @@ module "run_host_provision_module" {
 
   module_var_storage_definition = [ for storage_item in (length(var.map_host_specifications) != 0 ? var.map_host_specifications[var.host_specification_plan] : local.map_host_specifications_defaults[var.ansible_sap_scenario_selection][var.host_specification_plan])[each.key]["storage_definition"] : storage_item if contains(keys(storage_item),"disk_size") && try(storage_item.swap_path,"") == "" ]
 
-  module_var_disable_ip_anti_spoofing = false
+  module_var_disable_ip_anti_spoofing = false # Anti Spoofing is default, only requires disable to use Virtual IP when High Availability
 
 }
 
