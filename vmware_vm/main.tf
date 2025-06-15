@@ -46,16 +46,15 @@ module "run_host_provision_module" {
   # Set Terraform Module Variables using for_each loop on a map Terraform Variable with nested objects
 
   for_each = toset([
-    for key, value in var.map_host_specifications[var.host_specification_plan] : key
+    for key, value in (length(var.map_host_specifications) != 0 ? var.map_host_specifications[var.host_specification_plan] : local.map_host_specifications_defaults[var.ansible_sap_scenario_selection][var.host_specification_plan]) : key
   ])
 
   module_var_vmware_vm_hostname = each.key
 
-  module_var_vmware_vm_compute_cpu_threads                        = var.map_host_specifications[var.host_specification_plan][each.key].vmware_vm_compute_cpu_threads
-  module_var_vmware_vm_compute_ram_gb                             = var.map_host_specifications[var.host_specification_plan][each.key].vmware_vm_compute_ram_gb
+  module_var_vmware_vm_compute_cpu_threads  = (length(var.map_host_specifications) != 0 ? var.map_host_specifications[var.host_specification_plan] : local.map_host_specifications_defaults[var.ansible_sap_scenario_selection][var.host_specification_plan])[each.key].vmware_vm_compute_cpu_threads
+  module_var_vmware_vm_compute_ram_gb       = (length(var.map_host_specifications) != 0 ? var.map_host_specifications[var.host_specification_plan] : local.map_host_specifications_defaults[var.ansible_sap_scenario_selection][var.host_specification_plan])[each.key].vmware_vm_compute_ram_gb
 
-  module_var_storage_definition = [ for storage_item in var.map_host_specifications[var.host_specification_plan][each.key]["storage_definition"] : storage_item if contains(keys(storage_item),"disk_size") && try(storage_item.swap_path,"") == "" ]
-
+  module_var_storage_definition = [ for storage_item in (length(var.map_host_specifications) != 0 ? var.map_host_specifications[var.host_specification_plan] : local.map_host_specifications_defaults[var.ansible_sap_scenario_selection][var.host_specification_plan])[each.key]["storage_definition"] : storage_item if contains(keys(storage_item),"disk_size") && try(storage_item.swap_path,"") == "" ]
 
 }
 

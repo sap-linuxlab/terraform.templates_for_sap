@@ -90,6 +90,7 @@ module "run_host_network_access_sap_module" {
   module_var_host_security_group_id   = module.run_account_bootstrap_module.output_host_security_group_id
 
   module_var_sap_hana_instance_no          = var.sap_system_hana_db_instance_nr
+  module_var_sap_nwas_abap_ascs_instance_no = var.sap_system_nwas_abap_ascs_instance_nr
   module_var_sap_nwas_abap_pas_instance_no = var.sap_system_nwas_abap_pas_instance_nr
   module_var_sap_nwas_java_ci_instance_no  = var.sap_system_nwas_java_ci_instance_nr
 
@@ -129,10 +130,12 @@ module "run_host_nfs_module" {
 
   source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/host_nfs?ref=main"
 
+  count  = contains( distinct(flatten( [for host in (length(var.map_host_specifications) != 0 ? var.map_host_specifications[var.host_specification_plan] : local.map_host_specifications_defaults[var.ansible_sap_scenario_selection][var.host_specification_plan]) : [for item in host.storage_definition: keys(item)] ] )) , "nfs_path") ? 1 : 0
+
+  module_var_resource_group_id        = module.run_account_init_module.output_resource_group_id
   module_var_resource_prefix          = var.resource_prefix
   module_var_ibmcloud_vpc_subnet_name = local.ibmcloud_vpc_subnet_create_boolean ? module.run_account_init_module.output_vpc_subnet_name : var.ibmcloud_vpc_subnet_name
   module_var_host_security_group_id   = module.run_account_bootstrap_module.output_host_security_group_id
-  module_var_nfs_boolean_sapmnt       = contains([for host in var.map_host_specifications[var.host_specification_plan] : host.nfs_boolean_sapmnt],true)
 
 }
 
@@ -176,14 +179,14 @@ module "run_host_provision_module" {
   # Set Terraform Module Variables using for_each loop on a map Terraform Variable with nested objects
 
   for_each = toset([
-    for key, value in var.map_host_specifications[var.host_specification_plan] : key
+    for key, value in (length(var.map_host_specifications) != 0 ? var.map_host_specifications[var.host_specification_plan] : local.map_host_specifications_defaults[var.ansible_sap_scenario_selection][var.host_specification_plan]) : key
   ])
 
   module_var_virtual_server_hostname = each.key
 
-  module_var_virtual_server_profile = var.map_host_specifications[var.host_specification_plan][each.key].virtual_server_profile
+  module_var_virtual_server_profile = (length(var.map_host_specifications) != 0 ? var.map_host_specifications[var.host_specification_plan] : local.map_host_specifications_defaults[var.ansible_sap_scenario_selection][var.host_specification_plan])[each.key].virtual_server_profile
 
-  module_var_storage_definition = [ for storage_item in var.map_host_specifications[var.host_specification_plan][each.key]["storage_definition"] : storage_item if contains(keys(storage_item),"disk_size") && try(storage_item.swap_path,"") == "" ]
+  module_var_storage_definition = [ for storage_item in (length(var.map_host_specifications) != 0 ? var.map_host_specifications[var.host_specification_plan] : local.map_host_specifications_defaults[var.ansible_sap_scenario_selection][var.host_specification_plan])[each.key]["storage_definition"] : storage_item if contains(keys(storage_item),"disk_size") && try(storage_item.swap_path,"") == "" ]
 
   module_var_disable_ip_anti_spoofing = false
 
