@@ -23,7 +23,7 @@
 # version control.
 #
 *.tfvars
-!variables_generic_for_cli.tfvars
+!variables_predefined_input.tfvars
 
 # Ignore override files as they are usually used to override resources locally and so
 # are not checked in
