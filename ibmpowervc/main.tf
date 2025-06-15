@@ -58,53 +58,46 @@ module "run_host_provision_module" {
 }
 
 
-module "run_ansible_sap_s4hana_install" {
+module "run_ansible" {
 
   depends_on = [module.run_host_provision_module]
 
-  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_sap_s4hana_install?ref=main"
+  source = "github.com/sap-linuxlab/terraform.modules_for_sap//all/ansible_playbooks_for_sap?ref=main"
 
   # Terraform Module Variables using the prior Terraform Module Variables (from bootstrap module)
-  module_var_bastion_boolean         = var.bastion_boolean
-  module_var_bastion_user            = var.bastion_boolean ? var.bastion_user : ""
-  module_var_bastion_ssh_port        = var.bastion_boolean ? var.bastion_ssh_port : 0
-  module_var_bastion_private_ssh_key = var.bastion_boolean ? var.bastion_private_ssh_key : 0
-  module_var_bastion_floating_ip     = var.bastion_boolean ? var.bastion_ip : 0
+  module_var_bastion_boolean         = true // required as true boolean for any Cloud Service Provider (CSP)
+  module_var_bastion_user            = var.bastion_user
+  module_var_bastion_ssh_port        = var.bastion_ssh_port
+  module_var_bastion_private_ssh_key = module.run_account_bootstrap_module.output_bastion_private_ssh_key
+  module_var_bastion_floating_ip     = module.run_bastion_inject_module.output_bastion_ip
 
-  module_var_host_private_ssh_key = module.run_host_bootstrap_module.output_host_private_ssh_key
+  module_var_host_private_ssh_key = module.run_account_bootstrap_module.output_host_private_ssh_key
 
+  module_var_host_specifications     = (length(var.map_host_specifications) != 0 ? var.map_host_specifications : local.map_host_specifications_defaults[var.ansible_sap_scenario_selection] )
+  module_var_host_specification_plan = var.host_specification_plan
+  module_var_host_provision_outputs  = module.run_host_provision_module
 
-  # Set Terraform Module Variables using for_each loop on a map Terraform Variable at runtime
+  module_var_nfs_fqdn_sapmnt    = try(module.run_host_nfs_module[0].output_nfs_fqdn_sapmnt,"")
+  module_var_nfs_fqdn_transport = try(module.run_host_nfs_module[0].output_nfs_fqdn_transport,"")
 
-  for_each                        = module.run_host_provision_module
-  module_var_host_private_ip      = join(", ", each.value.*.output_host_private_ip)
-  module_var_hostname             = join(", ", each.value.*.output_host_name)
-  module_var_dns_root_domain_name = var.dns_root_domain
+  module_var_dns_root_domain = var.dns_root_domain
 
-  module_var_sap_id_user          = var.sap_id_user
-  module_var_sap_id_user_password = var.sap_id_user_password
+  module_var_ansible_sap_scenario_selection = var.ansible_sap_scenario_selection
+  module_var_ansible_sap_software_product   = var.ansible_sap_software_product
 
-  module_var_sap_hana_install_master_password = var.sap_hana_install_master_password
-  module_var_sap_hana_install_sid             = var.sap_hana_install_sid
-  module_var_sap_hana_install_instance_number = var.sap_hana_install_instance_number
+  module_var_ansible_sap_system_sid = try(var.sap_system_sid,"")
+  module_var_ansible_sap_system_hana_db_sid = try(var.sap_system_hana_db_sid,"")
+  module_var_ansible_sap_system_hana_db_instance_nr = try(var.sap_system_hana_db_instance_nr,"")
+  module_var_ansible_sap_system_anydb_sid = try(var.sap_system_anydb_sid,"")
+  module_var_ansible_sap_system_nwas_abap_ascs_instance_nr = try(var.sap_system_nwas_abap_ascs_instance_nr,"")
+  module_var_ansible_sap_system_nwas_abap_pas_instance_nr  = try(var.sap_system_nwas_abap_pas_instance_nr,"")
+  module_var_ansible_sap_system_nwas_abap_aas_instance_nr  = try(var.sap_system_nwas_abap_aas_instance_nr,"")
+  module_var_ansible_sap_system_nwas_java_scs_instance_nr  = try(var.sap_system_nwas_java_scs_instance_nr,"")
+  module_var_ansible_sap_system_nwas_java_ci_instance_nr   = try(var.sap_system_nwas_java_ci_instance_nr,"")
+  module_var_ansible_sap_maintenance_planner_transaction_name = try(var.sap_maintenance_planner_transaction_name,"")
+  module_var_ansible_sap_software_download_directory = var.sap_software_download_directory
 
-  module_var_sap_swpm_sid = var.sap_s4hana_install_sid
-
-  module_var_sap_swpm_db_schema_abap          = "SAPHANADB"
-  module_var_sap_swpm_db_schema_abap_password = var.sap_hana_install_master_password
-  module_var_sap_swpm_db_system_password      = var.sap_hana_install_master_password
-  module_var_sap_swpm_db_systemdb_password    = var.sap_hana_install_master_password
-  module_var_sap_swpm_db_sidadm_password      = var.sap_hana_install_master_password
-  module_var_sap_swpm_ddic_000_password       = var.sap_hana_install_master_password
-  module_var_sap_swpm_pas_instance_nr         = var.sap_nwas_abap_pas_instance_no
-  module_var_sap_swpm_ascs_instance_nr        = var.sap_nwas_abap_ascs_instance_no
-
-  module_var_sap_swpm_master_password         = var.sap_hana_install_master_password
-
-  module_var_sap_swpm_template_selected = var.sap_swpm_template_selected
-
-  module_var_sap_software_download_directory  = var.sap_software_download_directory
-
-  module_var_terraform_host_specification_storage_definition = var.map_host_specifications[var.host_specification_plan][join(", ", each.value.*.output_host_name)]["storage_definition"]
+  module_var_ansible_sap_id_user          = var.sap_id_user
+  module_var_ansible_sap_id_user_password = var.sap_id_user_password
 
 }
