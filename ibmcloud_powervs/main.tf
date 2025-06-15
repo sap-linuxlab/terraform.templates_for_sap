@@ -228,10 +228,12 @@ module "run_host_nfs_module" {
 
   source = "github.com/sap-linuxlab/terraform.modules_for_sap//ibmcloud_vs/host_nfs?ref=main"
 
+  count  = contains( distinct(flatten( [for host in (length(var.map_host_specifications) != 0 ? var.map_host_specifications[var.host_specification_plan] : local.map_host_specifications_defaults[var.ansible_sap_scenario_selection][var.host_specification_plan]) : [for item in host.storage_definition: keys(item)] ] )) , "nfs_path") ? 1 : 0
+
+  module_var_resource_group_id        = module.run_account_init_module.output_resource_group_id
   module_var_resource_prefix          = var.resource_prefix
   module_var_ibmcloud_vpc_subnet_name = local.ibmcloud_vpc_subnet_create_boolean ? module.run_account_init_module.output_vpc_subnet_name : var.ibmcloud_vpc_subnet_name
   module_var_host_security_group_id   = module.run_account_bootstrap_module.output_host_security_group_id
-  module_var_nfs_boolean_sapmnt       = contains([for host in var.map_host_specifications[var.host_specification_plan] : host.nfs_boolean_sapmnt],true)
 
 }
 
