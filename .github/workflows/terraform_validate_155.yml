@@ -18,12 +18,12 @@ jobs:
       max-parallel: 25
       matrix:
         terraform_ver: [=1.5.5] # Job matrix can generate a maximum of 256 jobs per workflow run
-        infrastructure_platform: [aws_ec2_instance, gcp_ce_vm, ibmcloud_vs, ibmcloud_powervs, ibmpowervc, msazure_vm, vmware_vm]
+        infrastructure_platform: [deploy_aws_ec2_instance, deploy_gcp_ce_vm, deploy_ibmcloud_vs, deploy_ibmcloud_powervs, deploy_ibmpowervc, deploy_msazure_vm, deploy_vmware_vm]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3.0.0
+        uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ${{ matrix.terraform_ver }}
       - name: Check if directory empty
