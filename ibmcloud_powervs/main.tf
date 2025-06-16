@@ -327,6 +327,8 @@ module "run_ansible" {
 
   module_var_dns_root_domain = var.dns_root_domain
 
+  module_var_ibmpower_flag = true
+
   module_var_ansible_sap_scenario_selection = var.ansible_sap_scenario_selection
   module_var_ansible_sap_software_product   = var.ansible_sap_software_product
 

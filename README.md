@@ -1,5 +1,5 @@
 # Terraform Templates for SAP
-[![Terraform Validate Tests](https://github.com/sap-linuxlab/terraform.templates_for_sap/actions/workflows/terraform_validate_100.yml/badge.svg?branch=main)](https://github.com/sap-linuxlab/terraform.templates_for_sap/actions/workflows/terraform_validate_100.yml)
+[![Terraform Validate Tests](https://github.com/sap-linuxlab/terraform.templates_for_sap/actions/workflows/terraform_validate_155.yml/badge.svg?branch=main)](https://github.com/sap-linuxlab/terraform.templates_for_sap/actions/workflows/terraform_validate_155.yml)
 
 Deploy various SAP Software solution scenarios onto different Hyperscaler Cloud Service Providers and Hypervisors platforms.
 
