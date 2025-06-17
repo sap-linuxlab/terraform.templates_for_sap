@@ -1,0 +1,52 @@
+
+variable "dns_root_domain" {
+  description = "Root Domain for Private DNS used with the Virtual Server"
+}
+
+variable "bastion_user" {
+  description = "OS User to create on Bastion host to avoid pass-through root user (e.g. bastionuser)"
+}
+
+variable "bastion_ssh_port" {
+  type        = number
+  description = "Bastion host SSH Port from IANA Dynamic Ports range (49152 to 65535)"
+
+  validation {
+    condition     = var.bastion_ssh_port > 49152 && var.bastion_ssh_port < 65535
+    error_message = "Bastion host SSH Port must fall within IANA Dynamic Ports range (49152 to 65535)."
+  }
+}
+
+
+locals {
+
+  resource_group_create_boolean = var.ibmcloud_resource_group == "new" ? true : false
+
+  ibmcloud_vpc_subnet_create_boolean = var.ibmcloud_vpc_subnet_name == "new" ? true : false
+
+  ibmcloud_vpc_subnet_name_entry_is_ip = (
+    can(
+      regex("^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)([/][0-3][0-2]?|[/][1-2][0-9]|[/][0-9])$",
+        var.ibmcloud_vpc_subnet_name
+      )
+  ) ? true : false)
+
+  #  ibmcloud_region = replace(var.ibmcloud_vpc_availability_zone, "/-[0-9]/", "")
+  ibmcloud_region = replace(var.map_ibm_powervs_to_vpc_az[lower(var.ibmcloud_powervs_location)], "/-[0-9]/", "")
+
+  # Ensure lowercase to avoid API case-sensitive errors such as "pcloudNetworksPostForbidden Code 403 Error crn regionZone WDC06 is not supported under the current region"
+  ibmcloud_powervs_region = lower(var.map_ibm_powervs_location_to_powervs_region[lower(var.ibmcloud_powervs_location)])
+
+  # Directories start with "C:..." on Windows; All other OSs use "/" for root.
+  detect_windows = substr(pathexpand("~"), 0, 1) == "/" ? false : true
+  detect_shell = substr(pathexpand("~"), 0, 1) == "/" ? true : false
+
+  # Used for displaying Shell ssh connection output
+  # /proc/version contains WSL subsstring, if detected then running Windows Subsystem for Linux
+  not_wsl = fileexists("/proc/version") ? length(regexall("WSL", file("/proc/version"))) > 0 ? false : true : true
+
+  # Used for displaying Windows PowerShell ssh connection output
+  # /proc/version contains WSL subsstring, if detected then running Windows Subsystem for Linux
+  is_wsl = fileexists("/proc/version") ? length(regexall("WSL", file("/proc/version"))) > 0 ? true : false : false
+
+}
