@@ -8,7 +8,6 @@ To get started immediately, requirements:
 - Infrastructure Platform credentials and required authorizations (see [Infrastructure Guidance](./DEV_INFRASTRUCTURE_GUIDANCE.md)); depending on choice may require OS Vendor subscription
 - SAP ONE Support Launchpad credentials, with Software Download privileges
 - Terraform and Ansible installed
-- Optional, depending on choice SAP solution scenario: SAP System Copy backup file
 
 <br/>
 <details>
@@ -19,7 +18,12 @@ To get started immediately, requirements:
   1. Install Homebrew, please see documentation: https://docs.brew.sh
       - Install Terraform and Ansible Community Edition (contains ansible-core); such as using `brew install ansible bash gawk jq openssl@1.1 terraform`
   2. Download Terraform Templates for SAP using `curl -L https://github.com/sap-linuxlab/terraform.templates_for_sap/archive/refs/heads/main.zip -o main.zip && tar -xvf main.zip`
-  3. Run and follow prompts `./run_terraform.sh`
+  3. Select a target Infrastructure Platform and run the Terraform Template, for example:
+  ```
+  cd /terraform.templates_for_sap/ibmcloud_vs
+  terraform init
+  terraform apply -var-file=variables_predefined_input.tfvars
+  ```
   4. Once completed, follow output copy/paste to open SSH connection to OS or an SSH tunnel for SAP HANA Studio and SAPGUI
 </details>
 
@@ -42,26 +46,11 @@ To get started immediately, requirements:
   6. ALTERNATIVE / Not recommended: Install Homebrew on Linux, please see documentation: https://docs.brew.sh/Homebrew-on-Linux
       - Install Terraform and Ansible Community Edition (contains ansible-core); such as using `brew install ansible terraform`
   7. Download Terraform Templates for SAP using `curl -L https://github.com/sap-linuxlab/terraform.templates_for_sap/archive/refs/heads/main.zip -o main.zip && unzip main.zip`
-  8. Run and follow prompts `./run_terraform.sh`
   9. If altering any files, these can be accessed with Windows Finder by using directory `\\wsl$`. For example, opening this directory using VS Code for Windows.
-  10. Run and follow prompts `./run_terraform.sh`
+  10. Select a target Infrastructure Platform and run the Terraform Template
   11. Once completed, follow output copy/paste to open SSH connection to OS or an SSH tunnel for SAP HANA Studio and SAPGUI
 
   `NOTE:` If editing any code, please ensure the file is saved in LF and not the Windows default CRLF as the format for End of Line Sequence. Terraform and Ansible may not work correctly if files are CRLF.
-</details>
-
-<br/>
-<details>
-  <summary><b>Local - Advanced users summary:</b></summary>
-  
-  The `./run_terraform.sh` script is provided as an entry point for beginner users, with prompts for the target SAP Scenario and Infrastructure Platform which will then switch to the correct directory for the specific Terraform Template of those choices.
-
-  As an example, the script would run the following 3 commands for a user selecting SAP S/4HANA on IBM Cloud and using default variable values:
-  ```
-  cd /terraform.templates_for_sap/sap_s4hana_single_node_install_maintenance_plan/ibmcloud_vs
-  terraform init
-  terraform apply -var-file=variables_generic_for_cli.tfvars
-  ```
 </details>
 
 <br/>
@@ -102,7 +91,7 @@ To get started immediately, requirements:
   9. Select the Tasks tab, by default an Agent Job will be added to the Release Pipeline Stage 1..n and have the Agent Pool set to to 'Hosted Windows 2019'.
   10. Change the Agent Pool to 'Azure Pipelines', which will prompt for the Agent Specification. Choose 'ubuntu-latest' for the Agent Specification.
   11. Click the `+` button to 'Add a task to Agent Job'. On the right-side search "terraform" which will display two tasks from the Terraform Extension for Azure DevOps by Microsoft DevLabs. Add the 'Terraform tool installer' followed by adding 'Terraform' twice. This will add three tasks under the Agent Job.
-  12. In both the second and third task of the Agent Job, change the 'Configuration directory' to `$(System.DefaultWorkingDirectory)/<<Azure_Repo_name_here>>/<<sap_software_scenario>>/<<infrastructure_platform>>`. For example, `$(System.DefaultWorkingDirectory)/_tf-templates-sap/sap_hana_single_node_install/msazure_vm`.
+  12. In both the second and third task of the Agent Job, change the 'Configuration directory' to `$(System.DefaultWorkingDirectory)/<<Azure_Repo_name_here>>/<<infrastructure_platform>>`. For example, `$(System.DefaultWorkingDirectory)/_tf-templates-sap/sap_hana_single_node_install/msazure_vm`.
   13. In the second task of the Agent Job, select an Azure Subscription and click 'Authorize' to create a new Azure service principal for this Azure DevOps Release Pipeline. Subsequently select where the Terraform State Files will be stored by selecting an Azure Resource Group and the Azure Blob Container (and the parent Azure Storage Account). The 'Key' option can be set to standard 'terraform.tfstate'. 
   14. In the third task of the Agent Job, change the command to 'apply' and append the '-auto-approve' for the Additional command arguments and if preferring to use default variables for the SAP Software solution scenario then instead append `-auto-approve -var-file=variables_generic_for_cli.tfvars -var "az_app_client_id=value" -var "az_app_client_secret=value" -var "az_location_availability_zone_no=value" -var "az_location_region=value" -var "az_resource_group_name=value" -var "az_subscription_id=value" -var "az_tenant_id=value" -var "az_vnet_name=value" -var "az_vnet_subnet_name=value" -var "sap_id_user=value" -var "sap_id_user_password=value"`
   15. Once completed, click 'Save' for this Release Pipeline
@@ -117,7 +106,7 @@ To get started immediately, requirements:
   
   1. Open [IBM Cloud Schematics](https://cloud.ibm.com/schematics)
   2. [Create an IBM Cloud Schematics Workspace](https://cloud.ibm.com/schematics/workspaces/create), and specify the Terraform Template for SAP to use:
-    - The URL will reference the specific Terraform Template for SAP `https://github.com/sap-linuxlab/terraform.templates_for_sap/tree/main/<<sap_software_scenario>>/<<infrastructure_platform>>`. For example, use the SAP HANA installation Terraform Template for IBM Cloud VS `https://github.com/sap-linuxlab/terraform.templates_for_sap/tree/main/sap_hana_single_node_install/ibmcloud_vs`.
+    - The URL will reference the specific Terraform Template for SAP `https://github.com/sap-linuxlab/terraform.templates_for_sap/tree/main/<<infrastructure_platform>>`. For example, use the SAP HANA installation Terraform Template for IBM Cloud VS `https://github.com/sap-linuxlab/terraform.templates_for_sap/tree/main/ibmcloud_vs`.
     - Ensure 'Use full repository' is not selected, so that only the specific Terraform Template for SAP is loaded.
     - Ensure the Terraform version is Terraform 1.2 and above.
     - Click next.
@@ -194,28 +183,12 @@ The following is a list of Infrastructure Platforms and Operating System vendors
 
 **Hypervisors, provisioned via Terraform:**
 - IBM PowerVM LPAR
-- ~~OVirt / Red Hat Virtualization Virtual Machine~~ `[planned]`
 - VMware vSphere Virtual Machine
 
 **Operating Systems:**
 - Red Hat Enterprise Linux for SAP Solutions (RHEL4SAP)
 - SUSE Linux Enterprise Server for SAP Applications (SLES4SAP)
 
-**Future SAP solution scenarios:**
-
-There are various suggested/requested SAP solution scenarios under consideration by the SAP LinuxLab open-source team (across multiple SAP Technology Partners), which have been suggested from customers and SAP Service Partners.
-
-While the Ansible Collections for SAP are compatbile with almost any installation (e.g. SAP SolMan, SAP WebDispatcher, SAP BW/4HANA) - our focus in this project is to provide a common end-to-end automated deployment for common scenarios, therefore we are unable to working code for all combinations. For additional detail, see [Disclaimer](#disclaimer) section.
-
-Any contributors who would are available for development and testing of these proposed future SAP solution scenarios in this project are greatly welcomed, please read the [Contributors document](./DEV_CONTRIBUTORS.md). As described in the SAP LinuxLab initiative governance processes, any customer or SAP Partner may submit proposals of new code or direction.
-
-The following list is **`not`** a commitment but is a statement of intent beyond the initial release, the terraform.templates_for_sap project seeks to include in future:
-
-| Proposed future SAP solution scenario | Description |
-| --- | --- |
-| *SAP HANA multi-node HA/DR installation* | Install of SAP HANA Database Server to multiple virtual machines on a Cloud or Hypervisor, and setup of HA/DR fencing agents and resource agents |
-| *SAP HANA multi-node scale-out cluster* installation | Install of SAP HANA Database Server to multiple virtual machines on a Cloud or Hypervisor, and setup of scale-out cluster for OLAP workloads (e.g. SAP BW/4HANA) |
-| *SAP S/4HANA distributed installation* | Installation of SAP S/4HANA using SAP HANA Database Server and SAP NetWeaver across multiple virtual machine on a Cloud or Hypervisor |
 
 ## Requirements, Dependencies and Testing
 
