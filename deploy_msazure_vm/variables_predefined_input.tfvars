@@ -8,7 +8,7 @@ bastion_user = "bastionuser"
 
 bastion_ssh_port = 50222
 
-host_specification_plan = "small_256gb"
+host_specification_plan = "xsmall_256gb"
 
 host_os_image = "rhel-9-2-sap-ha"
 
