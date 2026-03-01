@@ -34,8 +34,9 @@ module "run_account_bootstrap_module" {
   module_var_az_location_region               = var.az_location_region
   module_var_az_location_availability_zone_no = var.az_location_availability_zone_no
 
-  module_var_az_vnet_name        = module.run_account_init_module.output_vnet_name
-  module_var_az_vnet_subnet_name = module.run_account_init_module.output_vnet_subnet_name
+  module_var_az_vnet_id                     = module.run_account_init_module.output_vnet_id
+  module_var_az_vnet_subnet_range = module.run_account_init_module.output_vnet_subnet_range
+  module_var_az_vnet_subnet_id = module.run_account_init_module.output_vnet_subnet_id
 
   module_var_dns_root_domain_name = var.dns_root_domain
 }
@@ -72,8 +73,8 @@ module "run_bastion_inject_module" {
   module_var_az_location_region               = var.az_location_region
   module_var_az_location_availability_zone_no = var.az_location_availability_zone_no
 
-  module_var_az_vnet_name        = module.run_account_init_module.output_vnet_name
-  module_var_az_vnet_subnet_name = module.run_account_init_module.output_vnet_subnet_name
+  module_var_az_vnet_name         = module.run_account_init_module.output_vnet_name
+  module_var_az_vnet_subnet_range = module.run_account_init_module.output_vnet_subnet_range
 
   module_var_bastion_user            = var.bastion_user
   module_var_bastion_ssh_port        = var.bastion_ssh_port
@@ -98,8 +99,7 @@ module "run_host_network_access_sap_module" {
 
   module_var_az_resource_group_name = module.run_account_init_module.output_resource_group_name
 
-  module_var_az_vnet_name        = module.run_account_init_module.output_vnet_name
-  module_var_az_vnet_subnet_name = module.run_account_init_module.output_vnet_subnet_name
+  module_var_az_vnet_subnet_range = module.run_account_init_module.output_vnet_subnet_range
 
   module_var_host_security_group_name = module.run_account_bootstrap_module.output_host_security_group_name
 
@@ -123,9 +123,8 @@ module "run_host_network_access_sap_public_via_proxy_module" {
 
   module_var_az_resource_group_name = module.run_account_init_module.output_resource_group_name
 
-  module_var_az_vnet_name        = module.run_account_init_module.output_vnet_name
-  module_var_az_vnet_subnet_name = module.run_account_init_module.output_vnet_subnet_name
-  module_var_az_vnet_bastion_subnet_name = module.run_bastion_inject_module.output_vnet_bastion_subnet_name
+  module_var_az_vnet_subnet_range = module.run_account_init_module.output_vnet_subnet_range
+  module_var_az_vnet_bastion_subnet_range = module.run_bastion_inject_module.output_vnet_bastion_subnet_range
 
   module_var_host_security_group_name               = module.run_account_bootstrap_module.output_host_security_group_name
   module_var_bastion_security_group_name            = module.run_bastion_inject_module.output_bastion_security_group_name
@@ -157,8 +156,8 @@ module "run_host_nfs_module" {
   module_var_az_location_region               = var.az_location_region
   module_var_az_location_availability_zone_no = var.az_location_availability_zone_no
 
-  module_var_az_vnet_name                     = module.run_account_init_module.output_vnet_name
-  module_var_az_vnet_subnet_name              = module.run_account_init_module.output_vnet_subnet_name
+  module_var_az_vnet_subnet_range = module.run_account_init_module.output_vnet_subnet_range
+  module_var_az_vnet_subnet_id = module.run_account_init_module.output_vnet_subnet_id
 
   module_var_host_security_group_name         = module.run_account_bootstrap_module.output_host_security_group_name
 
@@ -184,8 +183,7 @@ module "run_host_provision_module" {
   module_var_az_location_region               = var.az_location_region
   module_var_az_location_availability_zone_no = var.az_location_availability_zone_no
 
-  module_var_az_vnet_name        = module.run_account_init_module.output_vnet_name
-  module_var_az_vnet_subnet_name = module.run_account_init_module.output_vnet_subnet_name
+  module_var_az_vnet_subnet_id = module.run_account_init_module.output_vnet_subnet_id
 
   module_var_bastion_user             = var.bastion_user
   module_var_bastion_ssh_port         = var.bastion_ssh_port
