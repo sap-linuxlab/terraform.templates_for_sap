@@ -19,9 +19,11 @@ variable "map_os_image_regex" {
 
     rhel-8-latest = { project = "rhel-cloud" , family  = "rhel-8" },
     rhel-9-latest = { project = "rhel-cloud" , family  = "rhel-9" },
+    rhel-10-latest = { project = "rhel-cloud" , family  = "rhel-10" },
 
     sles-12-latest = { project = "suse-cloud" , family  = "sles-12" },
     sles-15-latest = { project = "suse-cloud" , family  = "sles-15" },
+    sles-16-latest = { project = "suse-cloud" , family  = "sles-16" },
 
     # rhel-7-7-sap-ha = { project = "rhel-sap-cloud" , family  = "rhel-7-7-sap-ha" }, // removed
     rhel-7-9-sap-ha = { project = "rhel-sap-cloud" , family  = "rhel-7-9-sap-ha" },
@@ -30,12 +32,13 @@ variable "map_os_image_regex" {
     rhel-8-4-sap-ha = { project = "rhel-sap-cloud" , family  = "rhel-8-4-sap-ha" },
     rhel-8-6-sap-ha = { project = "rhel-sap-cloud" , family  = "rhel-8-6-sap-ha" },
 
-    sles-12-sp5-sap = { project = "suse-sap-cloud" , family  = "sles-12-sp5-sap" },
-    # sles-15-sp1-sap = { project = "suse-sap-cloud" , family  = "sles-15-sp1-sap" }, // removed
-    sles-15-sp2-sap = { project = "suse-sap-cloud" , family  = "sles-15-sp2-sap" },
-    sles-15-sp3-sap = { project = "suse-sap-cloud" , family  = "sles-15-sp3-sap" },
-    sles-15-sp4-sap = { project = "suse-sap-cloud" , family  = "sles-15-sp4-sap" },
-    sles-15-sp5-sap = { project = "suse-sap-cloud" , family  = "sles-15-sp5-sap" }
+    sles-12-5-sap-ha = { project = "suse-sap-cloud" , family  = "sles-12-sp5-sap" },
+    # sles-15-1-sap-ha = { project = "suse-sap-cloud" , family  = "sles-15-sp1-sap" }, // removed
+    sles-15-2-sap-ha = { project = "suse-sap-cloud" , family  = "sles-15-sp2-sap" },
+    sles-15-3-sap-ha = { project = "suse-sap-cloud" , family  = "sles-15-sp3-sap" },
+    sles-15-4-sap-ha = { project = "suse-sap-cloud" , family  = "sles-15-sp4-sap" },
+    sles-15-5-sap-ha = { project = "suse-sap-cloud" , family  = "sles-15-sp5-sap" }
+    sles-15-6-sap-ha = { project = "suse-sap-cloud" , family  = "sles-15-sp6-sap" }
 
   }
 

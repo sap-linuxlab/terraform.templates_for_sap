@@ -177,8 +177,8 @@ map_host_specifications_defaults_sandbox = {
           {
             name = "swap"
             mountpoint = "/swap"
-            disk_size = 136 // 64 default, use minimum of 128GB swap for IBM DB2 LUW
-            disk_type = "general-purpose"
+            disk_size = 128 // use minimum of 128GB swap for IBM DB2 LUW
+            disk_type = "E10"
             filesystem_type = "swap"
           },
           {
@@ -278,8 +278,8 @@ map_host_specifications_defaults = {
           {
             name = "software"
             mountpoint = "${var.sap_software_download_directory}"
-            disk_size = 100
-            disk_type = "5iops-tier"
+            disk_size = 128
+            disk_type = "P10"
             filesystem_type = "xfs"
           }
         ]
@@ -308,8 +308,8 @@ map_host_specifications_defaults = {
           {
             name = "swap"
             mountpoint = "/swap"
-            disk_size = 136 // 64 default, use minimum of 128GB swap for IBM DB2 LUW
-            disk_type = "general-purpose"
+            disk_size = 128 // use minimum of 128GB swap for IBM DB2 LUW
+            disk_type = "E10"
             filesystem_type = "swap"
           },
           {
@@ -381,8 +381,8 @@ map_host_specifications_defaults = {
           {
             name = "software"
             mountpoint = "${var.sap_software_download_directory}"
-            disk_size = 100
-            disk_type = "5iops-tier"
+            disk_size = 128
+            disk_type = "P10"
             filesystem_type = "xfs"
           }
         ]
@@ -411,8 +411,8 @@ map_host_specifications_defaults = {
           {
             name = "swap"
             mountpoint = "/swap"
-            disk_size = 136 // 64 default, use minimum of 128GB swap for IBM DB2 LUW
-            disk_type = "general-purpose"
+            disk_size = 128 // use minimum of 128GB swap for IBM DB2 LUW
+            disk_type = "E10"
             filesystem_type = "swap"
           },
           {
@@ -484,8 +484,8 @@ map_host_specifications_defaults = {
           {
             name = "software"
             mountpoint = "${var.sap_software_download_directory}"
-            disk_size = 100
-            disk_type = "5iops-tier"
+            disk_size = 128
+            disk_type = "P10"
             filesystem_type = "xfs"
           }
         ]
@@ -514,8 +514,8 @@ map_host_specifications_defaults = {
           {
             name = "swap"
             mountpoint = "/swap"
-            disk_size = 136 // 64 default, use minimum of 128GB swap for IBM DB2 LUW
-            disk_type = "general-purpose"
+            disk_size = 128 // use minimum of 128GB swap for IBM DB2 LUW
+            disk_type = "E10"
             filesystem_type = "swap"
           },
           {
@@ -601,8 +601,8 @@ map_host_specifications_defaults = {
           {
             name = "software"
             mountpoint = "${var.sap_software_download_directory}"
-            disk_size = 200
-            disk_type = "5iops-tier"
+            disk_size = 128
+            disk_type = "P10"
             filesystem_type = "xfs"
           }
         ]
@@ -642,15 +642,15 @@ map_host_specifications_defaults = {
           {
             name = "swap"
             mountpoint = "/swap"
-            disk_size = 96
-            disk_type = "general-purpose"
+            disk_size = 128 // closest disk type to 96
+            disk_type = "E10"
             filesystem_type = "swap"
           },
           {
             name = "software"
             mountpoint = "${var.sap_software_download_directory}"
-            disk_size = 100
-            disk_type = "general-purpose"
+            disk_size = 128
+            disk_type = "E10"
             filesystem_type = "xfs"
           }
         ]
@@ -690,15 +690,15 @@ map_host_specifications_defaults = {
           {
             name = "swap"
             mountpoint = "/swap"
-            disk_size = 96
-            disk_type = "general-purpose"
+            disk_size = 128 // closest disk type to 96
+            disk_type = "E10"
             filesystem_type = "swap"
           },
           {
             name = "software"
             mountpoint = "${var.sap_software_download_directory}"
-            disk_size = 200
-            disk_type = "10iops-tier"
+            disk_size = 128
+            disk_type = "P10"
             filesystem_type = "xfs"
           }
         ]
@@ -738,15 +738,15 @@ map_host_specifications_defaults = {
           {
             name = "swap"
             mountpoint = "/swap"
-            disk_size = 96
-            disk_type = "general-purpose"
+            disk_size = 128 // closest disk type to 96
+            disk_type = "E10"
             filesystem_type = "swap"
           },
           {
             name = "software"
             mountpoint = "${var.sap_software_download_directory}"
-            disk_size = 100
-            disk_type = "general-purpose"
+            disk_size = 128
+            disk_type = "E10"
             filesystem_type = "xfs"
           }
         ]
@@ -827,8 +827,8 @@ map_host_specifications_defaults = {
           {
             name = "software"
             mountpoint = "${var.sap_software_download_directory}"
-            disk_size = 200
-            disk_type = "5iops-tier"
+            disk_size = 128
+            disk_type = "P10"
             filesystem_type = "xfs"
           }
         ]
@@ -868,15 +868,15 @@ map_host_specifications_defaults = {
           {
             name = "swap"
             mountpoint = "/swap"
-            disk_size = 96
-            disk_type = "general-purpose"
+            disk_size = 128 // closest disk type to 96
+            disk_type = "E10"
             filesystem_type = "swap"
           },
           {
             name = "software"
             mountpoint = "${var.sap_software_download_directory}"
-            disk_size = 100
-            disk_type = "general-purpose"
+            disk_size = 128
+            disk_type = "E10"
             filesystem_type = "xfs"
           }
         ]
@@ -916,15 +916,15 @@ map_host_specifications_defaults = {
           {
             name = "swap"
             mountpoint = "/swap"
-            disk_size = 96
-            disk_type = "general-purpose"
+            disk_size = 128 // closest disk type to 96
+            disk_type = "E10"
             filesystem_type = "swap"
           },
           {
             name = "software"
             mountpoint = "${var.sap_software_download_directory}"
-            disk_size = 200
-            disk_type = "10iops-tier"
+            disk_size = 128
+            disk_type = "P10"
             filesystem_type = "xfs"
           }
         ]
@@ -964,15 +964,15 @@ map_host_specifications_defaults = {
           {
             name = "swap"
             mountpoint = "/swap"
-            disk_size = 96
-            disk_type = "general-purpose"
+            disk_size = 128 // closest disk type to 96
+            disk_type = "E10"
             filesystem_type = "swap"
           },
           {
             name = "software"
             mountpoint = "${var.sap_software_download_directory}"
-            disk_size = 100
-            disk_type = "general-purpose"
+            disk_size = 128
+            disk_type = "E10"
             filesystem_type = "xfs"
           }
         ]
@@ -996,8 +996,8 @@ map_host_specifications_defaults = {
             name = "anydb"
             mountpoint = "/anydb" # should be /db2, /oracle, /sybase, /sapdb
             disk_count = 2
-            disk_size = 640
-            disk_type = "10iops-tier"
+            disk_size = 1024 // closest disk type to 640
+            disk_type = "P30"
             #disk_iops =
             filesystem_type = "xfs"
             #lvm_lv_name =
@@ -1032,8 +1032,8 @@ map_host_specifications_defaults = {
           {
             name = "swap"
             mountpoint = "/swap"
-            disk_size = 136 // 64 default, use minimum of 128GB swap for IBM DB2 LUW
-            disk_type = "5iops-tier"
+            disk_size = 128 // use minimum of 128GB swap for IBM DB2 LUW
+            disk_type = "E10"
             filesystem_type = "swap"
           },
           {
@@ -1080,15 +1080,15 @@ map_host_specifications_defaults = {
           {
             name = "swap"
             mountpoint = "/swap"
-            disk_size = 96
-            disk_type = "general-purpose"
+            disk_size = 128 // closest disk type to 96
+            disk_type = "E10"
             filesystem_type = "swap"
           },
           {
             name = "software"
             mountpoint = "${var.sap_software_download_directory}"
-            disk_size = 100
-            disk_type = "general-purpose"
+            disk_size = 128
+            disk_type = "E10"
             filesystem_type = "xfs"
           }
         ]
@@ -1128,15 +1128,15 @@ map_host_specifications_defaults = {
           {
             name = "swap"
             mountpoint = "/swap"
-            disk_size = 96
-            disk_type = "general-purpose"
+            disk_size = 128 // closest disk type to 96
+            disk_type = "E10"
             filesystem_type = "swap"
           },
           {
             name = "software"
             mountpoint = "${var.sap_software_download_directory}"
-            disk_size = 200
-            disk_type = "10iops-tier"
+            disk_size = 128
+            disk_type = "P10"
             filesystem_type = "xfs"
           }
         ]
@@ -1176,15 +1176,15 @@ map_host_specifications_defaults = {
           {
             name = "swap"
             mountpoint = "/swap"
-            disk_size = 96
-            disk_type = "general-purpose"
+            disk_size = 128 // closest disk type to 96
+            disk_type = "E10"
             filesystem_type = "swap"
           },
           {
             name = "software"
             mountpoint = "${var.sap_software_download_directory}"
-            disk_size = 100
-            disk_type = "general-purpose"
+            disk_size = 128
+            disk_type = "E10"
             filesystem_type = "xfs"
           }
         ]
