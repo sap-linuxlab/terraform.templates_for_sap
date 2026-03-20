@@ -20,8 +20,11 @@ variable "map_os_image_regex" {
     rhel-8-10 = ".*redhat.*8-10.*minimal.*amd64.*"
     rhel-9-2 = ".*redhat.*9-2.*minimal.*amd64.*"
     rhel-9-4 = ".*redhat.*9-4.*minimal.*amd64.*"
+    rhel-10-0 = ".*redhat.*10-0.*minimal.*amd64.*"
+    rhel-10-1 = ".*redhat.*10-1.*minimal.*amd64.*"
     sles-15-5 = ".*sles.*15-5.*amd64-[0-9]"
     sles-15-6 = ".*sles.*15-6.*amd64-[0-9]"
+    sles-16-0 = ".*sles.*16-0.*amd64-[0-9]"
 
     # OS Image keys for IBM Power Virtual Server
     rhel-8-4-sap-ha = "RHEL8-SP4-SAP"
@@ -41,6 +44,8 @@ variable "map_os_image_regex" {
     sles-15-4-sap-ha-byol = "SLES15-SP4-SAP-BYOL"
     sles-15-5-sap-ha = "SLES15-SP5-SAP"
     sles-15-5-sap-ha-byol = "SLES15-SP5-SAP-BYOL"
+    sles-15-6-sap-ha = "SLES15-SP6-SAP"
+    sles-15-6-sap-ha-byol = "SLES15-SP6-SAP-BYOL"
 
   }
 

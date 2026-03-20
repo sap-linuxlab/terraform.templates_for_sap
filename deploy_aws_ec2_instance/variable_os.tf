@@ -26,6 +26,8 @@ variable "map_os_image_regex" {
     rhel-9-2 = "*RHEL-9.2*_HVM*x86_64*"
     rhel-9-3 = "*RHEL-9.3*_HVM*x86_64*"
     rhel-9-4 = "*RHEL-9.4*_HVM*x86_64*"
+    rhel-10-0 = "*RHEL-10.0*_HVM*x86_64*"
+    rhel-10-1 = "*RHEL-10.1*_HVM*x86_64*"
 
     # rhel-7-7-sap-ha = "*RHEL-SAP-7.7*" // removed
     # rhel-7-9-sap-ha = "*RHEL-SAP-7.9*" // removed
@@ -42,6 +44,7 @@ variable "map_os_image_regex" {
     # sles-15-4 = "*suse-sles-15-sp4-v202*-hvm-ssd-x86_64*" // removed
     sles-15-5 = "*suse-sles-15-sp5-v202*-hvm-ssd-x86_64*"
     sles-15-6 = "*suse-sles-15-sp6-v202*-hvm-ssd-x86_64*"
+    sles-16-0 = "*suse-sles-16-0-v202*-hvm-ssd-x86_64*"
 
     sles-12-5-sap-ha = "*suse-sles-sap-12-sp5-v202*-hvm-ssd-x86_64*"
     sles-15-1-sap-ha = "*suse-sles-sap-15-sp1-v202*-hvm-ssd-x86_64*"
