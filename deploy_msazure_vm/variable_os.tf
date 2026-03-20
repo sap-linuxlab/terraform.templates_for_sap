@@ -36,6 +36,8 @@ variable "map_os_image_regex" {
     rhel-9-2  = { publisher = "RedHat" , offer = "RHEL" , sku = "92-gen2" },
     rhel-9-3  = { publisher = "RedHat" , offer = "RHEL" , sku = "93-gen2" },
     rhel-9-4  = { publisher = "RedHat" , offer = "RHEL" , sku = "94-gen2" },
+    rhel-10-0 = { publisher = "RedHat", offer = "RHEL", sku = "100-gen2" },
+    rhel-10-1 = { publisher = "RedHat", offer = "RHEL", sku = "101-gen2" },
 
     rhel-8-1-sap-ha  = { publisher = "RedHat" , offer = "RHEL-SAP-HA" , sku = "81sapha-gen2" },
     rhel-8-2-sap-ha  = { publisher = "RedHat" , offer = "RHEL-SAP-HA" , sku = "82sapha-gen2" },
@@ -54,6 +56,7 @@ variable "map_os_image_regex" {
     sles-15-4 = { publisher = "SUSE" , offer = "sles-15-sp4" , sku = "gen2" },
     sles-15-5 = { publisher = "SUSE" , offer = "sles-15-sp5" , sku = "gen2" },
     sles-15-6 = { publisher = "SUSE" , offer = "sles-15-sp6" , sku = "gen2" },
+    sles-16-0 = { publisher = "SUSE", offer = "sles-16-0-x86-64", sku = "gen2" },
 
     sles-12-5-sap-ha = { publisher = "SUSE" , offer = "sles-sap-12-sp5" , sku = "gen2" },
     sles-15-1-sap-ha = { publisher = "SUSE" , offer = "sles-sap-15-sp1" , sku = "gen2" },

@@ -2,7 +2,7 @@ resource_prefix = "sap"
 
 bastion_user = false
 
-host_specification_plan = "small_256gb"
+host_specification_plan = "xsmall_256gb"
 
 sap_hana_install_master_password = "NewPass$321"
 
